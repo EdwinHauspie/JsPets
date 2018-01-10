@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>JsonViewer</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css"/>
+    <script>
+        function render(data) {
+            var html = '<ul>';
+            
+            (function ___(o, name) {
+                name = typeof name === 'undefined' ? '' : (name + ': ');
+                
+                if (o === null) {
+                    html += '<li>' + name + 'null</li>';
+                }              
+                else if (o instanceof Array) {
+                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + name + 'Array [' + o.length + ']';
+                    if (o.length) {
+                        html += '<ul>';
+                        for (var i = 0; i < o.length; i++) {
+                            ___(o[i], i);
+                        }
+                        html += '</ul>';
+                    }
+                    html+='</li>';
+                }
+                else if (typeof o == 'object') {
+                    var props = [];
+                    for (var propName in o) {
+                        if (o.hasOwnProperty(propName)) {
+                            props.push(propName);
+                        }
+                    }
+                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + name + '{' + props.length + '}';
+                    if (props.length) {
+                        html += '<ul>';
+                        for (var i = 0; i < props.length; i++) {
+                            ___(o[props[i]], props[i]);
+                        }
+                        html += '</ul>';
+                    }
+                    html += '</li>';
+                }
+                else {
+                    html += '<li>' + name + (typeof o === 'string' ? ('<span class="gray">"' + o + '"</span>') : o) + '</li>';
+                }
+            })(data);
+            
+            html += '</ul>';
+            
+            $('.tree').html(html);
+        }
+               
+        $(function() {
+            $('.tree').on('click', '.toggle', function () { $(this).closest('li').toggleClass('open'); });
+            
+            $('#parse').click(function() {
+                try {
+                    var data = JSON.parse($('#jsonText').val());
+                    render(data);
+                    $('.tree li').addClass('open');
+                } catch(e) {
+                    alert('Text is not valid JSON.');
+                }
+            }).click();
+        });
+    </script>
+</head>
+
+<body>
+    <!--button onclick="$('.tree').find('li').addClass('open');">Expand all</button>
+    <button onclick="$('.open', '.tree').removeClass('open');">Collapse all</button-->
+        
+    <div class="tree"></div>
+    
+    <div class="actions">
+        <button id="parse">Parse</button>
+        <textarea id="jsonText" spellcheck="false" autocomplete="off" style="width:300px;height:400px;outline: none;border: 0;padding: 10px;box-shadow: 1px 1px 10px 0px #c3c3c3;">{
+    "firstName": "John",
+    "lastName": "Smith",
+    "age": 25,
+    "address":
+    {
+        "streetAddress": "21 Street",
+        "city": "New York",
+        "postalCode": "10021"
+    },
+    "phoneNumbers":
+    [
+        {
+          "type": "home",
+          "number": "212 555-1234"
+        },
+        {
+          "type": "fax",
+          "number": "646 555-4567"
+        }
+    ]
+}</textarea>
+    </div>
+</body>
+
+</html>

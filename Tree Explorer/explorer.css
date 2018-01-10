@@ -1,0 +1,52 @@
+body { font-family: verdana, sans-serif; font-size: 13px; line-height: 25px; margin: 20px; }
+.tree {width: 200px;}
+.tree ul, li { list-style: none; margin: 0; padding: 0;}
+.tree ul { display: none; }
+.tree li { padding-left: 23px; position: relative;}
+.tree .toggle {
+    display: inline-block;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAVElEQVQoU2NkYGBguHTp0v+3b98yODo6MoL46AAsuH///v/Pnz9nkJSUxKoQrhOfQhTjcSnEcMOaNWv+//r1i0FPT49BR0cHLE+aSQTdRJTvCIUTAEpgPwo+KLAsAAAAAElFTkSuQmCC);
+    z-index: 2;
+    background-repeat: no-repeat;
+    background-position: 4px 4px;
+}
+
+.tree li.open > .toggle {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAXElEQVQoU2NkIAIwEqGGgXH+/Pn/b9y4wdDZ2Ymhoby8/L+mpiYDI4ixceNGBn9/fxSFyOJg3egK0flwK2ASKioqDHfu3EExGcUduKzGcOzChQv/x8fHo4gTFQQA5zU5TagbBmIAAAAASUVORK5CYII=);
+}
+
+.tree li.open > ul, .tree > ul { display: block; }
+
+.tree img { vertical-align: middle; }
+
+.tree li .name {padding: 1px 2px 1px 23px;display: block;position: relative;cursor: pointer;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+
+.tree li .name::before {
+    content: ' ';
+    display: inline-block;
+    background-image: url("folder.png");
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 3px;
+    top: 5px;
+}
+
+.tree li .name:hover { color: black; background-color: #f5f5f5; }
+.tree li.active > .name { color: black; background-color: #e1eef3; }
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}

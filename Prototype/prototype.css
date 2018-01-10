@@ -1,0 +1,6 @@
+body { margin: 15px; font-family: monospace; line-height: 27px; font-size: 13px; }
+h2, h3, pre { margin: 0; }
+a { text-decoration: none; display: block; cursor: pointer; color: #00A4EF; }
+a:hover { font-weight: bold; color: #0052CC; }
+fieldset { margin: 10px 0 0 0; padding: 0 0 10px 15px; border: 1px solid gray; }
+legend { font-size: 1.17em; font-weight: bold; padding: 0 5px; margin-left: -5px; }

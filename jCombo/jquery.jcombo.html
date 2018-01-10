@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jCombo &ndash; jQuery extension</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./jquery.jcombo.bootstrap.css"/>
+	<style>
+        body { font: 15px monospace; line-height: 30px; }
+        h3 { margin-bottom: 10px; }
+        .hiddenoption { display: none; } /*For test purposes*/
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="./jquery.jcombo.js"></script>
+    <script>
+        $(function () {
+            $('select')
+                .change(function() { $('.value').text($(this).val()); })
+                .jCombo();
+        });
+    </script>
+</head>
+
+<body>
+    <h2>jCombo &ndash; jQuery extension</h2>
+
+    <h3>Style</h3>
+    <label><input type="radio" name="style" onclick="$('[rel=stylesheet]').attr('href', './jquery.jcombo.bootstrap.css');$('document').fadeOut().show();" checked="checked">Bootstrap</label><br>
+    <label><input type="radio" name="style" onclick="$('[rel=stylesheet]').attr('href', './jquery.jcombo.simple.css');$('document').fadeOut().show();">Simple</label><br>
+    <label><input type="radio" name="style" onclick="$('[rel=stylesheet]').attr('href', './jquery.jcombo.retro.css');$('document').fadeOut().show();">Retro</label><br>
+    <label><input type="radio" name="style" onclick="$('[rel=stylesheet]').attr('href', './jquery.jcombo.material.css');$('document').fadeOut().show();">Material Design</label>
+    
+    <h3>Demo</h3>
+    <select name="country">
+        <optgroup label="Group one">
+            <option value="AD">Andorra</option>
+            <option value="BE" selected="selected">Belgium</option>
+            <option value="BA">Bosnia &amp; Herzegovina</option>
+            <option value="HT" style="display:none;">Haiti</option>
+            <option value="IR" disabled="disabled">Ireland</option>
+        </optgroup>
+        <optgroup label="Group two">
+            <option value="JP">Japan</option>
+            <option value="VN">Vietnam</option>
+            <option value="ZM">Zambia</option>
+        </optgroup>
+    </select>
+    <div>$('select').val() = "<span class="value"></span>"</div>
+</body>
+</html>

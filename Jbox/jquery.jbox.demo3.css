@@ -1,0 +1,72 @@
+.jBox {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-bottom: 6px;
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    position: relative;
+    border: 1px solid #777;
+    border-radius: 3px;
+    overflow: hidden;
+    outline: none;
+}
+label.jBoxEnabled:hover .jBox, .jBox:focus {
+    background-color: #EBFFE4;
+}
+.jBox.checked {
+    border: 1px solid #5F5F5F;
+    background-color: #B9FFA1 !important;
+}
+label.jBoxEnabled:hover {
+    cursor: pointer;
+}
+.jBox.disabled {
+    border: 1px solid #d6d6d6;
+    background-color: #fff !important;
+    cursor: default;
+    outline: none;
+    box-shadow: none;
+}
+.jBox span {
+    display: none;
+}
+.jBox.radio {
+    border-radius: 8px;
+}
+.jBox.radio.checked span:nth-child(1) {
+    display: inline-block;
+    background-color: #5f5f5f;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 9px;
+}
+.jBox.checkbox.checked span {
+    display: inline-block;
+    position: absolute;
+    background-color: #5f5f5f;
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+}
+.jBox.checkbox.checked span:nth-child(1) {
+    width: 3px;
+    height: 11px;
+    left: 8px;
+    top: 3px;
+}
+.jBox.checkbox.checked span:nth-child(2) {
+    width: 6px;
+    height: 3px;
+    left: 2px;
+    top: 8px;
+}
+.jBox.checked.disabled span {
+    background-color: #ccc !important;
+    box-shadow: none !important;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text fade</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./textfade.css"/>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="./textfade.js"></script>
+    <script>
+        $(function() {
+            $('button').click(function() {
+                eval($('input:eq(0)').val());
+            });
+        });
+    </script>
+</head>
+
+<body style="width: 400px; font-family: sans-serif; line-height: 22px;">
+    <h2>Text fade</h2>
+
+    <input value="$('.text').applyTextFade(70);" style="font-family: monospace; width: 250px;" />
+    <button>Run</button>
+    
+    <br><br>
+    
+    <div class="text" style="text-align: justify;">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        It has survived not only five centuries, but also the leap into electronic typesetting,
+        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.
+    </div>
+    
+    <br>
+    
+    <div class="text" style="text-align: justify;">
+        Selfies wolf try-hard post-ironic pug letterpress. Hella sartorial tacos semiotics.
+        Aesthetic tilde small batch chartreuse, pork belly echo park disrupt heirloom retro portland kickstarter venmo bicycle rights normcore.
+        Celiac hammock fashion axe sustainable. Keffiyeh photo booth hella shoreditch poutine lomo, DIY cold-pressed pug polaroid intelligentsia.
+        Cold-pressed fanny pack put a bird on it brooklyn, PBR&B YOLO meggings trust fund bushwick venmo.
+    </div>
+</body>
+</html>

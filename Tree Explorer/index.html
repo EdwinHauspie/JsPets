@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Tree</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./explorer.css"/>
+    <script>
+        function render(items) {
+            if (!items || !items.length) return '';
+            var html = '<ul>';
+
+            for (var i = 0, item = items[i]; i < items.length; i++, item = items[i]) {
+                html += '<li>' + (item.children && item.children.length ? '<span class="toggle"></span>' : '') + '<span class="name">' + item.name + '</span>';
+                html += render(item.children);
+                html += '</li>';
+            }
+                
+            html += '</ul>';
+            return html;
+        }
+        
+        var html = render([{
+            name: 'KifareImageStore',
+            children: [
+                {
+                    name: 'School id 1',
+                    children: [
+                        {
+                            name: '2016'
+                        },
+                        {
+                            name: '2017'
+                        }
+                    ]
+                }
+            ]
+        }]);
+        
+        $(function() {
+            $('.tree').html(html);
+            $('.tree').on('click', '.toggle', function () { $(this).closest('li').toggleClass('open'); });
+            $('.tree').on('click', '.name', function () { $('.tree .active').removeClass('active'); $(this).closest('li').addClass('active'); });
+            $('.tree').on('dblclick', '.name', function () { $(this).closest('li').toggleClass('open'); });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="tree noselect"></div>
+</body>
+
+</html>

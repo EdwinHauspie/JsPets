@@ -1,0 +1,2 @@
+- gedeeltelijk updaten van de DOM
+- babel builden ipv in browser (webpack ?)

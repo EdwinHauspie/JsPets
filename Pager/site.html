@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Pager &ndash; jQuery extension</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="./jquery.pager.js"></script>
+    <link rel="stylesheet" href="./site.css"/>
+    <link rel="stylesheet" href="./jquery.pager.css"/>
+    <link rel="disabled" href="./jquery.pager.lite.css"/>
+    <script>
+        $(function() {
+            var $myPager = $.createPager({
+                pageIndex: 0,
+                pageSize: 10,
+                rowCount: 433,
+                text: { next: '❯', previous: '❮', first: '❮❮', last: '❯❯' }
+            });
+
+            $('#pagerWrap').append($myPager);
+
+            function eventHandler(event, pageIndex, pageSize, numberOfPages) {
+                var $logEntry = $('<tr><td>event: ' + event.type + '</td><td>page: ' + (pageIndex + 1) + '</td><td>pageSize: ' + pageSize + '</td><td>numberOfPages: ' + numberOfPages + '</td></tr>');
+                $('#log').append($logEntry);
+            };
+            
+            $myPager
+                .on('onPageChanged', eventHandler)
+                .on('onPageSizeChanged', eventHandler);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Pager</h1>
+
+    <h2>Requires</h2>
+    <ul><li>jQuery</li></ul>
+    
+    <h2>Usage</h2>
+    <pre>var $myPager = $.createPager({
+    pageIndex: 0,
+    pageSize: 10,
+    rowCount: 433,
+    text: {
+        next: '›',
+        previous: '‹',
+        first: '‹‹',
+        last: '››',
+        statusFormat: '{0} / {1}',
+        pageSizeFormat: 'Page size {0}'
+    }
+});
+
+$myPager
+    .on('onPageChanged', <i>your_event_handler</i>)
+    .on('onPageSizeChanged', <i>your_event_handler</i>);
+
+$('#myPagerWrapper').append($myPager);</pre>
+
+    <h2 class="options">Demo</h2>
+    <span class="option" onclick="$('[href=\'./jquery.pager.lite.css\']').attr('rel', 'disabled');">Default css</span>
+    <span class="option" onclick="$('[href=\'./jquery.pager.lite.css\']').attr('rel', 'stylesheet');">Minimal</span>
+    <div id="pagerWrap" class="unselectable"></div>
+
+    <h2 class="options">Log</h2>
+    <span class="option" onclick="$('#log').empty();">Clear</span>
+    <table id="log"></div>
+</body>
+</html>

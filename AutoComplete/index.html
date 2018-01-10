@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Autocomplete</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./autocomplete.css"/>
+    <style>
+        #country { height: 33px; vertical-align: bottom; padding: 0 10px; width: 350px; outline: none;  border: 1px solid #8e8e8e; box-shadow: inset 2px 2px 5px #efefef,0 0 5px rgba(18,99,153,0); box-sizing: border-box; border-radius: 3px; }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="http://users.telenet.be/dropbox/js/Prototype/prototype.js"></script>
+    <script src="./autocomplete.js"></script>
+    <script>
+        $(function () {
+            var SuggestionProvider = function() {
+                var xhr;
+
+                this.get = function (searchTerm) {
+
+                    //Escape regex syntax that was found in the input value and make it lenient
+                    var lenientVal = searchTerm.toLowerCase()
+                        .replace(/\\/gi, '\\\\') //Must be first !
+                        .replace(/\(/gi, '\\(').replace(/\)/gi, '\\)').replace(/\[/gi, '\\[').replace(/\]/gi, '\\]')
+                        .replace(/\?/gi, '\\?').replace(/\./gi, '\\.').replace(/\+/gi, '\\+').replace(/\*/gi, '\\*');
+
+                    var lenientGroups = ['[aäâáàã]', '[eëêéè]', '[iïîíì]', '[oöôóòõ]', '[uüûúùµ]', '[cç]', '[nñ]'];
+                    lenientGroups.each(function (grp) {
+                        lenientVal = lenientVal.replace(new RegExp(grp, 'gi'), grp);
+                    });
+                    
+                    var $def = $.Deferred();
+                    
+                    if (xhr) xhr.abort();
+                    
+                    xhr = $.ajax({ url: '/dropbox/js/AutoComplete/data.json', dataType: 'json' })
+                        .fail(function() { $def.resolve([]); })
+                        .done(function(allSuggestions) {
+                            //Get matching suggestions
+                            var reg = new RegExp(lenientVal, 'gi');
+                    
+                            var suggestions = allSuggestions
+                                .where(function(s) {
+                                    reg.lastIndex = 0; //Must reset the RegExp when using multiple times
+                                    return reg.test(s);
+                                }).select(function (s) {
+                                    return s.replace(reg, '<em>$&</em>'); //Highlight the matches and return suggestions
+                                }).take(5);
+                                
+                            $def.resolve(suggestions);
+                        });
+                    
+                    return $def;
+                }
+            };
+            
+            $.createAutocompleter('#country', new SuggestionProvider());
+            
+            $('#country').focus();
+        });
+    </script>
+</head>
+
+<body style="font-family: sans-serif; font-size: 14px; padding: 20px 50px;">
+    <h2>Autocomplete</h2>
+    <input id="country" placeholder="Enter your country" autocomplete="off" />
+</body>
+
+</html>

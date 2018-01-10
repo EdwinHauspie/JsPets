@@ -1,0 +1,7 @@
+body { font-size: 14px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+pre { font-family: "Courier New", monospace; }
+h2.options { display: inline-block; margin-right: 10px; }
+.option { cursor: pointer; color: #2196F3; font-size: 11px; margin-right: 5px; }
+.option:before { content: "["; margin-right: 2px; color: #888; }
+.option:after { content: "]"; margin-left: 2px; color: #888; }
+#log td { padding-right: 20px; }

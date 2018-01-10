@@ -1,0 +1,2 @@
+.pager .pages, .pager select  { display: none; }
+.pager .status { display: inline-block; }

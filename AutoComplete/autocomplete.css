@@ -1,0 +1,4 @@
+.suggestion-box { width: 350px; font-size: 13px; padding: 3px; line-height: 20px; border: 1px solid #8e8e8e;  margin-top: 2px;  position: absolute; overflow-y: auto; z-index: 2; box-sizing: border-box; background-color: white; border-radius: 4px; }
+.suggestion { cursor: pointer; overflow: hidden; text-overflow: ellipsis; padding: 0 7px; white-space: nowrap; border-radius: 4px; line-height: 28px; }
+.suggestion em { font-weight: bold; font-style: normal; }
+.suggestion.selected { background-color: #d8e4ec; }

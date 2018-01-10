@@ -1,0 +1,25 @@
+.cooltip {
+    background: #282828;
+    border: 1px solid #282828;
+    border-radius: 3px;
+    color: #fff;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.cooltip-body {
+    padding: 6px 8px;
+    background-color: inherit;
+}
+
+.cooltip-close {
+	background-color: #282828;
+    border-radius: 10px;
+    border-color: white;
+    border: 2px solid white;
+    right: -9px;
+    top: -9px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAI0lEQVQYV2P8f+X/f0YdRkYGKADzQWyYBIxGVQHVgV0lNjMBTmcjqLz8JLIAAAAASUVORK5CYII=);
+    background-position: 5px 5px;
+}

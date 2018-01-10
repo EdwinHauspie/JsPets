@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popup &ndash; jQuery extension</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="./jquery.popup.js"></script>
+    <link rel="stylesheet" href="./jquery.popup.css"/>
+
+	<style>
+        body { font: 15px/22.5px "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; line-height: 30px; }
+		li { list-style: none; }
+        #demoResult { margin-left: 20px; }
+		ul, li { margin: 0; padding: 0; margin-left: 10px; }
+        input[type=text] { outline: none; border: 1px solid #c5c8c8; padding: 5px 5px 4px 5px; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1); width: 250px; }
+        pre { margin: 0; }
+        .code { font-family: monospace; font-size: 16px; color: #0A92C9; }
+        .code.inline { color: #989830; font-size: inherit; }
+        a[href] { color: #168FE6; }
+        h3 { margin: 30px 0 5px 0; }
+        .popup.fullscreen .popup-close, .popup.cmdDemo .popup-close { display: none; }
+		button { line-height: normal; height: 26px; padding: 0 10px; font-size: 12px; color: #fff; text-shadow: -1px -1px 0 rgba(0 , 0, 0, .15); border: 1px solid #0987b8; border-radius: 1px; cursor: pointer; background: #0a93ca; background-image: -webkit-linear-gradient(#0a93ca, #0a8abd); background-image: -moz-linear-gradient(#0a93ca, #0a8abd); background-image: linear-gradient(#0a93ca, #0a8abd); box-shadow: 0 1px 0 0 rgba(0, 0, 0, .1); -webkit-appearance: none; }
+		button:hover { color: #fff; border-color: #0b94bf; background: #0ca3d4; background-image: -webkit-linear-gradient(#0ca3d4 ,#0b98c5); background-image: -moz-linear-gradient(#0ca3d4, #0b98c5); background-image: linear-gradient(#0ca3d4, #0b98c5); }
+		button:focus { outline: 0; box-shadow: 0 0 4px rgba(9, 135, 184, .75); }
+		button.popup-cancel { color: #333; text-shadow: none; border-color: #c5c8c8; background: #fff; background-image: -webkit-linear-gradient(#fff, #efefef); background-image: -moz-linear-gradient(#fff, #efefef); background-image: linear-gradient(#fff, #efefef); box-shadow:none; }
+		button.popup-cancel:hover { color: #333; border-color: #c3c6c6; background: #f9f9f9; background-image: -webkit-linear-gradient(#f9f9f9, #dfdfdf); background-image: -moz-linear-gradient(#f9f9f9, #dfdfdf); background-image: linear-gradient(#f9f9f9, #dfdfdf); }
+		button.popup-cancel:focus { box-shadow: 0 0 4px rgba(196, 187, 193, .75);}
+    </style>
+
+    <script>
+        $(function () {
+            var $demoPopup = $('#demoPopup')
+				$demoResult = $('#demoResult'),
+				$demoInput = $demoPopup.find('input');
+
+			$demoPopup
+                .popup('init', { title: 'Enter your name', cancel: 'Cancel', submitOnEnter: true, cancelOnEscape: true })
+				.popup('onShow', function() { $demoResult.text(''); /*$demoInput.focus();*/ })
+				.popup('onHide', function() { $demoInput.val(''); })
+                .popup('onCancel', function() { $demoResult.text('Popup was canceled').effect('highlight', { color: '#fd0' }, 1000); })
+				.popup('onSubmit', function() { $demoResult.text('Your name is ' + ($demoInput.val() || 'a mistery')).effect('highlight', { color: '#0f0' }, 1000); });
+
+            $('.demos button:eq(0)').click(function () {
+                $demoPopup.popup('show', false);
+            });
+            
+            $('.demos button:eq(1)').click(function () {
+                $demoPopup.popup('show');
+            });
+
+            $('.demos button:eq(2)').click(function () {
+                $demoPopup.popup('showfullscreen');
+            });
+
+            $('.demos button:eq(3)').click(function () {
+                $demoPopup.popup('showballoon', { position: { my: 'left center', at: 'right+20 center', of: this }, tip: 'left' });
+            });
+            
+            var $demoPopup2 = $('#demoPopup2');
+            $demoPopup2.popup('init', { submit: null }).popup('onpop', function() { alert('Balloon was popped!'); $demoPopup2.popup('hide'); });
+
+            $('#cmdBalloon').click(function () {
+                $demoPopup2.popup('showballoon', { position: { my: 'center bottom', at: 'center+40 top-20', of: $('#cmdBalloon')[0] }, tip: { bottom: '-8px', left: '20px' } });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Popup &ndash; jQuery extension</h1>
+
+    <h2>Requires</h2>
+    <ul>
+        <li>jQuery</li>
+        <li>jQuery UI core</li>
+        <li>jQuery UI position</li>
+        <li>jQuery UI draggable <i>(optional)</i></li>
+    </ul>
+
+    <h2>Demos</h2>
+    <ul class="demos">
+        <li>
+			<button>Dialog</button> <button>Modal</button> <button>Fullscreen</button> <button>Balloon</button>
+			<span id="demoResult"></span>
+		</li>
+    </ul>
+
+    <div id="demoPopup" class="popup">
+        <input type="text" maxlength="30" placeholder="John Doe">
+    </div>
+    
+    <div id="demoPopup2" class="popup cmdDemo">
+        Tiny balloon! <a href="javascript:void(0);" data-command="pop">pop</a>
+    </div>
+
+    <h2>Usage</h2>
+    <ul>
+        <li><pre class="code">&lt;div id="myPopup" class="popup"&gt;
+    Lorem ipsum
+&lt;/div&gt;
+
+var $myPopup = $('#myPopup').popup('init');
+
+$('#myButton').click(function() {
+   $myPopup.popup('show');
+});</pre>
+        </li>
+    </ul>
+    
+    <h2>Syntax</h2>
+    <ul>
+        <li class="code">.popup(command[, settings])</li>
+        <li>
+            <ul>
+                <li><b>command</b>:string &ndash; The command to execute.</li>
+                <li><b>settings</b>:object &ndash; Parameters used by the command.</li>
+                <li>See below for complete reference.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h2>Reference</h2>
+    <ul>
+        <li>&#9702; &nbsp; <a href="#init">init</a></li>
+        <li>&#9702; &nbsp; <a href="#show">show</a></li>
+        <li>&#9702; &nbsp; <a href="#showfullscreen">showfullscreen</a></li>
+        <li>&#9702; &nbsp; <a href="#showballoon">showballoon</a></li>
+        <li>&#9702; &nbsp; <a href="#hide">hide</a></li>
+        <li>&#9702; &nbsp; <a href="#submit">submit</a></li>
+        <li>&#9702; &nbsp; <a href="#cancel">cancel</a></li>
+        <li>&#9702; &nbsp; <a href="#callbacks">callbacks</a></li>
+        <li>&#9702; &nbsp; <a href="#datacommand">data-command</a></li>
+    </ul>
+    
+    <ul>
+        <li><h3><a name="init">init</a></h3></li>
+        <li>
+            <pre class="code">.popup('<b>init</b>', {
+    title: '',
+    submit: 'OK',
+    cancel: '',
+    submitOnEnter: false,
+    cancelOnEscape: false,
+    hideOnSubmit: true,
+    draggable: true
+})</pre>
+        </li>
+        <li>
+            <ul>
+                <li>
+                    Initializes the popup. When no settings are supplied, the default values will be applied.<br/>
+                    When omitting title and/or button captions, the header and/or footer will be hidden. (Dragging requires a visible header.)
+                </li>
+                <li><b>title</b>:string &ndash; Optional header caption. Default: null</li>
+                <li><b>submit</b>:string &ndash; Submit button caption. Default: 'OK'</li>
+                <li><b>cancel</b>:string &ndash; Cancel button caption. Default: null</li>
+                <li><b>submitOnEnter</b>:boolean &ndash; Performs the submit command when pressing enter. Default: false</li>
+                <li><b>cancelOnEscape</b>:boolean &ndash; Performs the cancel command when pressing escape. Default: false</li>
+                <li><b>hideOnSubmit</b>:boolean &ndash; Hides the popup after a submit command or clicking the submit button. Default: true</li>
+                <li><b>hideOnCancel</b>:boolean &ndash; Hides the popup after a cancel command or clicking the cancel or close button. Default: true</li>
+                <li><b>draggable</b>:boolean &ndash; Makes the popup draggable. Default: true (only when dependency <i>jQuery UI draggable</i> is found)</li>
+            </ul>
+        </li>
+        <li><h3><a name="show">show</a></h3></li>
+        <li><pre class="code">.popup('<b>show</b>' [, modal ])</pre></li>
+        <li>
+            <ul>
+                <li>Shows the popup.</li>
+                <li><b>modal</b>:boolean &ndash; Default: true</li>
+            </ul>
+        </li>
+        <li><h3><a name="showfullscreen">showfullscreen</a></h3></li>
+        <li><pre class="code">.popup('<b>showfullscreen</b>')</pre></li>
+        <li>
+            <ul>
+                <li>Shows the popup fullscreen.</li>
+            </ul>
+        </li>
+        <li><h3><a name="showballoon">showballoon</a></h3></li>
+        <li>
+            <pre class="code">.popup('<b>showballoon</b>', { position: { my: '', at: '', of: '' }[, tip: ''][, tip: { top: '', left: '' }] })</pre></li>
+        <li>
+            <ul>
+                <li>
+                    Shows the popup as a balloon at the specified element.<br/>
+                    
+                </li>
+                <li><b>position</b>:object &ndash; Position of the popup. Must be a <a target="_blank" href="http://api.jqueryui.com/position/">jQuery UI position</a> object.</li>
+                <li><b>tip</b>:string or object &ndash; Position of the tip. Can be 'top', 'right', 'bottom', 'left' or a css object.</li>
+                
+            </ul>
+        </li>
+        <li><h3><a name="hide">hide</a></h3></li>
+        <li><pre class="code">.popup('<b>hide</b>')</pre></li>
+        <li>
+            <ul>
+                <li>Hides the popup. Using jQuery.fn.hide will work too but can disrupt normal popup behaviour.</li>
+            </ul>
+        </li>
+        <li><h3><a name="submit">submit</a></h3></li>
+        <li><pre class="code">.popup('<b>submit</b>')</pre></li>
+        <li>
+            <ul>
+                <li>
+                    Executes the onSubmit callback and hides the popup when it was initialized with <span class="code inline">hideOnSubmit = true</span> (default value).
+                </li>
+            </ul>
+        </li>
+        <li><h3><a name="cancel">cancel</a></h3></li>
+        <li><pre class="code">.popup('<b>cancel</b>')</pre></li>
+        <li>
+            <ul>
+                <li>
+                    Executes the onCancel callback and hides the popup when it was initialized with <span class="code inline">hideOnCancel = true</span> (default value).
+                </li>
+            </ul>
+        </li>
+        <li><h3><a name="callbacks">callbacks</a></h3></li>
+        <li><pre class="code">.popup(callback [, function])</pre></li>
+        <li>
+            <ul>
+                <li>Sets or executes the callback function.</li>
+                <li><b>callback</b>:string &ndash; Name of the callback. Can be 'onShow', 'onHide', 'onSubmit', 'onCancel'.</li>
+                <li><b>function</b>:function</li>
+            </ul>
+        </li>
+        <li><h3><a name="datacommand">data-command</a></h3></li>
+        <li><pre class="code">&lt;span data-command="hide"&gt;Got it&lt;/span&gt;</pre></li>
+        <li>
+            <ul>
+                <li>
+                    You can use all commands from within the body itself with the data-command attribute. <button id="cmdBalloon">Example</button>
+                    <br>You can also use custom commands like this:
+                    <br><span class="code inline">data-command="pop"</span>
+                    <br><span class="code inline">$myPopup.popup('onPop', function() { /*callback*/ });</span>
+                </li>
+            </ul>
+        <li>
+    </ul>
+</body>
+</html>

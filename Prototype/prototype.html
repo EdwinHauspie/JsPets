@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prototype</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./prototype.js"></script>
+    <link rel="stylesheet" href="./prototype.css"/>
+</head>
+
+<body>
+    <h2>Prototype and helper functions</h2>
+
+    <script>
+        function _(sender) {
+            var result = JSON.stringify(eval(sender.innerText || sender.textContent)).replace(/,/g, ', ');
+            var pre = document.getElementsByTagName('PRE')[0];
+            pre.innerHTML = '';
+            pre.appendChild(document.createTextNode(result));
+        }
+    </script>
+
+    <fieldset>
+        <legend>Examples</legend>
+        <div>
+            <a onclick="_(this);">[1, 2].first('x => x > 1');</a>
+            <a onclick="_(this);">[1, 1, 2, '2', 3, 3].groupBy();</a>
+            <a onclick="_(this);">[1, 2, 3, 4].groupBy(function(x) { return x > 2; });</a>
+            <a onclick="_(this);">[7, 'a', 'z'].where(isNaN);</a>
+            <a onclick="_(this);">[10, 20].aggregate(0, 'x, agg => agg + x');</a>
+            <a onclick="_(this);">(1).addFlag(2).hasFlag(2);</a>
+            <a onclick="_(this);">String.random(9);</a>
+            <a onclick="_(this);">String.format('{0} is bigger than {1}', 'Two', 1);</a>
+            <a onclick="_(this);">[1, 2].intersect([2, 3]);</a>
+            <a onclick="_(this);">[100, 200, 300, 400].skip(1).take(2).orderByDescending();</a>
+            <a onclick="_(this);">[{ nrs: [1, 11] }, { nrs: [2, 22] }].selectMany('x => x.nrs');</a>
+            <a onclick="_(this);">[1, 2, 3].count(function(x) { return x == 3; });</a>
+            <a onclick="_(this);">' Hello World '.trim();</a>
+            <a onclick="_(this);">'abc'.isLike('^...$');</a>
+            <a onclick="_(this);">String.ellipsis('hello world', 8);</a>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Result</legend>
+        <pre>Click on an example</pre>
+    </fieldset>
+</body>
+</html>

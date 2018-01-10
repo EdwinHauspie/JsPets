@@ -1,0 +1,34 @@
+.pager { position: relative; line-height: 24px; font-size: 12px; color: #555; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+
+.pager .pages { display: inline-block; margin: 0; padding: 0; }
+.pager .pages li { display: inline-block; margin: 0; padding: 0; list-style: none; }
+.pager .pages li.page {cursor: pointer;width: 28px;display: inline-block;text-align: center;background-color: white;border-radius: 5px;}
+.pager .pages li.ellipsis {width: 28px;display: inline-block;text-align: center;}
+.pager .pages li.page:hover { background-color: #eee; }
+.pager .pages li.page.active { background-color: #ddd; }
+
+.pager .page:hover,
+.pager .rwd:hover,
+.pager .prv:hover,
+.pager .nxt:hover,
+.pager .ffd:hover { background-color: #eee;border-radius: 5px; }
+
+.pager .prv,
+.pager .nxt,
+.pager .rwd,
+.pager .ffd {display: inline-block;cursor: pointer;text-align: center;margin-right: 3px;background-color: white;width: 27px;color: #777;}
+
+.pager .nxt { margin-left: 3px; }
+
+.pager .status { width: 50px; text-align: center; display: none; }
+
+/*No arrow on dropdowns IE9+, FF, Chr*/
+.pager select { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+.pager select::-ms-expand { display: none; }
+
+.pager select {vertical-align: bottom;border: 0;display: inline-block;height: 26px;outline: none;font: inherit;color: inherit;cursor: pointer;background-color: white;}
+.pager select:hover, .pager select:focus {background-color: #eee;border-radius:5px;}
+
+.pager .disabled { cursor: default !important; color: #ddd; border-color: #ddd; }
+.pager .disabled:hover,
+.pager .disabled:focus { background-color: white; }

@@ -1,0 +1,110 @@
+.jCombo {
+    font: 13px Verdana, sans-serif;
+    display: inline-block;
+    position: relative;
+    line-height: 23px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: black;
+    vertical-align: middle;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    width: 130px;
+}
+.jCombo .toggle {
+    overflow: hidden;
+    position: relative;
+    border-radius: 2px;
+    background-color: #fff;
+    border: 1px solid #8fb9d0;
+    width: 100%;
+}
+.jCombo.open {
+    outline: none;
+}
+.jCombo.open .toggle {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.jCombo .text {
+    padding: 0 35px 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.jCombo .arrow {
+    display: block;
+    position: absolute;
+    right: 0;
+    font-size: 10px;
+    width: 24px;
+    text-align: center;
+    background: -webkit-linear-gradient(top, #f2f9fe 0%, #d6f0fd 100%);
+    background: linear-gradient(to bottom, #f2f9fe 0%, #d6f0fd 100%);
+    border-left: 1px solid #8fb9d0;
+    color: #8FB9D0;
+}
+.jCombo .arrow {
+    font-size: 10px;
+
+}
+.jCombo .toggle:hover .arrow {
+    color: #6B94AB;
+}
+.jCombo .options {
+    display: none;
+    background: #fff;
+    position: absolute;
+    border: 1px solid #8FB9D0;
+    color: black;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0;
+    width: 100%;
+    max-height: 230px;
+    overflow-y: auto;
+}
+.jCombo.open .options {
+    display: inline-block;
+}
+.jCombo .options ul {
+    margin: 0;
+    padding: 0;
+}
+.jCombo .options li {
+    padding: 0 10px;
+    list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.jCombo .options li.hover {
+    background: #ECECEC;
+}
+.jCombo .options li.current {
+    background: #8FB9D0;
+    color: #FFF;
+}
+.jCombo .options li.disabled {
+    background: none;
+    cursor: default;
+    color: #ddd;
+}
+.jCombo .options li.optgroup {
+    font-weight: bold;
+    color: #000;
+}
+.jCombo .options li.hidden {
+    display: none;
+}
+.jCombo .options::-webkit-scrollbar {
+    width: 10px;
+    background-color: #efefef;
+}
+.jCombo .options::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+}

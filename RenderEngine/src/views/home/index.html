@@ -1,0 +1,23 @@
+<h1>Home</h1>
+
+
+
+
+
+<h3>If else</h3>
+
+<div id="number" data-style="color:{{ number%2==0 ? 'green' : 'red' }}">
+    <span if="number %2 == 0">{{ number }} is an <b>even</b> number</span>
+    <span else>{{ number }} is an <b>odd</b> number</span>
+</div>
+
+<a href="#" data-click="refreshNumber" data-prevent>Refresh number</a>
+
+
+
+
+
+<h3>Inline functions</h3>
+
+<a href="#" data-click="alert('The current number is ' + number)" data-prevent>Click me</a>
+<br><a href="#" data-click="function(sender) { sender.innerHTML += '!!!' }" data-prevent>Click me</a>

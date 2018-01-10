@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jBox &ndash; jQuery extension</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./jquery.jbox.material.css"/>
+	<style>
+        label, select { font-family: monospace; font-size: 12px; margin-left: 10px; }
+        body { font-family: Verdana; font-size: 13px; line-height: 28px; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="./jquery.jbox.js"></script>
+    <script>
+        $(function () {
+            $('[type=checkbox], [type=radio]').jBox();
+        });
+    </script>
+</head>
+
+<body>
+    <h1>jBox &ndash; jQuery extension</h1>
+    
+    <select autocomplete="off" onchange="$('[rel=stylesheet]').attr('href', './jquery.jbox.' + $(this).val() + '.css');">
+        <option value="material">Material Design</option>
+        <option value="demo2">Example style sheet 2</option>
+        <option value="demo3">Example style sheet 3</option>
+    </select>
+
+    <h4>Styled checkboxes</h4>
+
+    <label><input type="checkbox" /> <span class="state">Check 1</span></label><br/>
+    <label><input type="checkbox" checked="checked" /> <span class="state">Check 2</span></label><br/>
+    <label><input type="checkbox" disabled="disabled" checked="checked" /> <span class="state">Check 3 (disabled)</span></label>
+    
+    <h4>Styled radio group buttons</h4>
+    
+    <label><input name="test" type="radio" /> <span class="state">Radio 1</span></label><br/>
+    <label><input name="test" type="radio" /> <span class="state">Radio 2</span></label><br/>
+    <label><input name="test" type="radio" disabled="disabled" checked="checked" /> <span class="state">Radio 3 (disabled)</span></label><br/>
+
+    <h4>Notes</h4>
+    <ul>
+        <li>The original input element is hidden with a negative margin for compatibility.<!--<br/>Form elements with style "<i>display:none;</i>" do not submit in Internet Explorer 8.--></li>
+        <li>All elements are placed within a label to let the browser handle the click event.</li>
+    </ul>
+</body>
+</html>

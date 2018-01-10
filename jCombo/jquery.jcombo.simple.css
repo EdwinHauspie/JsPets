@@ -1,0 +1,89 @@
+.jCombo {
+    font: 13px Verdana, sans-serif;
+    display: inline-block;
+    position: relative;
+    line-height: 21px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    width: 110px;
+}
+.jCombo .toggle {
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #AAAAAA;
+    width: 100%;
+}
+.jCombo.open {
+    outline: none;
+}
+.jCombo .text {
+    padding: 0 20px 0 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.jCombo .arrow {
+    display: block;
+    position: absolute;
+    right: 5px;
+    font-size: 10px;
+    color: #444;
+}
+.jCombo .options {
+    display: none;
+    background: #fff;
+    position: absolute;
+    border: 1px solid #AAAAAA;
+    color: black;
+    border-top: 0;
+    width: 100%;
+    max-height: 105px;
+    overflow-y: auto;
+}
+.jCombo.open .options {
+    display: inline-block;
+}
+.jCombo .options ul {
+    margin: 0;
+    padding: 0;
+}
+.jCombo .options li {
+    padding: 0 5px;
+    list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.jCombo .options li.hover {
+    background: #E0E0E0;
+}
+.jCombo .options li.current {
+    background: #3399ff;
+    color: #fff;
+}
+.jCombo .options li.disabled {
+    background: none;
+    cursor: default;
+    color: #ddd;
+}
+.jCombo .options li.optgroup {
+    font-weight: bold;
+    color: #000;
+}
+.jCombo .options li.hidden {
+    display: none;
+}
+.jCombo .options::-webkit-scrollbar {
+    width: 10px;
+    background-color: #FFF;
+}
+.jCombo .options::-webkit-scrollbar-thumb {
+    background-color: #AAA;
+    border: 3px solid rgb(255, 255, 255);
+}

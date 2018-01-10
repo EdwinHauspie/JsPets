@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cooltips &ndash; jQuery extension</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="./jquery.cooltips.js"></script>
+    <link rel="stylesheet" href="./css/cooltips.css"/>
+    <link rel="disabled" href="./css/facebook.css"/>
+    <style>
+        body { font-family: sans-serif; font-size: 13px; padding: 10px 25px; margin: 0;}
+        h2 { color: #4CB3E8; }
+        li { line-height: 30px; }
+        img { vertical-align: bottom; margin: 2px 0; }
+        [data-cooltip], [data-sticky-cooltip] { color: #FFF; cursor: default; background-color: #efb719; border-radius: 10px; width: 20px; height: 20px; display: inline-block; line-height: 20px; text-align: center; font-weight: bold; font-size: 12px; transform: rotate(90deg); margin: 0 20px; }
+        [data-sticky-cooltip] { cursor: pointer; }
+        pre, .pre { font-family: "Courier New"; margin: 0; padding: 0; }
+        td { padding: 5px 10px 5px 0; }
+    </style>
+</head>
+
+<body>
+    <h1>Cooltips &ndash; jQuery extension</h1>
+
+    <h2>Requires</h2>
+    <ul>
+        <li>jQuery</li>
+        <li>jQuery UI</li>
+    </ul>
+
+    <h2>Usage</h2>
+    <pre>&lt;div <b>data-cooltip="Hello world"</b>&gt;Hello&lt;/div&gt;</pre>
+
+    <h2>Demos</h2>
+    <table>
+        <tr>
+            <td>Default</td>
+            <td><span data-cooltip="Hello world">: )</span></td>
+            <td class="pre">data-cooltip="Hello world"</td>
+        </tr>
+        <tr>
+            <td>Html</td>
+            <td><span data-cooltip="&lt;b&gt;Bold text&lt;/b&gt;">: )</span></td>
+            <td class="pre">data-cooltip="&amp;lt;b&amp;gt;Bold text&amp;lt;/b&amp;gt;"</td>
+        </tr>
+        <tr>
+            <td>Element</td>
+            <td><span data-cooltip="#dog">: )</span></td>
+            <td class="pre">data-cooltip="#dog"</td>
+        </tr>
+        <tr>
+            <td>Function</td>
+            <td><span data-cooltip="function() { return navigator.userAgent; }">: )</span></td>
+            <td class="pre">data-cooltip="function() { return navigator.userAgent; }"</td>
+        </tr>
+        <tr>
+            <td>Sticky</td>
+            <td><span data-sticky-cooltip="#form">: )</span></td>
+            <td class="pre">data-<b>sticky</b>-cooltip="#form"</td>
+        </tr>
+    </table>
+
+    <h2>Style</h2>
+    <label><input name="cooltipStyle" type="radio" onclick="$('[href=\'./css/facebook.css\']').attr('rel', 'disabled');" checked="checked" /> Demo</label>
+    <label><input name="cooltipStyle" type="radio" onclick="$('[href=\'./css/facebook.css\']').attr('rel', 'stylesheet');" /> Facebook</label>
+    <script>$(function() { $('[name=cooltipStyle]').first().prop('checked', true); });</script>
+
+    <div id="dog" style="display:none;">
+        <img height="100" width="100" src="./dog.jpg" alt="Dog" /><br>
+        <small>Fig 1 &ndash; Cool dog</small>
+    </div>
+    
+    <div id="form" style="display:none;">
+        <label><input type="radio" name="blabla" /> Option 1</label><br>
+        <label><input type="radio" name="blabla" /> Option 2</label>
+    </div>
+</body>
+</html>

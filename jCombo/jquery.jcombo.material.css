@@ -1,0 +1,85 @@
+.jCombo {
+    font: 16px Verdana, sans-serif;
+    display: inline-block;
+    position: relative;
+    line-height: 22px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 200px;
+}
+.jCombo .toggle {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.jCombo.open {
+    outline: none;
+}
+.jCombo .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 14px 16px;
+}
+.jCombo .arrow {
+    display: none;
+}
+.jCombo .options {
+    display: none;
+    background: #fff;
+    position: absolute;
+    color: black;
+    width: 250px;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.239216) 0px 1px 4px;
+}
+.jCombo.open .options {
+    display: inline-block;
+    -webkit-animation: mymove .5s;
+    animation: mymove .5s;
+}
+@-webkit-keyframes mymove { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes mymove { 0% { opacity: 0; } 100% { opacity: 1; } }
+.jCombo .options ul {
+    margin: 0;
+    padding: 0;
+}
+.jCombo .options li {
+    list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #26a69a;
+    padding: 14px 16px;
+}
+.jCombo .options li.hover {
+    background: #F2F2F2;
+}
+.jCombo .options li.current {
+    background: #EDEDED;
+}
+.jCombo .options li.disabled {
+    background: none;
+    cursor: default;
+    color: #ddd;
+}
+.jCombo .options li.optgroup {
+    font-weight: bold;
+    color: #555;
+}
+.jCombo .options li.hidden {
+    display: none !important;
+}
+.jCombo .options::-webkit-scrollbar {
+    width: 10px;
+    background-color: #EFEFEF;
+}
+.jCombo .options::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+}
