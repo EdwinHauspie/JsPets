@@ -22,7 +22,7 @@
         },
         on: function (eventName, handler) {
             if (this.length) {
-                if (w.document.attachEvent) this[0].attachEvent('on' + eventName, handler)
+                if (window.document.attachEvent) this[0].attachEvent('on' + eventName, handler)
                 else this[0].addEventListener(eventName, handler)
             }
             return this
