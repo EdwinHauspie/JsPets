@@ -1,3 +1,12 @@
+import Navigo from './core/navigo'
+import './core/q.js'
+import './core/little-engine.js'
+
+import HomeController from './controllers/home'
+import ContactController from './controllers/contact'
+
+import './index.css'
+
 (function (appConfig) {
     //————————//
     // Router //
@@ -8,10 +17,11 @@
     let router = new Navigo(null, true) /*root, useHash*/
 
     let controllers = {}
+    let C = { 'HomeController': HomeController, 'ContactController': ContactController}
 
     let execute = function (controllerName, actionName, routeParams) {
         //Create controller if necessary
-        controllers[controllerName] = controllers[controllerName] || new window[controllerName]({ router, ...appConfig })
+        controllers[controllerName] = controllers[controllerName] || new C[controllerName]({ router, ...appConfig })
 
         //Execute view
         controllers[controllerName].execute(actionName, routeParams || {})

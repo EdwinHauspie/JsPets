@@ -1,3 +1,5 @@
+import BaseController from './_base'
+
 class ContactController extends BaseController {
     constructor(controllerConfig) {
         super(controllerConfig, 'contact')
@@ -11,3 +13,5 @@ class ContactController extends BaseController {
         super.render('index')
     }
 }
+
+export default ContactController

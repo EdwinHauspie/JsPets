@@ -1,3 +1,5 @@
+import BaseController from './_base'
+
 class HomeController extends BaseController {
     constructor(controllerConfig) {
         super(controllerConfig, 'home')
@@ -41,3 +43,5 @@ class HomeController extends BaseController {
         Q('input').focus()
     }
 }
+
+export default HomeController
