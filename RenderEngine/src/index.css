@@ -1,8 +1,0 @@
-body { margin: 0; padding: 0; line-height: 26px; font-family: 'Merriweather', serif; text-align: center; }
-ul { list-style: none; margin: 0; padding: 0; }
-a { color: dodgerblue }
-
-.js-menu { padding: 7px; background-color: black; }
-.js-menu a {  margin: 0 10px; color: white; text-decoration: none; text-transform: uppercase; }
-.js-menu a.active { font-weight: bold; border-bottom: 3px solid dodgerblue }
-.js-body { transition: all .2s }

@@ -1,4 +1,4 @@
-import LittleEngine from '../core/little-engine'
+import LittleEngine from '../little-engine'
 
 class BaseController {
     constructor(controllerConfig, name) {

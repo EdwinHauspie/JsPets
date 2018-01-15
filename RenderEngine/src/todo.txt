@@ -1,3 +1,0 @@
-- gedeeltelijk updaten van de DOM
-- afwerken webpack en co
-- field input event werkt niet in IE9

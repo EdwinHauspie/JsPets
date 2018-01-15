@@ -1,102 +1,102 @@
-import Navigo from './core/navigo'
-import $ from './core/$'
-import LittleEngine from './core/little-engine'
-import HomeController from './controllers/home'
-import ContactController from './controllers/contact'
-import './index.css'
+import Navigo from 'navigo'
+import eQuery from './js/eQuery'
+import LittleEngine from './js/little-engine'
+import HomeController from './js/controllers/home'
+import ContactController from './js/controllers/contact'
+import './css/index.css'
 
-(function (appConfig) {
-    window.$ = $
+window.$ = eQuery
 
-    //————————//
-    // Router //
-    //————————//
-
-    Navigo.prototype.url = Navigo.prototype.generate
-    Navigo.prototype.go = function (routeName, routeParams) { this.navigate(this.url(routeName, routeParams)) }
-    let router = new Navigo(null, true) /*root, useHash*/
-
-    let controllers = {}
-    let controllerClasses = { HomeController, ContactController}
-
-    let execute = function (controllerName, actionName, routeParams) {
-        //Create controller if necessary
-        controllers[controllerName] = controllers[controllerName] || new controllerClasses[controllerName]({ router, ...appConfig })
-
-        //Execute view
-        controllers[controllerName].execute(actionName, routeParams || {})
-    }
-
-    router.notFound(function (routeParams) { router.go('home') })
-
-    router.on(function (routeParams) { execute('HomeController', 'index', routeParams) }) //Root route
-    router.on({
-        '/home': { as: 'home', uses: function (routeParams) { execute('HomeController', 'index', routeParams) } },
-        '/about': { as: 'about', uses: function (routeParams) { execute('HomeController', 'about', routeParams) } },
-        '/contact': { as: 'contact', uses: function (routeParams) { execute('ContactController', 'index', routeParams) } },
-    })
-
-    router.hooks({
-        before: function (done, routeParams) {
-            let lastRoute = (router.lastRouteResolved() || {}).name || 'home'
-            $('a.active', '.js-menu').removeClass('active')
-            $(`[data-route="${lastRoute}"]`, '.js-menu').addClass('active')
-            done()
-        }
-    })
-
-    //——————//
-    // Menu //
-    //——————//
-
-    let menu = $('.js-menu')
-    let menuRenderer = LittleEngine.createRenderer(menu.html())
-    menu.html(LittleEngine.render(menuRenderer, { pages: router._routes.map(r => r.name), router }))
-
-    router.resolve()
-
-    //————————//
-    // Events //
-    //————————//
-
-    let events = ['click', 'keyup', 'keydown', 'change', 'input']
-
-    events.forEach(x => $(document).on(x, e => {
-        let target = e.target || e.srcElement //IE10
-
-        let prevent = target.matches('[data-prevent]')
-
-        if (prevent && e.preventDefault)
-            e.preventDefault()
-
-        let eventType = null
-
-        if (e.type === 'click' && target.matches(`[data-click]`)) eventType = 'click'
-        else if (e.type === 'change' && target.matches(`[data-change]`)) eventType = 'change'
-        else if (e.type === 'input' && target.matches(`[data-input]`)) eventType = 'input'
-        else if (e.type === 'keydown' && e.which === 32 && target.matches(`[data-space]`)) eventType = 'space'
-        else if (e.type === 'keydown' && e.which === 13 && target.matches(`[data-enter]`)) eventType = 'enter'
-        else if (e.type === 'keyup' && target.matches(`[data-keyup]`)) eventType = 'keyup'
-
-        if (!eventType) return !prevent
-
-        let func = (target.getAttribute('data-' + eventType) || '').trim()
-        if (!func) return!prevent
-
-        try {
-            let model = target.closest('[data-view]').viewModel
-            if (model && model[func]) model[func](target, e)
-            else if (func.indexOf('function') === 0 || func.match(/=>/g)) (new Function('sender, e', '(' + func + ')(sender, e)')).apply(model, [target, e])
-            else (new Function('sender, e', 'with (this) {' + func + '}')).apply(model, [target, e])
-        }
-        catch (e) {
-            throw Error('Function not found or contains errors: ' + func + '\r\n' + e.message)
-        }
-
-        return !prevent
-    }))
-})({
+let appConfig = {
     buildStamp: 123456789,
     api: 'api.demo.com'
     //...
+}
+
+//————————//
+// Router //
+//————————//
+
+Navigo.prototype.url = Navigo.prototype.generate
+Navigo.prototype.go = function (routeName, routeParams) { this.navigate(this.url(routeName, routeParams)) }
+let router = new Navigo(null, true) /*root, useHash*/
+
+let controllers = {}
+let controllerClasses = { HomeController, ContactController }
+
+let execute = function (controllerName, actionName, routeParams) {
+    //Create controller if necessary
+    controllers[controllerName] = controllers[controllerName] || new controllerClasses[controllerName]({ router, ...appConfig })
+
+    //Execute view
+    controllers[controllerName].execute(actionName, routeParams || {})
+}
+
+router.notFound(function (routeParams) { router.go('home') })
+
+router.on(function (routeParams) { execute('HomeController', 'index', routeParams) }) //Root route
+router.on({
+    '/home': { as: 'home', uses: function (routeParams) { execute('HomeController', 'index', routeParams) } },
+    '/about': { as: 'about', uses: function (routeParams) { execute('HomeController', 'about', routeParams) } },
+    '/contact': { as: 'contact', uses: function (routeParams) { execute('ContactController', 'index', routeParams) } },
 })
+
+router.hooks({
+    before: function (done, routeParams) {
+        let lastRoute = (router.lastRouteResolved() || {}).name || 'home'
+        $('a.active', '.js-menu').removeClass('active')
+        $(`[data-route="${lastRoute}"]`, '.js-menu').addClass('active')
+        done()
+    }
+})
+
+//——————//
+// Menu //
+//——————//
+
+let menu = $('.js-menu')
+let menuRenderer = LittleEngine.createRenderer(menu.html())
+menu.html(LittleEngine.render(menuRenderer, { pages: router._routes.map(r => r.name), router }))
+
+router.resolve()
+
+//————————//
+// Events //
+//————————//
+
+let events = ['click', 'keyup', 'keydown', 'change', 'input']
+
+events.forEach(x => $(document).on(x, e => {
+    let target = e.target || e.srcElement
+    let prevent = target.matches('[data-prevent]')
+    let which = e.which | e.keyCode
+
+    if (prevent && e.preventDefault)
+        e.preventDefault()
+
+    let eventType = null
+
+    if (e.type === 'click' && target.matches(`[data-click]`)) eventType = 'click'
+    else if (e.type === 'change' && target.matches(`[data-change]`)) eventType = 'change'
+    else if (e.type === 'input' && target.matches(`[data-input]`)) eventType = 'input'
+    else if (e.type === 'keydown' && which === 32 && target.matches(`[data-space]`)) eventType = 'space'
+    else if (e.type === 'keydown' && which === 13 && target.matches(`[data-enter]`)) eventType = 'enter'
+    else if (e.type === 'keyup' && target.matches(`[data-keyup]`)) eventType = 'keyup'
+
+    if (!eventType) return !prevent
+
+    let func = (target.getAttribute('data-' + eventType) || '').trim()
+    if (!func) return !prevent
+
+    try {
+        let model = target.closest('[data-view]').viewModel
+        if (model && model[func]) model[func](target, e)
+        else if (func.indexOf('function') === 0 || func.match(/=>/g)) (new Function('sender, e', '(' + func + ')(sender, e)')).apply(model, [target, e])
+        else (new Function('sender, e', 'with (this) {' + func + '}')).apply(model, [target, e])
+    }
+    catch (e) {
+        throw Error('Function not found or contains errors: ' + func + '\r\n' + e.message)
+    }
+
+    return !prevent
+}))

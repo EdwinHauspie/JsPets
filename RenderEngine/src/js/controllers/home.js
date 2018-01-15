@@ -3,7 +3,7 @@ import BaseController from './_base'
 class HomeController extends BaseController {
     constructor(controllerConfig) {
         super(controllerConfig, 'home')
-        BaseController.call(this, controllerConfig, 'home') ///////
+        BaseController.call(this, controllerConfig, 'home') ///////IE10 fix
 
         let root = this
 

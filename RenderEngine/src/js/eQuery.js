@@ -51,7 +51,7 @@ const funcs = {
     }
 }
 
-const $ = function (selector, ctx) {
+const eQuery = function (selector, ctx) {
     let results = []
 
     if (selector.nodeType) results.push(selector)
@@ -66,7 +66,7 @@ const $ = function (selector, ctx) {
     return results
 }
 
-$.get = viewUrl => fetch(viewUrl).then(r => r.status !== 200 ? `${r.status} ${r.statusText} ${viewUrl}` : r.text())
+eQuery.get = viewUrl => fetch(viewUrl).then(r => r.status !== 200 ? `${r.status} ${r.statusText} ${viewUrl}` : r.text())
 
-//export default $
-module.exports = $
+//export default eQuery
+module.exports = eQuery

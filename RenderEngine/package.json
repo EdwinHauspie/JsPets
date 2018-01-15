@@ -4,11 +4,13 @@
   "description": "",
   "main": "",
   "scripts": {
-    "build": "webpack"
+    "dev": "webpack && http-server -s -o -c-1"
   },
   "author": "Edwin Hauspie",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "navigo": "^7.0.0"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

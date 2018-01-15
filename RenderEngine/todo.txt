@@ -1,0 +1,2 @@
+- gedeeltelijk updaten van de DOM
+- afwerken webpack en co
