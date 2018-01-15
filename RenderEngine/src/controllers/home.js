@@ -3,6 +3,7 @@ import BaseController from './_base'
 class HomeController extends BaseController {
     constructor(controllerConfig) {
         super(controllerConfig, 'home')
+        BaseController.call(this, controllerConfig, 'home') ///////
 
         let root = this
 
@@ -40,7 +41,7 @@ class HomeController extends BaseController {
 
     about(routeParams) {
         super.render('about')
-        Q('input').focus()
+        $('input').focus()
     }
 }
 

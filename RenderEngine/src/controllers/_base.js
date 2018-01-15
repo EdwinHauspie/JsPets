@@ -1,3 +1,5 @@
+import LittleEngine from '../core/little-engine'
+
 class BaseController {
     constructor(controllerConfig, name) {
         this.config = controllerConfig
@@ -10,7 +12,7 @@ class BaseController {
         if (!this[actionName]) throw Error(`Action "${actionName}" not found in controller "${this.name}". Check controller or router config.`)
 
         //Koppelen van model aan DOM element voor event handlers
-        Q('.js-body')[0].viewModel = this.models[actionName]
+        $('.js-body')[0].viewModel = this.models[actionName]
 
         //Uitvoeren van action als de view reeds bestaat
         if (this.views[actionName]) {
@@ -21,7 +23,7 @@ class BaseController {
         let toCamelCase = x => x.toLowerCase().replace(/-([a-zA-Z])/g, g => g[1].toUpperCase())
 
         //Ophalen van de view
-        return Q.get(`./views/${this.name}/${actionName}.html`)
+        return $.get(`./views/${this.name}/${actionName}.html`)
             .then(html => {
                 //Correct self closing custom tags
                 //<my-tag /> is invalid html - it must be <my-tag></my-tag>
@@ -33,9 +35,9 @@ class BaseController {
 
                 //https://w3c.github.io/webcomponents/spec/custom/#valid-custom-element-name
                 var VALID_CUSTOM_ELEMENT_NAME_REGEX = /^(?!(?:annotation-xml|color-profile|font-face|font-face(?:-(?:src|uri|format|name))?|missing-glyph)$)[a-z][a-z.0-9_\xb7\xc0-\xd6\xd8-\xf6\xf8-\u037d\u200C\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uDFFF\uF900-\uFDCF\uFDF0-\uFFFD]*-[\-a-z.0-9_\xb7\xc0-\xd6\xd8-\xf6\xf8-\u037d\u200C\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uDFFF\uF900-\uFDCF\uFDF0-\uFFFD]*$/;
-                let customTags = Q('*', vDom).filter(x => x.constructor === HTMLUnknownElement || x.constructor === HTMLElement && VALID_CUSTOM_ELEMENT_NAME_REGEX.test(x.localName))
+                let customTags = $('*', vDom).filter(x => x.constructor === HTMLUnknownElement || x.constructor === HTMLElement && VALID_CUSTOM_ELEMENT_NAME_REGEX.test(x.localName))
                 let partials = customTags.reduce((agg, x) => { agg[x.tagName] = null; return agg }, {})
-                let gets = Object.keys(partials).map(p => Q.get(`./views/_partials/${toCamelCase(p)}.html`).then(partialHtml => partials[p] = partialHtml))
+                let gets = Object.keys(partials).map(p => $.get(`./views/_partials/${toCamelCase(p)}.html`).then(partialHtml => partials[p] = partialHtml))
 
                 return Promise.all(gets).then(() => {
                     customTags.forEach(x => x.outerHTML = partials[x.tagName])
@@ -55,15 +57,15 @@ class BaseController {
         let html = LittleEngine.render(this.views[actionName], this.models[actionName])
 
         if (!idSelector || idSelector.indexOf('#') !== 0) {
-            Q('.js-body').html(html)
+            $('.js-body').html(html)
             return
         }
 
         let vDom = document.createElement('div')
         vDom.innerHTML = html
 
-        var newPart = Q(idSelector, vDom)
-        var oldPart = Q(idSelector)
+        var newPart = $(idSelector, vDom)
+        var oldPart = $(idSelector)
 
         if (newPart.length && oldPart.length) {
             oldPart.replaceWith(newPart)
