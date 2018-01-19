@@ -1,3 +1,3 @@
 - gedeeltelijk updaten van de DOM
 - partials
-- afwerken webpack en co, hot dev server
+- html views include met import ... zal ook beter zijn voor hot dev server
