@@ -11,5 +11,20 @@
 
 <h3>Inline functions</h3>
 
-<a href="#" data-click="alert('The current number is ' + number)" data-prevent>Click me</a>
-<br><a href="#" data-click="function(sender) { sender.innerHTML += '!!!' }" data-prevent>Click me</a>
+<ul>
+    <li>
+        <a href="#" data-click="function(vm, e) { this.innerHTML = 'The current number is ' + vm.number }" data-prevent>
+            Function
+        </a>
+    </li>
+    <li>
+        <a href="#" data-click="vm => this.innerHTML = 'The current number is ' + vm.number" data-prevent>
+            Arrow function
+        </a>
+    </li>
+    <li>
+        <a href="#" data-click="this.innerHTML = 'The current number is ' + $(this).closest('[data-view]').viewModel.number" data-prevent>
+            Function body only
+        </a>
+    </li>
+</ul>

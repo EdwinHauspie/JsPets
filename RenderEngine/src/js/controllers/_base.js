@@ -12,7 +12,7 @@ class BaseController {
         if (!this[actionName]) throw Error(`Action "${actionName}" not found in controller "${this.name}". Check controller or router config.`)
 
         //Koppelen van model aan DOM element voor event handlers
-        $('.js-body')[0].viewModel = this.models[actionName]
+        $('.js-main')[0].viewModel = this.models[actionName]
 
         //Uitvoeren van action als de view reeds bestaat
         if (this.views[actionName]) {
@@ -57,7 +57,7 @@ class BaseController {
         let html = LittleEngine.render(this.views[actionName], this.models[actionName])
 
         if (!idSelector || idSelector.indexOf('#') !== 0) {
-            $('.js-body').html(html)
+            $('.js-main').html(html)
             return
         }
 

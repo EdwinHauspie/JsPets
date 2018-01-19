@@ -90,9 +90,13 @@ events.forEach(x => $(document).on(x, e => {
 
     try {
         let model = target.closest('[data-view]').viewModel
+
         if (model && model[func]) model[func](target, e)
-        else if (func.indexOf('function') === 0 || func.match(/=>/g)) (new Function('sender, e', '(' + func + ')(sender, e)')).apply(model, [target, e])
-        else (new Function('sender, e', 'with (this) {' + func + '}')).apply(model, [target, e])
+        else {
+            if (func.indexOf('function') === 0) (new Function('model, e', '(' + func + ').apply(this, [model, e])')).apply(target, [model, e])
+            else if (func.match(/=>/g)) (new Function(func.split('=>')[0].replace(/^\s*\(/, '').replace(/\)\s*$/, ''), func.split('=>')[1])).apply(target, [model, e])
+            else (new Function('', func)).apply(target)
+        }
     }
     catch (e) {
         throw Error('Function not found or contains errors: ' + func + '\r\n' + e.message)
