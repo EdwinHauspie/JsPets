@@ -48,6 +48,11 @@ const funcs = {
             return this
         }
         return this[0].getAttribute(attrName)
+    },
+    toArray: function() {
+        let output = []
+        for (let i = 0; i < this.length; i++) output.push(this[0])
+        return output
     }
 }
 

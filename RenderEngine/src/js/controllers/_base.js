@@ -27,22 +27,24 @@ class BaseController {
             .then(html => {
                 //Correct self closing custom tags
                 //<my-tag /> is invalid html - it must be <my-tag></my-tag>
-                html = html.replace(/<([-a-zA-Z]+)\s?\/>/gi, '<$1></$1>')
+                html = html.replace(/<([a-zA-Z]+-[a-zA-Z]+)\s?\/>/gi, '<$1></$1>')
 
                 //Get partials
                 let vDom = document.createElement('div')
                 vDom.innerHTML = html
 
-                //https://w3c.github.io/webcomponents/spec/custom/#valid-custom-element-name
-                var VALID_CUSTOM_ELEMENT_NAME_REGEX = /^(?!(?:annotation-xml|color-profile|font-face|font-face(?:-(?:src|uri|format|name))?|missing-glyph)$)[a-z][a-z.0-9_\xb7\xc0-\xd6\xd8-\xf6\xf8-\u037d\u200C\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uDFFF\uF900-\uFDCF\uFDF0-\uFFFD]*-[\-a-z.0-9_\xb7\xc0-\xd6\xd8-\xf6\xf8-\u037d\u200C\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uDFFF\uF900-\uFDCF\uFDF0-\uFFFD]*$/;
-                let customTags = $('*', vDom).filter(x => x.constructor === HTMLUnknownElement || x.constructor === HTMLElement && VALID_CUSTOM_ELEMENT_NAME_REGEX.test(x.localName))
-                let partials = customTags.reduce((agg, x) => { agg[x.tagName] = null; return agg }, {})
-                let gets = Object.keys(partials).map(p => $.get(`./views/_partials/${toCamelCase(p)}.html`).then(partialHtml => partials[p] = partialHtml))
+                //let partialElements = $('partial', vDom).toArray()
+                //let partials = {}
+                //partialElements.forEach(x => partials[x.getAttribute('name')] = '')
+                //let partialHtmls = {}
+                //let gets = Object.keys(partials).map(p => $.get(`./views/_partials/${toCamelCase(p)}.html`).then(html => partials[p] = html))
 
-                return Promise.all(gets).then(() => {
-                    customTags.forEach(x => x.outerHTML = partials[x.tagName])
+                //return Promise.all(gets).then(() => {
+                    //; console.log(partials);
+                    //; console.log(partialElements);
+                    //partialElements.forEach(x => x.outerHTML = partials[x.getAttribute('name')])
                     return vDom.innerHTML
-                })
+                //})
             })
             .then(html => {
                 //Bewaren van view

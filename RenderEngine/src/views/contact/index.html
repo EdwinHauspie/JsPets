@@ -1,9 +1,20 @@
 <h1>Contact</h1>
 
-<h3>Nested loops with partial</h3>
+<h3>Nested loop</h3>
 
-<div for="item1 in [1, 2, 3]">
-    <span for="item2 in ['a', 'b', 'c']">
-        <my-partial />
-    </span>
-</div>
+<ul>
+    <li for="item1 in [1, 2, 3]">
+        {{item1}}
+        <ul>
+            <li for="item2 in ['a', 'b', 'c']">
+                {{item2}}
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<h3>Partial</h3>
+
+Todo
+<!--partial name="title" data-view="{ }"></partial>
+<partial name="title" data-view="{ }"></partial-->
