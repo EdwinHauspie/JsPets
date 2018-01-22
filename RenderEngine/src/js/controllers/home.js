@@ -16,7 +16,7 @@ class HomeController extends BaseController {
 
         this.models.index = {
             ...controllerConfig,
-            number: 123,
+            number: getRandom(1, 1000),
             refreshNumber: function () {
                 this.number = getRandom(1, 1000)
                 root.render('index', '#number')
