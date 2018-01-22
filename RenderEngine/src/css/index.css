@@ -1,6 +1,6 @@
 body { margin: 0; padding: 0; line-height: 26px; font-family: 'Work Sans', sans-serif; }
 
-ul { list-style: square; margin: 0; padding-left: 20px; }
+ul { list-style: square; list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAhUlEQVQoU2NkIBIwwtTdNNn6H8RWP+ONVQwsCFIkl6sP1vNo8kWwYnQxsML/tjfApoHAjxQeBo45X+A0TByikPUkXCGI/61PgoGr6AWK6+Hu+aB0GEUxsiqBe7aMcIUgids6EA8hA9UrEM+hKAQJ7DWeD1fsfDYRLo+hEKYYWRFWE3GFPwB+pTOrwX4M1AAAAABJRU5ErkJggg=='); margin: 0; padding-left: 20px; }
 
 a { color: dodgerblue; text-decoration: none; border-bottom: 1px dotted rgba(30, 144, 255, 0.38823529411764707); }
 
