@@ -18,7 +18,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 use: 'babel-loader',
-                include: [resolve('src')]
+                //include: [resolve('src')]
             },
             {
                 test: /\.css$/,
@@ -38,5 +38,6 @@ module.exports = {
     ],
     devServer: {
         //contentBase: './dist'
+        historyApiFallback: true
     }
 }

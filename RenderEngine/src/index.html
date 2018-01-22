@@ -10,7 +10,9 @@
 
 <body>
     <div class="js-menu menu" data-view>
-        <a for="page in pages" href="{{router.url(page)}}" data-route="{{page}}">{{ page }}</a>
+        <a for="p in pages" href="{{router.generate(p)}}" data-route="{{p}}" data-click="vm => vm.go('{{p}}')" data-prevent>
+            {{ p }}
+        </a>
     </div>
 
     <div class="js-main main" data-view></div>

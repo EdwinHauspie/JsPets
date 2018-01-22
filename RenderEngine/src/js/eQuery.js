@@ -16,6 +16,14 @@ const funcs = {
     focus: function () {
         if (this.length) this[0].focus()
     },
+    hide: function() {
+        this.forEach(x => x.style.display = 'none')
+        return this
+    },
+    show: function() {
+        this.forEach(x => x.style.display = '')
+        return this
+    },
     closest: function (selector) {
         return this.length ? this[0].closest(selector) : w.$([])
     },

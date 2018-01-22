@@ -17,9 +17,8 @@ let appConfig = {
 // Router //
 //————————//
 
-Navigo.prototype.url = Navigo.prototype.generate
-Navigo.prototype.go = function (routeName, routeParams) { this.navigate(this.url(routeName, routeParams)) }
-let router = new Navigo(null, true) /*root, useHash*/
+Navigo.prototype.go = function (routeName, routeParams) { this.navigate(this.generate(routeName, routeParams)) }
+let router = new Navigo(null, false) /*root, useHash*/
 
 let controllers = {}
 let controllerClasses = { HomeController, ContactController }
@@ -43,8 +42,14 @@ router.on({
 
 router.hooks({
     before: function (done, routeParams) {
+        $('.js-main').hide()[0].style.opacity = 0
+        setTimeout(function() {
+            $('.js-main').show()
+            setTimeout(function() { $('.js-main')[0].style.opacity = null }, 0)
+        }, 200)
+
         let lastRoute = (router.lastRouteResolved() || {}).name || 'home'
-        $('a.active', '.js-menu').removeClass('active')
+        $('a', '.js-menu').removeClass('active')
         $(`[data-route="${lastRoute}"]`, '.js-menu').addClass('active')
         done()
     }
@@ -54,9 +59,15 @@ router.hooks({
 // Menu //
 //——————//
 
-let menu = $('.js-menu')
-let menuRenderer = LittleEngine.createRenderer(menu.html())
-menu.html(LittleEngine.render(menuRenderer, { pages: router._routes.map(r => r.name), router }))
+let $menu = $('.js-menu')
+$menu[0].viewModel = {
+    go: page => router.go(page),
+    pages: router._routes.map(r => r.name),
+    router
+}
+let menuRenderer = LittleEngine.createRenderer($menu.html())
+let menuHtml = LittleEngine.render(menuRenderer, $menu[0].viewModel)
+$menu.html(menuHtml)
 
 router.resolve()
 
