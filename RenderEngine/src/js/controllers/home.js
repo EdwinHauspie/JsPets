@@ -12,14 +12,14 @@ class HomeController extends BaseController {
         //Note: in browsers without this issue, the constructor will get fired twice
         BaseController.call(this, controllerConfig, 'home')
 
-        let root = this
+        let self = this
 
         this.models.index = {
             ...controllerConfig,
             number: getRandom(1, 1000),
             refreshNumber: function () {
                 this.number = getRandom(1, 1000)
-                root.render('index', '#number')
+                self.render('index')
             }
         }
 
@@ -29,8 +29,8 @@ class HomeController extends BaseController {
             addName: function (sender, e) {
                 if (!sender.value.trim()) return
                 this.names.push(sender.value.trim())
-                root.render('about', '#names')
-                sender.value = ''
+                self.render('about')
+                $('input').focus()
             }
         }
     }

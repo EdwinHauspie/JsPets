@@ -79,7 +79,10 @@ const eQuery = function (selector, ctx) {
     return results
 }
 
-eQuery.get = viewUrl => fetch(viewUrl).then(r => r.status !== 200 ? `${r.status} ${r.statusText} ${viewUrl}` : r.text())
+//Ajax
+eQuery
+    .get = viewUrl => fetch(viewUrl)
+    .then(r => r.status !== 200 ? `${r.status} ${r.statusText} ${viewUrl}` : r.text())
 
 //export default eQuery
 module.exports = eQuery

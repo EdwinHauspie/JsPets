@@ -58,20 +58,21 @@ LittleEngine.createRenderer = function (html) {
 }
 
 LittleEngine.render = function (renderer, viewModel) {
-    var vDom = document.createElement('div')
-    vDom.innerHTML = renderer.apply(viewModel)
+    //var vDom = document.createElement('div')
+    //vDom.innerHTML = renderer.apply(viewModel)
 
     //Post process some attributes
-    var attrs = ['data-style']
+    /*var attrs = ['data-style']
     attrs.forEach(function (a) {
         var items = [].slice.call(vDom.querySelectorAll('[' + a + ']'))
         items.forEach(function (x) {
             x.setAttribute('style', x.getAttribute(a))
             x.removeAttribute(a)
         })
-    })
+    })*/
 
-    return vDom.innerHTML
+    //return vDom.innerHTML
+    return renderer.apply(viewModel)
 }
 
 export default LittleEngine
