@@ -42,12 +42,6 @@ router.on({
 
 router.hooks({
     before: function (done, routeParams) {
-        /*$('.js-main').hide()[0].style.opacity = 0
-        setTimeout(function() {
-            $('.js-main').show()
-            setTimeout(function() { $('.js-main')[0].style.opacity = null }, 0)
-        }, 200)*/
-
         let lastRoute = (router.lastRouteResolved() || {}).name || 'home'
         $('a', '.js-menu').removeClass('active')
         $(`[data-route="${lastRoute}"]`, '.js-menu').addClass('active')

@@ -3,18 +3,10 @@ import index from '../../views/contact/index.html'
 
 class ContactController extends BaseController {
     constructor(controllerConfig) {
-        super(controllerConfig, 'contact')
+        super(controllerConfig, { index })
 
         //IE10 fix: super not working correctly in constructor with babel
-        //Note: in browsers without this issue, the constructor will get fired twice
-        BaseController.call(this, controllerConfig, 'contact')
-
-        this.addViews({ index })
-
-        this.models.index = {
-            ...controllerConfig,
-            text: 'Brussels'
-        }
+        if (!this.views) BaseController.call(this, controllerConfig, { index })
     }
 
     index(routeParams) {

@@ -36,9 +36,9 @@ module.exports = {
             template: './src/index.html',
             inject: true
         }),
-        new CopyWebpackPlugin([
+        /*new CopyWebpackPlugin([
             { from: resolve('src/views/'), to: resolve('dist/views/') }
-        ])
+        ])*/
     ],
     devServer: {
         //contentBase: './dist'

@@ -1,25 +1,20 @@
 import LittleEngine from '../little-engine'
 
 class BaseController {
-    constructor(controllerConfig, name) {
+    constructor(controllerConfig, views) {
         this.config = controllerConfig
-        this.name = name
-        this.views = {}
         this.models = {}
+
+        this.views = {}
+        Object.keys(views).forEach(v => this.views[v] = LittleEngine.createRenderer(views[v]))
     }
 
     execute(actionName, routeParams) {
-        if (!this[actionName]) throw Error(`Action "${actionName}" not found in controller "${this.name}". Check controller or router config.`)
+        if (!this[actionName]) throw Error(`Action "${actionName}" not found. Check controller or router config.`)
 
-        //Koppelen van model aan DOM element voor event handlers
+        //Do action and bind model to the main element to catch events
         $('.js-main')[0].viewModel = this.models[actionName]
-
-        //Uitvoeren van action
         this[actionName](routeParams)
-    }
-
-    addViews(obj) {
-        Object.keys(obj).forEach(k => this.views[k] = LittleEngine.createRenderer(obj[k]))
     }
 
     render(actionName) {

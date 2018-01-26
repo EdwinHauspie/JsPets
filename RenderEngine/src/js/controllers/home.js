@@ -8,40 +8,31 @@ function getRandom(min = 1, max = 1000) {
 
 class HomeController extends BaseController {
     constructor(controllerConfig) {
-        super(controllerConfig, 'home')
+        super(controllerConfig, { index, about })
 
         //IE10 fix: super not working correctly in constructor with babel
-        //Note: in browsers without this issue, the constructor will get fired twice
-        BaseController.call(this, controllerConfig, 'home')
-
-        this.addViews({ index, about })
-
-        let self = this
+        if (!this.views) BaseController.call(this, controllerConfig, { index, about })
 
         this.models.index = {
             ...controllerConfig,
             number: getRandom(),
-            refreshNumber: function () {
-                this.number = getRandom()
-                self.render('index')
+            refresh: () => {
+                this.models.index.number = getRandom()
+                this.render('index')
             }
         }
 
         this.models.about = {
             ...controllerConfig,
             names: ['An', 'Jan', 'Rik'],
-            addName: function (sender, e) {
+            addName: (sender, e) => {
                 if (!sender.value.trim()) return
-                this.names.push(sender.value.trim())
-                self.render('about')
+                this.models.about.names.push(sender.value.trim())
+                this.render('about')
                 $('input').focus()
             }
         }
     }
-
-    //—————————//
-    // Actions //
-    //—————————//
 
     index(routeParams) {
         super.render('index')
