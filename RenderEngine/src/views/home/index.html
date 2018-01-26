@@ -1,8 +1,9 @@
+import Title from '../_partials/title.html'
+
+export default `
 <h1>Home</h1>
 
-<div>
-    <h3>If else-if else</h3>
-</div>
+${Title('If else-if else')}
 
 <div class="{{ number%2==0 ? 'green' : 'red' }}">
     <span if="number %2 == 0">{{ number }} is an <b>even</b> number</span>
@@ -11,9 +12,7 @@
 
 <a href="#" data-click="refreshNumber" data-prevent>Refresh number</a>
 
-<div>
-    <h3>Inline functions</h3>
-</div>
+${Title('Inline functions')}
 
 <ul>
     <li>
@@ -32,3 +31,4 @@
         </a>
     </li>
 </ul>
+`

@@ -1,6 +1,8 @@
 import BaseController from './_base'
+import index from '../../views/home/index.html'
+import about from '../../views/home/about.html'
 
-function getRandom(min, max) {
+function getRandom(min = 1, max = 1000) {
     return Math.floor(Math.random() * max) + min
 }
 
@@ -12,13 +14,15 @@ class HomeController extends BaseController {
         //Note: in browsers without this issue, the constructor will get fired twice
         BaseController.call(this, controllerConfig, 'home')
 
+        this.addViews({ index, about })
+
         let self = this
 
         this.models.index = {
             ...controllerConfig,
-            number: getRandom(1, 1000),
+            number: getRandom(),
             refreshNumber: function () {
-                this.number = getRandom(1, 1000)
+                this.number = getRandom()
                 self.render('index')
             }
         }

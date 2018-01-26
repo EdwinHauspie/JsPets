@@ -23,6 +23,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({ use: 'css-loader' })
+            },
+            {
+                test: /views.+\.html$/,
+                use: ['./view-loader.js', 'babel-loader']
             }
         ]
     },
