@@ -10,7 +10,6 @@ window.$ = eQuery
 let appConfig = {
     buildStamp: 123456789,
     api: 'api.demo.com'
-    //...
 }
 
 //————————//
@@ -32,7 +31,6 @@ let execute = function (controllerName, actionName, routeParams) {
 }
 
 router.notFound(function (routeParams) { router.go('home') })
-
 router.on(function (routeParams) { execute('HomeController', 'index', routeParams) }) //Root route
 router.on({
     '/home': { as: 'home', uses: function (routeParams) { execute('HomeController', 'index', routeParams) } },
@@ -41,11 +39,10 @@ router.on({
 })
 
 router.hooks({
-    before: function (done, routeParams) {
+    after: function (routeParams) {
         let lastRoute = (router.lastRouteResolved() || {}).name || 'home'
         $('a', '.js-menu').removeClass('active')
         $(`[data-route="${lastRoute}"]`, '.js-menu').addClass('active')
-        done()
     }
 })
 
