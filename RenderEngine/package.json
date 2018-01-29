@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server --hot --inline"
+    "dev": "webpack-dev-server --hot --inline --open"
   },
   "author": "Edwin Hauspie",
   "license": "ISC",

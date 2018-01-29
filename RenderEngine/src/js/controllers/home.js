@@ -18,7 +18,7 @@ class HomeController extends BaseController {
             number: getRandom(),
             refresh: () => {
                 this.models.index.number = getRandom()
-                this.render('index')
+                this.render('index', '#number')
             }
         }
 
@@ -28,8 +28,8 @@ class HomeController extends BaseController {
             addName: (sender, e) => {
                 if (!sender.value.trim()) return
                 this.models.about.names.push(sender.value.trim())
-                this.render('about')
-                $('input').focus()
+                this.render('about', '#names')
+                $('input')[0].value = ''
             }
         }
     }

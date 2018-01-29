@@ -5,29 +5,33 @@ export default `
 
 ${title('If else-if else')}
 
-<div class="{{ number%2==0 ? 'green' : 'red' }}">
-    <span if="number %2 == 0">{{ number }} is an <b>even</b> number</span>
-    <span else>{{ number }} is an <b>odd</b> number</span>
+<div id="number" class="{{ number%2 == 0 ? 'green' : 'red' }}">
+    <span if="number%2 == 0">{{ number }} is even</span>
+    <span else>{{ number }} is odd</span>
 </div>
 
-<a href="#" data-click="refresh" data-prevent>Refresh number</a>
+<ul>
+    <li>
+        <a href="#" data-click="refresh" data-prevent>Refresh number</a>
+    </li>
+</ul>
 
 ${title('Inline functions')}
 
 <ul>
     <li>
-        <a href="#" data-click="function(vm, e) { this.innerHTML = 'The current number is ' + vm.number }" data-prevent>
+        <a href="#" data-click="function(vm, e) { this.innerHTML = 'Current number is ' + vm.number }" data-prevent>
             Function
         </a>
     </li>
     <li>
-        <a href="#" data-click="vm => this.innerHTML = 'The current number is ' + vm.number" data-prevent>
+        <a href="#" data-click="vm => this.innerHTML = 'Current number is ' + vm.number" data-prevent>
             Arrow function
         </a>
     </li>
     <li>
-        <a href="#" data-click="this.innerHTML = 'The current number is ' + $(this).closest('[data-view]').viewModel.number" data-prevent>
-            Function body only
+        <a href="#" data-click="this.innerHTML = 'Current number is ' + $(this).closest('[data-view]').viewModel.number" data-prevent>
+            Function body
         </a>
     </li>
 </ul>

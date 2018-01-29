@@ -17,9 +17,17 @@ class BaseController {
         this[actionName](routeParams)
     }
 
-    render(actionName) {
+    render(actionName, selector) {
         let html = LittleEngine.render(this.views[actionName], this.models[actionName])
-        $('.js-main').html(html)
+
+        if (selector) {
+            let vDom = document.createElement('div')
+            vDom.innerHTML = html
+            var newPart = $(selector, vDom)
+            var oldPart = $(selector)
+            oldPart.replaceWith(newPart)
+        }
+        else $('.js-main').html(html)
     }
 }
 

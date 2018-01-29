@@ -1,3 +1,1 @@
-- gedeeltelijk updaten van de DOM
-- partials
-- html views include met import ... zal ook beter zijn voor hot dev server
+- view-loader momenteel niet nodig...
