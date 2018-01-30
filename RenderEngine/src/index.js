@@ -62,6 +62,15 @@ $menu.html(menuHtml)
 
 router.resolve()
 
+$(document).on('click', (e) => {
+    let target = e.target || e.srcElement
+    if (target && target.matches('[data-route]')) {
+        let routeName = $(target).attr('data-route')
+        router.go(routeName)
+        if (e.preventDefault) e.preventDefault()
+    }
+})
+
 //————————//
 // Events //
 //————————//
