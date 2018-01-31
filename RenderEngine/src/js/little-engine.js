@@ -46,15 +46,14 @@ LittleEngine.createRenderer = function (html) {
         return add;
     }
     while (match = re.exec(html)) {
-        add(html.slice(cursor, match.index))(match[1], true);
-        cursor = match.index + match[0].length;
+        add(html.slice(cursor, match.index))(match[1], true)
+        cursor = match.index + match[0].length
     }
-    add(html.substr(cursor, html.length - cursor));
-    code += 'return __r.join("");';
-    var funcCode = code.replace(/[\r\t\n]/g, '');
+    add(html.substr(cursor, html.length - cursor))
+    code += 'return __r.join("");'
+    var funcCode = code.replace(/[\r\t\n]/g, '')
     //console.log(funcCode)
-
-    return new Function('with (this) { ' + funcCode + ' }');
+    return new Function('with (this) { ' + funcCode + ' }')
 }
 
 LittleEngine.render = function (renderer, viewModel) {

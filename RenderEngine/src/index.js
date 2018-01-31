@@ -12,22 +12,22 @@ let appConfig = {
     api: 'api.demo.com'
 }
 
-//————————//
-// Router //
-//————————//
+//——————————————//
+// Router setup //
+//——————————————//
 
 Navigo.prototype.go = function (routeName, routeParams) { this.navigate(this.generate(routeName, routeParams)) }
 let router = new Navigo(null, false) /*root, useHash*/
 
-let controllers = {}
 let controllerClasses = { HomeController, ContactController }
+let controllerInstances = {}
 
 let execute = function (controllerName, actionName, routeParams) {
     //Create controller if necessary
-    controllers[controllerName] = controllers[controllerName] || new controllerClasses[controllerName]({ router, ...appConfig })
+    controllerInstances[controllerName] = controllerInstances[controllerName] || new controllerClasses[controllerName]({ router, ...appConfig })
 
-    //Execute view
-    controllers[controllerName].execute(actionName, routeParams || {})
+    //Execute action
+    controllerInstances[controllerName].execute(actionName, routeParams || {})
 }
 
 router.notFound(function (routeParams) { router.go('home') })
@@ -46,9 +46,9 @@ router.hooks({
     }
 })
 
-//——————//
-// Menu //
-//——————//
+//————————————//
+// Menu setup //
+//————————————//
 
 let $menu = $('.js-menu')
 $menu[0].viewModel = {
@@ -71,13 +71,11 @@ $(document).on('click', (e) => {
     }
 })
 
-//————————//
-// Events //
-//————————//
+//—————————————————//
+// Event listeners //
+//—————————————————//
 
-let events = ['click', 'keyup', 'keydown', 'change', 'input']
-
-events.forEach(x => $(document).on(x, e => {
+;['click', 'keyup', 'keydown', 'change', 'input'].forEach(x => $(document).on(x, e => {
     let target = e.target || e.srcElement
     let prevent = target.matches('[data-prevent]')
     let which = e.which | e.keyCode
