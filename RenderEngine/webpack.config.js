@@ -2,6 +2,7 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 function resolve(dir) {
     return path.resolve(__dirname, dir)
@@ -39,6 +40,7 @@ module.exports = {
         /*new CopyWebpackPlugin([
             { from: resolve('src/views/'), to: resolve('dist/views/') }
         ])*/
+        new UglifyJsPlugin()
     ],
     devServer: {
         historyApiFallback: true
