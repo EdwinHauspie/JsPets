@@ -27,7 +27,7 @@ module.exports = {
             },
             {
                 test: /views.+\.html$/,
-                use: ['./view-loader.js', 'babel-loader']
+                use: ['babel-loader', './view-loader.js']
             }
         ]
     },

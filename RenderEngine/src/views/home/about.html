@@ -1,13 +1,14 @@
 import title from '../_partials/title.html'
 
-export default `
-<h1>About</h1>
+<template>
+    <h1>About</h1>
+    ${title('Data entry')}
 
-${title('Data entry')}
+    <input type="text" data-enter="addName" placeholder="Enter name" maxlength="25" />
 
-<input type="text" data-enter="addName" placeholder="Enter name" maxlength="25" />
-
-<ul id="names">
-    <li for="name, i in names">{{ name }}</li>
-</ul>
-`
+    <ul id="names">
+        ${this.names.map(name => html`
+        <li>$${name}</li>
+        `)}
+    </ul>
+</template>

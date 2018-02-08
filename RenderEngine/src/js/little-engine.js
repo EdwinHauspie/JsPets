@@ -37,7 +37,7 @@ LittleEngine.createRenderer = function (html) {
     }
 
     //Create function
-    var html = vDom.innerHTML
+    html = vDom.innerHTML
     //console.log(html)
 
     var re = /\{\{(.+?)\}\}/g, reExp = /(^( )?(if\W|for\W|else\W|switch\W|case\W|var\W|break\W|{|}))(.*)?/g, code = 'var __r=[];\n', cursor = 0, match, add = function (line, js) {

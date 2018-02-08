@@ -7,6 +7,10 @@ class ContactController extends BaseController {
 
         //IE10 fix: super not working correctly in constructor with babel
         if (!this.views) BaseController.call(this, controllerConfig, { index })
+
+        this.models.index = {
+            arr: [1, 2, 3]
+        }
     }
 
     index(routeParams) {
