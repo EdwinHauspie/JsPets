@@ -1,18 +1,21 @@
 import title from '../_partials/title.html'
 
-export default `
-<h1>Contact</h1>
+<template>
+    <h1>Contact</h1>
+    ${title('Nested loop')}
 
-${title('Nested loop')}
-
-<ul>
-    <li for="item1 in [1, 2, 3]">
-        {{item1}}
-        <ul>
-            <li for="item2 in ['a', 'b', 'c']">
-                {{item2}}
-            </li>
-        </ul>
-    </li>
-</ul>
-`
+    <ul>
+        ${this.arr.map(x => html`
+        <li>
+            ${x}
+            <ul>
+                ${this.arr.map(y => html`
+                <li>
+                    ${x}.${y}
+                </li>
+                `)}
+            </ul>
+        </li>
+        `)}
+    </ul>
+</template>
