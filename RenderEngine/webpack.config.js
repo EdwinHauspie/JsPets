@@ -26,7 +26,7 @@ module.exports = {
                 use: ExtractTextPlugin.extract({ use: 'css-loader' })
             },
             {
-                test: /views.+\.html$/,
+                test: /views.+\.js$/,
                 use: ['babel-loader', './view-loader.js']
             }
         ]
@@ -40,7 +40,7 @@ module.exports = {
         /*new CopyWebpackPlugin([
             { from: resolve('src/views/'), to: resolve('dist/views/') }
         ])*/
-        new UglifyJsPlugin()
+        //new UglifyJsPlugin()
     ],
     devServer: {
         historyApiFallback: true

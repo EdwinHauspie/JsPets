@@ -5,9 +5,8 @@ module.exports = function (content) {
 
     let srcPath = path.resolve(__dirname, 'src').replace(/\\/g, '/');
 
-    content = content
-        .replace('<template>', `import html from '${srcPath}/js/html.js'; function view() { return html\``)
-        .replace('</template>', '\` }; export default view');
+    content = `import html from '${srcPath}/js/html.js'\n` + content
+        .replace(/<c-([^>]+)>(.*)<\/c-([^>]+)>/gi, '${$1($2)}')
 
     this.value = content;
     return content;

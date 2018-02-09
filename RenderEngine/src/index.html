@@ -10,12 +10,7 @@
 </head>
 
 <body>
-    <div class="js-menu menu" data-view>
-        <span for="p, i in pages">
-            <a href="{{router.generate(p)}}" data-route="{{p}}">{{ p }}</a>
-            <span if="i < pages.length - 1">-</span>
-        </span>
-    </div>
+    <div class="js-menu menu"></div>
 
     <div class="js-main main" data-view></div>
 

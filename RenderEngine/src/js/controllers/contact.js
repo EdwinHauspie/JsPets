@@ -1,5 +1,5 @@
 import BaseController from './_base'
-import index from '../../views/contact/index.html'
+import index from '../../views/contact/index.js'
 
 class ContactController extends BaseController {
     constructor(controllerConfig) {
@@ -9,7 +9,22 @@ class ContactController extends BaseController {
         if (!this.views) BaseController.call(this, controllerConfig, { index })
 
         this.models.index = {
-            arr: [1, 2, 3]
+            folders: [{
+                name: 'My Folder',
+                folders: [
+                    {
+                        name: 'Pictures',
+                        folders: [
+                            {
+                                name: '2017',
+                                folders: [{ name: 'Photoshop' }]
+                            },
+                            { name: '2018' }
+                        ]
+                    },
+                    { name: 'Movies' }
+                ]
+            }]
         }
     }
 

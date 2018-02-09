@@ -1,8 +1,8 @@
 import Navigo from 'navigo'
 import eQuery from './js/eQuery'
-import LittleEngine from './js/little-engine'
 import HomeController from './js/controllers/home'
 import ContactController from './js/controllers/contact'
+import menu from './views/_partials/menu'
 import './css/index.css'
 
 window.$ = eQuery
@@ -12,9 +12,9 @@ let appConfig = {
     api: 'api.demo.com'
 }
 
-//——————————————//
-// Router setup //
-//——————————————//
+//—————————————//
+// Route setup //
+//—————————————//
 
 Navigo.prototype.go = function (routeName, routeParams) { this.navigate(this.generate(routeName, routeParams)) }
 let router = new Navigo(null, false) /*root, useHash*/
@@ -38,6 +38,10 @@ router.on({
     '/contact': { as: 'contact', uses: function (routeParams) { execute('ContactController', 'index', routeParams) } },
 })
 
+//————————————//
+// Menu setup //
+//————————————//
+
 router.hooks({
     after: function (routeParams) {
         let lastRoute = (router.lastRouteResolved() || {}).name || 'home'
@@ -46,19 +50,7 @@ router.hooks({
     }
 })
 
-//————————————//
-// Menu setup //
-//————————————//
-
-let $menu = $('.js-menu')
-$menu[0].viewModel = {
-    go: page => router.go(page),
-    pages: router._routes.map(r => r.name),
-    router
-}
-let menuRenderer = LittleEngine.createRenderer($menu.html())
-let menuHtml = LittleEngine.render(menuRenderer, $menu[0].viewModel)
-$menu.html(menuHtml)
+$('.js-menu').html(menu(router))
 
 router.resolve()
 

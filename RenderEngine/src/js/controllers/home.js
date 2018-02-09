@@ -1,6 +1,6 @@
 import BaseController from './_base'
-import index from '../../views/home/index.html'
-import about from '../../views/home/about.html'
+import index from '../../views/home/index.js'
+import about from '../../views/home/about.js'
 
 function getRandom(min = 1, max = 1000) {
     return Math.floor(Math.random() * max) + min
@@ -28,8 +28,8 @@ class HomeController extends BaseController {
             addName: (sender, e) => {
                 if (!sender.value.trim()) return
                 this.models.about.names.push(sender.value.trim())
+                sender.value = ''
                 this.render('about', '#names')
-                $('input')[0].value = ''
             }
         }
     }
