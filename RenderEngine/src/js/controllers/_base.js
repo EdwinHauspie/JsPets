@@ -1,3 +1,5 @@
+import $ from '../eQuery'
+
 class BaseController {
     constructor(controllerConfig, views) {
         this.config = controllerConfig

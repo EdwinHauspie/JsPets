@@ -1,5 +1,5 @@
 import BaseController from './_base'
-import index from '../../views/contact/index.js'
+import index from '../../views/contact/index'
 
 class ContactController extends BaseController {
     constructor(controllerConfig) {

@@ -1,11 +1,9 @@
 import Navigo from 'navigo'
-import eQuery from './js/eQuery'
+import $ from './js/eQuery'
 import HomeController from './js/controllers/home'
 import ContactController from './js/controllers/contact'
 import menu from './views/_components/menu'
 import './css/index.css'
-
-window.$ = eQuery
 
 let appConfig = {
     buildStamp: 123456789,

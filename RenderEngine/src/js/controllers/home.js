@@ -1,10 +1,8 @@
 import BaseController from './_base'
-import index from '../../views/home/index.js'
-import about from '../../views/home/about.js'
-
-function getRandom(min = 1, max = 1000) {
-    return Math.floor(Math.random() * max) + min
-}
+import $ from '../eQuery'
+import { getRandom } from '../helpers'
+import index from '../../views/home/index'
+import about from '../../views/home/about'
 
 class HomeController extends BaseController {
     constructor(controllerConfig) {
