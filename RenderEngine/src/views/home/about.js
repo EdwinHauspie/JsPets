@@ -1,4 +1,4 @@
-import title from '../_partials/title'
+import title from '../_components/title'
 
 export default function ({ names }) {
     return html`

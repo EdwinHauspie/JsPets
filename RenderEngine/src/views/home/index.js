@@ -1,4 +1,4 @@
-import title from '../_partials/title'
+import title from '../_components/title'
 
 let num = nr => {
     return html`

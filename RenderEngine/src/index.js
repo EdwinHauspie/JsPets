@@ -2,7 +2,7 @@ import Navigo from 'navigo'
 import eQuery from './js/eQuery'
 import HomeController from './js/controllers/home'
 import ContactController from './js/controllers/contact'
-import menu from './views/_partials/menu'
+import menu from './views/_components/menu'
 import './css/index.css'
 
 window.$ = eQuery
