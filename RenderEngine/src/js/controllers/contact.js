@@ -24,12 +24,17 @@ class ContactController extends BaseController {
                     },
                     { name: 'Movies' }
                 ]
-            }]
+            }],
+            depth: 2,
+            calc: (sender) => {
+                this.models.index.depth = Number.parseInt(sender.value)
+                this.render('index', '#recursive')
+            }
         }
     }
 
     index(routeParams) {
-        super.render('index')
+        this.render('index')
     }
 }
 

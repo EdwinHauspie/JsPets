@@ -30,16 +30,17 @@ class HomeController extends BaseController {
                 this.models.about.names.push(sender.value.trim())
                 sender.value = ''
                 this.render('about', '#names')
+                //$('#names')[0].insertAdjacentHTML('beforeend', '<li>test</li>')
             }
         }
     }
 
     index(routeParams) {
-        super.render('index')
+        this.render('index')
     }
 
     about(routeParams) {
-        super.render('about')
+        this.render('about')
         $('input').focus()
     }
 }

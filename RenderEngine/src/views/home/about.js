@@ -8,6 +8,10 @@ export default function ({ names }) {
         <input type="text" data-enter="addName" placeholder="Enter name" maxlength="25" />
 
         <ul id="names">
-            ${names.map(name => html`<li>$${name}</li>`)}
+            <for n, i in names>
+                <li class="stagger" style="animation: slideIn 0.4s ${(.3 / names.length) * i}s ease-out 1 forwards;">
+                    $${n}
+                </li>
+            </for>
         </ul>`
 }

@@ -8,10 +8,9 @@ let num = nr => {
         </div>`
 }
 
-let link = (caption, click) => {
+let link = (click) => {
     return html`
-        <a href="#" data-click="${click}" data-prevent>${caption}</a>
-        <i>${click}</i>`
+        <a href="#" data-click="${click}" data-prevent>${click}</a>`
 }
 
 export default function ({ number }) {
@@ -24,7 +23,7 @@ export default function ({ number }) {
         ${title('Inline functions')}
 
         <ul>
-            <li><c-link>'Normal', 'function(vm, e) { this.innerHTML = vm.number }'</c-link></li>
-            <li><c-link>'Arrow', 'vm => this.innerHTML = vm.number'</c-link></li>
+            <li>${link('function(vm, e) { this.innerHTML = vm.number }')}</li>
+            <li>${link('vm => this.innerHTML = vm.number')}</li>
         </ul>`
 }
