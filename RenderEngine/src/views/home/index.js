@@ -1,29 +1,19 @@
 import title from '../_components/title'
 
-let num = nr => {
+export default ({ number }) => {
     return html`
-        <div id="number" class="${nr % 2 ? 'red' : 'green'}">
-            ${nr} is ${nr % 2 ? 'odd' : 'even'}
+        <c-title h1="'Home'" />
+        <c-title h3="'Conditions and functions'" />
+
+        <div>
+            <span class="${number % 2 ? 'red' : 'green'}">${number} is ${number % 2 ? 'odd' : 'even'}</span>
             <a href="#" data-click="refresh" data-prevent>Refresh number</a>
-        </div>`
-}
+        </div>
 
-let link = (click) => {
-    return html`
-        <a href="#" data-click="${click}" data-prevent>${click}</a>`
-}
-
-export default function ({ number }) {
-    return html`
-        <h1>Home</h1>
-        ${title('Conditions and functions')}
-
-        <c-num>number</c-num>
-
-        ${title('Inline functions')}
+        <c-title h3="'Inline functions'" />
 
         <ul>
-            <li>${link('function(vm, e) { this.innerHTML = vm.number }')}</li>
-            <li>${link('vm => this.innerHTML = vm.number')}</li>
+            <li><a href="#" data-click="function(vm, e) { this.innerHTML = vm.number }" data-prevent>Demo 1</a></li>
+            <li><a href="#" data-click="vm => this.innerHTML = vm.number" data-prevent>Demo 2</a></li>
         </ul>`
 }

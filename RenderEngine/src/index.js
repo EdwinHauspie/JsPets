@@ -48,7 +48,7 @@ router.hooks({
     }
 })
 
-$('.js-menu').html(menu(router))
+$('.js-menu').html(menu({router}))
 
 router.resolve()
 

@@ -1,17 +1,15 @@
 import title from '../_components/title'
 
-export default function ({ names }) {
+export default ({ names }) => {
     return html`
-        <h1>About</h1>
-        <c-title>'Data entry'</c-title>
+        <c-title h1="'About'" />
+        <c-title h3="'Data entry'" />
 
         <input type="text" data-enter="addName" placeholder="Enter name" maxlength="25" />
 
         <ul id="names">
             <for n, i in names>
-                <li class="stagger" style="animation: slideIn 0.4s ${(.3 / names.length) * i}s ease-out 1 forwards;">
-                    $${n}
-                </li>
+                <li>$${n}</li>
             </for>
         </ul>`
 }

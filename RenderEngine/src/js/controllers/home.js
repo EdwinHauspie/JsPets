@@ -16,7 +16,7 @@ class HomeController extends BaseController {
             number: getRandom(),
             refresh: () => {
                 this.models.index.number = getRandom()
-                this.render('index', '#number')
+                this.render('index')
             }
         }
 
@@ -26,9 +26,8 @@ class HomeController extends BaseController {
             addName: (sender, e) => {
                 if (!sender.value.trim()) return
                 this.models.about.names.push(sender.value.trim())
-                sender.value = ''
                 this.render('about', '#names')
-                //$('#names')[0].insertAdjacentHTML('beforeend', '<li>test</li>')
+                sender.value = ''
             }
         }
     }

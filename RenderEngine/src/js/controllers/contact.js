@@ -11,13 +11,13 @@ class ContactController extends BaseController {
         this.models.index = {
             folders: [{
                 name: 'My Folder',
-                folders: [
+                children: [
                     {
                         name: 'Pictures',
-                        folders: [
+                        children: [
                             {
                                 name: '2017',
-                                folders: [{ name: 'Photoshop' }]
+                                children: [{ name: 'Photoshop' }]
                             },
                             { name: '2018' }
                         ]
@@ -25,10 +25,10 @@ class ContactController extends BaseController {
                     { name: 'Movies' }
                 ]
             }],
-            depth: 2,
+            recurseArr: [1, 2, 3],
             calc: (sender) => {
-                this.models.index.depth = Number.parseInt(sender.value)
-                this.render('index', '#recursive')
+                this.models.index.recurseArr = Array.from(Array(Number.parseInt(sender.value))).map((x, i) => i + 1)
+                this.render('index', '#recursor')
             }
         }
     }

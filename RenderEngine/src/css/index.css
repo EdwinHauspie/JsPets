@@ -8,11 +8,11 @@ a { color: dodgerblue; text-decoration: none; border-bottom: 1px dotted rgba(30,
 .menu a { color: white; text-decoration: none; text-transform: uppercase; border-bottom: 0; position: relative; margin-right: 10px; }
 .menu a.active::after { content: ""; position: absolute; background-color: #1e90ff; top: 22px; height: 2px; width: 80%; left: 10%; }
 
-.main { transition: all .5s; padding: 15px; }
+.main { padding: 15px; }
 
-input[type=text] { padding: 5px; }
+input[type=text], select { padding: 5px; }
 
-input + ul { margin-top: 15px; }
+input + ul, select + #recursor { margin-top: 15px; }
 
 h1 { margin: 10px 0; text-transform: lowercase; }
 h3 { font-weight: normal; display: inline-block; box-shadow: inset 0 0 25px 5px #ddd; padding: 0px 5px; }
@@ -20,7 +20,6 @@ h3 { font-weight: normal; display: inline-block; box-shadow: inset 0 0 25px 5px 
 .red { color: red; }
 .green { color: green; }
 
-li.stagger { opacity: 0; }
-@-webkit-keyframes slideIn { 0% { opacity: 0; } 100% { opacity: 1; } }
-@-moz-keyframes slideIn { 0% { opacity: 0; } 100% {  opacity: 1; } }
-@keyframes slideIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+/*https://stephanwagner.me/only-css-loading-spinner*/
+@keyframes spinner { to {transform: rotate(360deg);} }
+.spinner:before { content: ''; box-sizing: border-box; position: absolute; top: 50%; left: 50%; width: 20px; height: 20px; margin-top: -10px; margin-left: -10px; border-radius: 50%; border: 2px solid #ccc; border-top-color: #333; animation: spinner .6s linear infinite; }

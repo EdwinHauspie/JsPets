@@ -1,42 +1,31 @@
 import title from '../_components/title'
+import tree from '../_components/tree'
 
-let tree = folders => {
-    if (!folders || !folders.length) return ''
-
+let recurse = ({ arr, curr = 1 }) => {
     return html`
         <ul>
-            <for f in folders>
-                <li>${f.name + tree(f.folders)}</li>
+            <for _, i in arr>
+                <li>Hello world! ${curr++ < arr.length ? recurse({arr, curr}) : ''}</li>
             </for>
         </ul>`
 }
 
-let recurse = (depth, curr = 1) => {
+export default ({ folders, recurseArr }) => {
     return html`
-        <ul>
-            <for _, i in Array.from(Array(depth))>
-                <li>${i+1} ${curr < depth ? recurse(depth, curr + 1) : ''}</li>
-            </for>
-        </ul>`
-}
+        <c-title h1="'Contact'" />
+        <c-title h3="'Tree'" />
 
-export default function ({ folders, depth }) {
-    return html`
-        <h1>Contact</h1>
+        <c-tree items="folders" />
 
-        <c-title>'Tree'</c-title>
-
-        <c-tree>folders</c-tree>
-
-        <c-title>'Nested loop'</c-title>
+        <c-title h3="'Recursion'" />
 
         <select data-change="calc">
-            <for d in [1, 2, 3, 4, 5]>
-                <option ${depth == d ? 'selected="selected"' : ''}>${d}</option>
+            <for x in 50>
+                <option ${3 == x ? 'selected="selected"' : ''} value="${x}">Depth ${x}</option>
             </for>
         </select>
 
-        <div id="recursive">
-            <c-recurse>depth</c-recurse>
+        <div id="recursor">
+            <c-recurse arr="recurseArr" />
         </div>`
 }
