@@ -4,9 +4,10 @@ import tree from '../_components/tree'
 let recurse = ({ arr, curr = 1 }) => {
     return html`
         <ul>
-            <for _, i in arr>
-                <li>Hello world! ${curr++ < arr.length ? recurse({arr, curr}) : ''}</li>
-            </for>
+            <li>
+                Hello world!
+                ${curr++ < arr.length ? recurse({ arr, curr }) : ''}
+            </li>
         </ul>`
 }
 
@@ -20,8 +21,8 @@ export default ({ folders, recurseArr }) => {
         <c-title h3="'Recursion'" />
 
         <select data-change="calc">
-            <for x in 50>
-                <option ${3 == x ? 'selected="selected"' : ''} value="${x}">Depth ${x}</option>
+            <for each="x" in="50">
+                <option ${3==x ? 'selected="selected"' : ''} value="${x}">Depth ${x}</option>
             </for>
         </select>
 
