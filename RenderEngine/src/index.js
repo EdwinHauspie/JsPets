@@ -19,13 +19,14 @@ let router = new Navigo(null, false) /*root, useHash*/
 
 let controllerClasses = { HomeController, ContactController }
 let controllerInstances = {}
+let currentModel = null
 
 let execute = function (controllerName, actionName, routeParams) {
     //Create controller if necessary
     controllerInstances[controllerName] = controllerInstances[controllerName] || new controllerClasses[controllerName]({ router, ...appConfig })
 
     //Execute action
-    controllerInstances[controllerName].execute(actionName, routeParams || {})
+    currentModel = controllerInstances[controllerName].execute(actionName, routeParams || {})
 }
 
 router.notFound(function (routeParams) { router.go('home') })
@@ -43,12 +44,12 @@ router.on({
 router.hooks({
     after: function (routeParams) {
         let lastRoute = (router.lastRouteResolved() || {}).name || 'home'
-        $('a', '.js-menu').removeClass('active')
-        $(`[data-route="${lastRoute}"]`, '.js-menu').addClass('active')
+        $('a', '.menu').removeClass('active')
+        $(`[data-route="${lastRoute}"]`, '.menu').addClass('active')
     }
 })
 
-$('.js-menu').html(menu({router}))
+$('.menu').html(menu({router}))
 
 router.resolve()
 
@@ -65,30 +66,42 @@ $(document).on('click', (e) => {
 // Event listeners //
 //—————————————————//
 
+let getEventInfos = el => {
+    let eventInfos = {}
+
+    for (var i = 0, atts = el.attributes, n = atts.length, arr = []; i < n; i++) {
+        var attrName = atts[i].nodeName
+        if (attrName.match(/^data-(click|change|input|space|enter|keyup)/i)) {
+            let parts = attrName.split('-').map(x => x.toLowerCase())
+            eventInfos[parts[1]] = { prevent: parts.includes('prevent'), value: atts[i].nodeValue }
+        }
+    }
+
+    return eventInfos
+}
+
 ;['click', 'keyup', 'keydown', 'change', 'input'].forEach(x => $(document).on(x, e => {
     let target = e.target || e.srcElement
-    let prevent = target.matches('[data-prevent]')
+    let eventInfos = getEventInfos(target)
+
     let which = e.which | e.keyCode
+    let eventInfo = null
 
-    if (prevent && e.preventDefault)
-        e.preventDefault()
+    if (e.type === 'click') eventInfo = eventInfos['click']
+    else if (e.type === 'change') eventInfo = eventInfos['change']
+    else if (e.type === 'input') eventInfo = eventInfos['input]']
+    else if (e.type === 'keydown' && which === 32) eventInfo = eventInfos['space']
+    else if (e.type === 'keydown' && which === 13) eventInfo = eventInfos['enter']
+    else if (e.type === 'keyup') eventInfo = eventInfos['keyup']
 
-    let eventType = null
+    if (!eventInfo) return true
+    if (eventInfo.prevent && e.preventDefault) e.preventDefault()
 
-    if (e.type === 'click' && target.matches(`[data-click]`)) eventType = 'click'
-    else if (e.type === 'change' && target.matches(`[data-change]`)) eventType = 'change'
-    else if (e.type === 'input' && target.matches(`[data-input]`)) eventType = 'input'
-    else if (e.type === 'keydown' && which === 32 && target.matches(`[data-space]`)) eventType = 'space'
-    else if (e.type === 'keydown' && which === 13 && target.matches(`[data-enter]`)) eventType = 'enter'
-    else if (e.type === 'keyup' && target.matches(`[data-keyup]`)) eventType = 'keyup'
-
-    if (!eventType) return !prevent
-
-    let func = (target.getAttribute('data-' + eventType) || '').trim()
-    if (!func) return !prevent
+    let func = (eventInfo.value || '').trim()
+    if (!func) return true
 
     try {
-        let model = target.closest('[data-view]').viewModel
+        let model = currentModel
 
         if (model && model[func]) model[func](target, e)
         else {
@@ -101,5 +114,5 @@ $(document).on('click', (e) => {
         throw Error('Function not found or contains errors: ' + func + '\r\n' + e.message)
     }
 
-    return !prevent
+    return true
 }))

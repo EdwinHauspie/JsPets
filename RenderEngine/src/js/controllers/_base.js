@@ -9,10 +9,8 @@ class BaseController {
 
     execute(actionName, routeParams) {
         if (!this[actionName]) throw Error(`Action "${actionName}" not found. Check controller or router config.`)
-
-        //Do action and bind model to the main element to catch events
-        $('.js-main')[0].viewModel = this.models[actionName]
         this[actionName](routeParams)
+        return this.models[actionName]
     }
 
     render(actionName, selector) {
@@ -23,10 +21,10 @@ class BaseController {
             let vDom = document.createElement('div')
             vDom.innerHTML = html
             var newPart = $(selector, vDom)
-            var oldPart = $(selector, '.js-main')
+            var oldPart = $(selector, '.main')
             oldPart.replaceWith(newPart)
         }
-        else $('.js-main').html(html)
+        else $('.main').html(html)
     }
 }
 
