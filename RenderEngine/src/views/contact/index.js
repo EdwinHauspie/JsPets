@@ -1,9 +1,9 @@
 import title from '../_components/title'
 import tree from '../_components/tree'
 
-let recurse = ({ arr, curr = 1 }) => {
+let recurse = ({ id = '', arr, curr = 1 }) => {
     return html`
-        <ul>
+        <ul id="${id}">
             <li>
                 Hello world!
                 ${curr++ < arr.length ? recurse({ arr, curr }) : ''}
@@ -22,11 +22,9 @@ export default ({ folders, recurseArr }) => {
 
         <select data-change="calc">
             <for each="x" in="50">
-                <option ${3==x ? 'selected="selected"' : ''} value="${x}">Depth ${x}</option>
+                <option ${3 == x ? 'selected="selected"' : ''} value="${x}">Depth ${x}</option>
             </for>
         </select>
 
-        <div id="recursor">
-            <c-recurse arr="recurseArr" />
-        </div>`
+        <c-recurse id="'recursor'" arr="recurseArr" />`
 }
