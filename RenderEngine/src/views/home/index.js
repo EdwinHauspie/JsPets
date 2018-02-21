@@ -1,17 +1,16 @@
 import title from '../_components/title'
 
-let numberDisplay = ({ number }) => {
-    return number % 2
-        ? html`<span class="red">${number} is odd</span>`
-        : html`<span class="green">${number} is even</span>`
-}
-
 export default ({ number }) => {
     return html`
         <c-title h1="'Home'" />
         <c-title h3="'Conditions and functions'" />
 
-        <c-number-display number="number" />
+        <if-else number % 2>
+            <span class="red">${number} is odd</span>
+            <else />
+            <span class="green">${number} is even</span>
+        </if-else>
+
         <a href="#" data-click-prevent="refresh">Refresh number</a>
 
         <c-title h3="'Inline functions'" />

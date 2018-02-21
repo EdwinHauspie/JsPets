@@ -21,7 +21,7 @@ export default ({ folders, recurseArr }) => {
         <c-title h3="'Recursion'" />
 
         <select data-change="calc">
-            <for each="x" in="50">
+            <for x in 50>
                 <option ${3 == x ? 'selected="selected"' : ''} value="${x}">Depth ${x}</option>
             </for>
         </select>
