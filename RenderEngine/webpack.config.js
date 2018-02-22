@@ -40,7 +40,7 @@ module.exports = {
         /*new CopyWebpackPlugin([
             { from: resolve('src/views/'), to: resolve('dist/views/') }
         ])*/
-        //new UglifyJsPlugin()
+        new UglifyJsPlugin()
     ],
     devServer: {
         historyApiFallback: true

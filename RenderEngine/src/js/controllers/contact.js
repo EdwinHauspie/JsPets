@@ -24,12 +24,7 @@ class ContactController extends BaseController {
                     },
                     { name: 'Movies' }
                 ]
-            }],
-            recurseArr: [1, 2, 3],
-            calc: (sender) => {
-                this.models.index.recurseArr = Array.from(Array(Number.parseInt(sender.value))).map((x, i) => i + 1)
-                this.render('index', '#recursor')
-            }
+            }]
         }
     }
 

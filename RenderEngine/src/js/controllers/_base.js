@@ -14,7 +14,6 @@ class BaseController {
     }
 
     render(actionName, selector) {
-        //Render html
         let html = this.views[actionName](this.models[actionName] || {})
 
         if (selector) {
