@@ -1,12 +1,13 @@
 import title from '../_components/title'
 
 export default ({ number }) => {
+    let isEven = (number + 1) % 2
+
     return html`
         <c-title caption="'Conditions'" />
 
-        <span-if test="number % 2" class="red">${number} is odd</span-if>
-        <span-if test="!(number % 2)" class="green">${number} is even
-        </span-if>
+        <span-if test="!isEven" class="red">${number} is odd</span-if>
+        <span-if test="isEven" class="green">${number} is even</span-if>
 
         <c-title caption="'Functions'" />
 
