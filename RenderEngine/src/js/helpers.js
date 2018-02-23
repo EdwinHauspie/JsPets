@@ -7,7 +7,7 @@ function esc(str) {
         .replace(/`/g, '&#96;');
 }
 
-export function html (literalSections, ...substs) {
+export function html(literalSections, ...substs) {
     //http://2ality.com/2015/01/template-strings-html.html
     // Use raw literal sections: we don’t want backslashes (\n etc.) to be interpreted
     let raw = literalSections.raw;
@@ -36,4 +36,10 @@ export function html (literalSections, ...substs) {
 
 export function getRandom(min = 1, max = 1000) {
     return Math.floor(Math.random() * max) + min
+}
+
+export function intArr(arr) {
+    return Number.parseInt(arr)
+        ? Array.from(Array(arr)).map((_, i) => i + 1)
+        : arr
 }

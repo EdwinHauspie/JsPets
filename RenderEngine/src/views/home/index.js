@@ -11,13 +11,22 @@ export default ({ number }) => {
 
         <c-title caption="'Functions'" />
 
-        <ul>
-            <for each="x" in="['refresh', 'function(vm, e) { vm.refresh(this, e) }', 'vm, e => vm.refresh(this, e)']">
-                <li>
-                    <a href="" data-click-prevent="${x}">
-                        Refresh number
-                    </a>
-                </li>
-            </for>
-        </ul>`
+        <a href="#" data-click-prevent="refresh">Refresh number</a>
+        <br>
+        <a href="#" data-click-prevent="function(vm, e) { vm.refresh(this, e) }">Refresh number</a>
+        <br>
+        <a href="#" data-click-prevent="vm, e => vm.refresh(this, e)">Refresh number</a>
+
+        <c-title-if test="true" caption="'Test area'" />
+
+        <if test="1%2">
+            lol
+            <span-if test="true">wut</span-if>
+        </if>
+
+        <br-if test="true" />
+
+        <for-if test="true" each="x" in="10">
+            ${x}
+        </for-if>`
 }
