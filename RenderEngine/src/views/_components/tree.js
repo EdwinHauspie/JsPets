@@ -3,7 +3,7 @@ let tree = ({ items }) => {
 
     return html`
         <ul>
-            <for each="x" in="items">
+            <for each="x in items">
                 <li>
                     ${x.name}
                     <c-tree items="x.children" />
