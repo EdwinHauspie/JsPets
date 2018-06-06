@@ -10,7 +10,7 @@
     </style>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <script src="http://users.telenet.be/dropbox/js/Prototype/prototype.js"></script>
+    <script src="../Prototype/prototype.js"></script>
     <script src="./autocomplete.js"></script>
     <script>
         $(function () {
@@ -29,17 +29,17 @@
                     lenientGroups.each(function (grp) {
                         lenientVal = lenientVal.replace(new RegExp(grp, 'gi'), grp);
                     });
-                    
+
                     var $def = $.Deferred();
-                    
+
                     if (xhr) xhr.abort();
-                    
-                    xhr = $.ajax({ url: '/dropbox/js/AutoComplete/data.json', dataType: 'json' })
+
+                    xhr = $.ajax({ url: './data.json', dataType: 'json' })
                         .fail(function() { $def.resolve([]); })
                         .done(function(allSuggestions) {
                             //Get matching suggestions
                             var reg = new RegExp(lenientVal, 'gi');
-                    
+
                             var suggestions = allSuggestions
                                 .where(function(s) {
                                     reg.lastIndex = 0; //Must reset the RegExp when using multiple times
@@ -47,16 +47,16 @@
                                 }).select(function (s) {
                                     return s.replace(reg, '<em>$&</em>'); //Highlight the matches and return suggestions
                                 }).take(5);
-                                
+
                             $def.resolve(suggestions);
                         });
-                    
+
                     return $def;
                 }
             };
-            
+
             $.createAutocompleter('#country', new SuggestionProvider());
-            
+
             $('#country').focus();
         });
     </script>

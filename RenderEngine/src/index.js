@@ -2,7 +2,7 @@ import Navigo from 'navigo'
 import $ from './js/eQuery'
 import HomeController from './js/controllers/home'
 import ContactController from './js/controllers/contact'
-import menu from './views/_components/menu'
+import menu from './views/components/menu'
 import './css/index.css'
 
 let appConfig = {
@@ -35,6 +35,7 @@ router.on({
     '/home': { as: 'home', uses: function (routeParams) { execute('HomeController', 'index', routeParams) } },
     '/about': { as: 'about', uses: function (routeParams) { execute('HomeController', 'about', routeParams) } },
     '/contact': { as: 'contact', uses: function (routeParams) { execute('ContactController', 'index', routeParams) } },
+    '/sandbox': { as: 'sandbox', uses: function (routeParams) { execute('ContactController', 'sandbox', routeParams) } },
 })
 
 //————————————//

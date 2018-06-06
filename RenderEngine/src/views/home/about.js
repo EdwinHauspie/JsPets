@@ -1,4 +1,4 @@
-import title from '../_components/title'
+import title from '../components/title'
 
 export default ({ names }) => {
     return html`

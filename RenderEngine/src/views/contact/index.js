@@ -1,5 +1,5 @@
-import title from '../_components/title'
-import tree from '../_components/tree'
+import title from '../components/title'
+import tree from '../components/tree'
 
 let recurse = ({ depth = 0 }) => {
     return depth > 10 ? '' : html`

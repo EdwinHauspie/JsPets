@@ -6,10 +6,11 @@ import about from '../../views/home/about'
 
 class HomeController extends BaseController {
     constructor(controllerConfig) {
-        super(controllerConfig, { index, about })
+        let views = { index, about }
+        super(controllerConfig, views)
 
         //IE10 fix: super not working correctly in constructor with babel
-        if (!this.views) BaseController.call(this, controllerConfig, { index, about })
+        if (!this.views) BaseController.call(this, controllerConfig, views)
 
         this.models.index = {
             ...controllerConfig,
