@@ -1,7 +1,7 @@
 (function ($) {
     (function(undefined) {
         function mustKeepFocus($popup) {
-            return $popup.is(':visible') && ($popup.hasClass('fullscreen') || $popup.next('.popup-overlay').length); //Only when modal or fullscreen
+            return $popup.is(':visible') && ($popup.hasClass('fullscreen') || $popup.prev('.popup-overlay').length) && !$popup.nextAll('.popup').length; //Only when modal or fullscreen
         }
     
         $.fn.extend({
@@ -26,7 +26,7 @@
                         $me .wrapInner('<div class="popup-body"/>')
                             .prepend('<div class="popup-header"/>')
                             .prepend('<span class="popup-close" data-command="cancel"></span>')
-                            .append('<div class="popup-footer"><button class="popup-submit" data-command="submit"></button> <button class="popup-cancel" data-command="cancel"></button></div>')
+                            .append('<div class="popup-footer"><button class="popup-submit" data-command="submit"></button> <a href="javascript:void(0);" class="popup-cancel" data-command="cancel"></a></div>')
                             .append('<div class="popup-tip"></div>')
                             .attr('tabIndex', '-1') //Make focusable so pressing escape will be able to hide
                             .on('keydown', function(e) {
@@ -84,7 +84,6 @@
                     if (cmd === 'show') {
                         $me .show() //position() does not work on a hidden element -> show it first
                             .css({ opacity: 0 })
-                            .attr('aria-hidden', 'false')
                             .position({ my: 'center center', at: 'center center-50', of: window, collision: 'fit fit' })
                             .animate({ opacity: 1 }, 300, 'easeOutSine');
                                 
@@ -96,25 +95,21 @@
                                     $(me.popupInfo.lastestFocus).focus();
                                 });
                             
-                            $me.after($overlay);
+                            $me.before($overlay);
                         }
                             
                         $tip.hide();
                         $(':focus').blur();
                         $me.focus();
-                        $body.attr('aria-hidden', 'true');
                         if ($.fn.draggable && me.popupInfo.draggable) { $me.draggable('enable'); }
                         
                         me.popupInfo.lastestFocus = me;
                         if (me.popupCallbacks.onshow) { me.popupCallbacks.onshow(); }
                     }
                     else if (cmd === 'showfullscreen') {
-                        $me .show()
-                            .css({ opacity: 0 })
-                            .attr('aria-hidden', 'false');
+                        $me.show().css({ opacity: 0 });
                         
                         $body
-                            .attr('aria-hidden', 'true')
                             .data('origOverflow', $body.css('overflow'))
                             .css({ overflow: 'hidden' });
 
@@ -132,7 +127,6 @@
                     else if (cmd === 'showballoon' && options.position) {
                         $me .show() //position() does not work on a hidden element -> show it first
                             .css({ opacity: 0 })
-                            .attr('aria-hidden', 'false')
                             .position(options.position)
                             .animate({ opacity: 1 }, 300, 'easeOutSine');
                         
@@ -155,7 +149,7 @@
                     }
                     else if (cmd === 'hide' && $me.is(':visible')) {
                         //Remove the overlay (modal popup only)
-                        $me.next('.popup-overlay').fadeOut(150, function () { $(this).remove(); });
+                        $me.prev('.popup-overlay').fadeOut(150, function () { $(this).remove(); });
 
                         //Restore body style (fullscreen popup only)
                         if ($me.hasClass('fullscreen')) {
@@ -163,8 +157,7 @@
                             $body.css({ overflow: $body.data('origOverflow') }).removeData('origOverflow');
                         }
                         
-                        $me.hide().attr('aria-hidden', 'true');
-                        $body.attr('aria-hidden', 'false');
+                        $me.hide();
                         if (me.popupCallbacks.onhide) { me.popupCallbacks.onhide(); }
                     }
                     else if (cmd === 'submit') {
