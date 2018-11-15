@@ -28,7 +28,7 @@ const app = http.createServer((request, response) => {
         var file = query.path != '/' ? query.path : '/index.html';
         //console.log(query);
 
-        var contents = fs.readFileSync('.' + file, 'utf8');
+        var contents = fs.readFileSync(__dirname + file, 'utf8');
 
         response.writeHead(200, { 'Content-Type': 'text/' + file.split('.').reverse()[0] });
         response.write(contents);
