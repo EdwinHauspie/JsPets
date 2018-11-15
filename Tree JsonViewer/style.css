@@ -1,4 +1,9 @@
 body { font-family: verdana, sans-serif; font-size: 13px; line-height: 25px; margin: 20px; }
+button { border-radius: 4px; border: 1px solid #bbb; cursor: pointer; background: #eee; height: 25px; outline:none; }
+button:active { background: #ddd; }
+textarea { width: 400px; height: 500px; outline: none; border: 0; padding: 15px; box-shadow: 0px 0px 4px 0px #c3c3c3; }
+input { width: 400px; outline: none; border: 0; padding: 5px; box-shadow: 0px 0px 4px 0px #c3c3c3; }
+
 .tree ul, li { list-style: none; margin: 0; padding: 0; }
 .tree ul { display: none; margin-left: 10px; }
 .tree li { padding-left: 20px; position: relative; }
@@ -11,8 +16,8 @@ body { font-family: verdana, sans-serif; font-size: 13px; line-height: 25px; mar
     left: -7px;
     top: 8px;
     background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAH0lEQVQYV2NkQID/DAwMjCAumIACFEEQBwXgVImhHQAIaAUFnFbvrgAAAABJRU5ErkJggg==) no-repeat 3px 3px;
-    border: 1px solid #ddd;
-    border-radius: 2px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     z-index: 2;
 }
 .tree li.open > .toggle {
@@ -24,7 +29,6 @@ body { font-family: verdana, sans-serif; font-size: 13px; line-height: 25px; mar
 .gray { color: #bbb; }
 .actions { position: absolute; right: 30px; top: 20px; }
 .actions * { vertical-align: top; }
-#parse { margin-left: 40px; }
 
 ul { border-left: 1px solid #ddd; }
 

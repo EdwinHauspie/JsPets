@@ -5,18 +5,18 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="stylesheet" href="./style.css"/>
     <script>
         function render(data) {
             var html = '<ul>';
-            
+
             (function ___(o, name) {
                 name = typeof name === 'undefined' ? '' : (name + ': ');
-                
+
                 if (o === null) {
                     html += '<li>' + name + '<i>null</i></li>';
-                }              
+                }
                 else if (o instanceof Array) {
                     html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + name + '<i>[' + o.length + ']</i>';
                     if (o.length) {
@@ -46,41 +46,48 @@
                     html += '</li>';
                 }
                 else {
-                    html += '<li>' + name + (typeof o === 'string' ? ('<span class="gray">"' + o + '"</span>') : o) + '</li>';
+                    html += '<li>' + name + (typeof o === 'string' ? ('<span class="gray">"' + o.replace(/\</g, '&lt;') + '"</span>') : o) + '</li>';
                 }
             })(data);
-            
+
             html += '</ul>';
-            
+
             $('.tree').html(html);
+            $('.tree > ul > li').addClass('open');
         }
-               
+
         $(function() {
             $('.tree').on('click', '.toggle', function (e) { e.stopPropagation(); $(this).closest('li').toggleClass('open'); return false; });
             $('.tree').on('dblclick', 'li', function (e) { e.stopPropagation(); $(this).toggleClass('open'); });
-            
+
             $('#parse').click(function() {
                 try {
-                    var data = JSON.parse($('#jsonText').val());
-                    render(data);
-                    $('.tree li').addClass('open');
+                    render(JSON.parse($('textarea').val()));
                 } catch(e) {
                     alert('Invalid JSON.');
                 }
             }).click();
+
+            $('#get').click(function() {
+                $.getJSON('/getjson?url=' + encodeURIComponent($('input').val()))
+                    .then(function(r) {
+                        render(r);
+                    })
+            });
         });
     </script>
 </head>
 
 <body>
-    <!--button onclick="$('.tree').find('li').addClass('open');">Expand all</button>
-    <button onclick="$('.open', '.tree').removeClass('open');">Collapse all</button-->
-        
     <div class="tree"></div>
-    
+
     <div class="actions">
+        <button onclick="$('.tree').find('li').addClass('open');">Expand all</button>
+        <button onclick="$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</button>
+        <button id="get">Get</button>
+        <input value="https://staging-api.kenniswest.be/api/publication/47743">
         <button id="parse">Parse</button>
-        <textarea id="jsonText" spellcheck="false" autocomplete="off" style="width:300px;height:400px;outline: none;border: 0;padding: 10px;box-shadow: 1px 1px 10px 0px #c3c3c3;">{
+        <textarea spellcheck="false" autocomplete="off">{
     "firstName": "John",
     "lastName": "Smith",
     "age": 25,
