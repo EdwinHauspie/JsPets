@@ -15,14 +15,14 @@
                 name = typeof name === 'undefined' ? '' : (name + ': ');
                 
                 if (o === null) {
-                    html += '<li>' + name + 'null</li>';
+                    html += '<li>' + name + '<i>null</i></li>';
                 }              
                 else if (o instanceof Array) {
-                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + name + 'Array [' + o.length + ']';
+                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + name + '<i>[' + o.length + ']</i>';
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
-                            ___(o[i], i);
+                            ___(o[i]/*, i*/);
                         }
                         html += '</ul>';
                     }
@@ -35,7 +35,7 @@
                             props.push(propName);
                         }
                     }
-                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + name + '{' + props.length + '}';
+                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + name + '<i>{' + props.length + '}</i>';
                     if (props.length) {
                         html += '<ul>';
                         for (var i = 0; i < props.length; i++) {
@@ -56,7 +56,8 @@
         }
                
         $(function() {
-            $('.tree').on('click', '.toggle', function () { $(this).closest('li').toggleClass('open'); });
+            $('.tree').on('click', '.toggle', function (e) { e.stopPropagation(); $(this).closest('li').toggleClass('open'); return false; });
+            $('.tree').on('dblclick', 'li', function (e) { e.stopPropagation(); $(this).toggleClass('open'); });
             
             $('#parse').click(function() {
                 try {
@@ -64,7 +65,7 @@
                     render(data);
                     $('.tree li').addClass('open');
                 } catch(e) {
-                    alert('Text is not valid JSON.');
+                    alert('Invalid JSON.');
                 }
             }).click();
         });
