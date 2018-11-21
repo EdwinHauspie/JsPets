@@ -17,7 +17,7 @@
 }
 
 .cooltip-pin {
-border: inherit;
+    border: inherit;
     position: absolute;
     width: 10px;
     height: 10px;
@@ -28,9 +28,21 @@ border: inherit;
     -moz-transform: rotate(45deg);
     -o-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
+    display: none;
+}
+
+.cooltip-pin.centerbottom {
     bottom: 0;
     right: 50%;
     margin: 0 -6px -6px 0;
+    display: block;
+}
+
+.cooltip-pin.centertop {
+    top: 0;
+    right: 50%;
+    margin: -6px -6px 0 0;
+    display: block;
 }
 
 .cooltip-close {

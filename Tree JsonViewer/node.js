@@ -9,7 +9,9 @@ const app = http.createServer((request, response) => {
         var query = url.parse(request.url, true);
 
         if (query.query.url) {
-            https.get(query.query.url, resp => {
+            let protocol = query.query.url.split(':')[0] === 'http' ? http : https;
+
+            protocol.get(query.query.url, resp => {
                 let data = '';
 
                 resp.on('data', chunk => (data += chunk));

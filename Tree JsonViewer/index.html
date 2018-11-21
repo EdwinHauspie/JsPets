@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open%20Sans" rel="stylesheet">
     <link rel="stylesheet" href="./style.css"/>
     <script>
         function render(data) {
@@ -15,29 +16,27 @@
                 name = typeof name === 'undefined' ? '' : (name + ': ');
 
                 if (o === null) {
-                    html += '<li>' + name + '<i>null</i></li>';
+                    html += `<li>${name}<i>null</i></li>`;
                 }
                 else if (o instanceof Array) {
-                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + name + '<i>[' + o.length + ']</i>';
+                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + name + `<i>[${o.length}]</i>`;
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
-                            ___(o[i]/*, i*/);
+                            ___(o[i], i);
                         }
                         html += '</ul>';
                     }
                     html+='</li>';
                 }
                 else if (typeof o == 'object') {
-                    var props = [];
-                    for (var propName in o) {
-                        if (o.hasOwnProperty(propName)) {
-                            props.push(propName);
-                        }
-                    }
-                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + name + '<i>{' + props.length + '}</i>';
+                    var props = Object.keys(o);
+                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + name + `<i>{${props.length}}</i>`;
                     if (props.length) {
                         html += '<ul>';
+                        if ($('#sort').is(':checked')) {
+                            props = props.sort((a, b) => a.localeCompare(b));
+                        }
                         for (var i = 0; i < props.length; i++) {
                             ___(o[props[i]], props[i]);
                         }
@@ -52,64 +51,47 @@
 
             html += '</ul>';
 
-            $('.tree').html(html);
+            $('.tree').html(html).fadeIn();
             $('.tree > ul > li').addClass('open');
         }
 
         $(function() {
-            $('.tree').on('click', '.toggle', function (e) { e.stopPropagation(); $(this).closest('li').toggleClass('open'); return false; });
-            $('.tree').on('dblclick', 'li', function (e) { e.stopPropagation(); $(this).toggleClass('open'); });
+            $('.tree').on('click', '.toggle', e => { e.stopPropagation(); $(e.target).closest('li').toggleClass('open'); return false; });
+            //$('.tree').on('dblclick', 'li', e => { e.stopPropagation(); $(e.target).toggleClass('open'); });
 
-            $('#parse').click(function() {
+            $('#parse').click(() => {
                 try {
+                    $('.tree').empty().hide();
                     render(JSON.parse($('textarea').val()));
                 } catch(e) {
                     alert('Invalid JSON.');
                 }
-            }).click();
-
-            $('#get').click(function() {
-                $.getJSON('/getjson?url=' + encodeURIComponent($('input').val()))
-                    .then(function(r) {
-                        render(r);
-                    })
             });
+
+            $('#get').click(() => {
+                $('.tree').empty().hide();
+                let url = $('#url').val();
+                localStorage.setItem('url', url);
+                $.getJSON('/getjson?url=' + encodeURIComponent(url)).then(r => render(r)).fail(r => alert('Error.'));
+            });
+
+             $('#url').val(localStorage.getItem('url'));
         });
     </script>
 </head>
 
 <body>
-    <div class="tree"></div>
-
     <div class="actions">
         <button onclick="$('.tree').find('li').addClass('open');">Expand all</button>
         <button onclick="$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</button>
+        <label><input type="checkbox" id="sort" checked="checked">Sort properties</label>
         <button id="get">Get</button>
-        <input value="https://staging-api.kenniswest.be/api/publication/47743">
+        <input type="text" id="url">
         <button id="parse">Parse</button>
-        <textarea spellcheck="false" autocomplete="off">{
-    "firstName": "John",
-    "lastName": "Smith",
-    "age": 25,
-    "address":
-    {
-        "streetAddress": "21 Street",
-        "city": "New York",
-        "postalCode": "10021"
-    },
-    "phoneNumbers":
-    [
-        {
-          "type": "home",
-          "number": "212 555-1234"
-        },
-        {
-          "type": "fax",
-          "number": "646 555-4567"
-        }
-    ]
-}</textarea>
+        <textarea spellcheck="false" autocomplete="off">{ "firstName": "John", "lastName": "Smith", "age": 25 }</textarea>
     </div>
+
+    <div class="tree"><i>No data yet</i></div>
 </body>
 
 </html>

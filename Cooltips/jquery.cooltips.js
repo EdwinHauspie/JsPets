@@ -16,12 +16,15 @@
                 content = eval('(' + content + ')()');
             else if ((function() { try { return $(content).length; } catch(e) { return 0; } })() > 0 && $.contains(document, $(content)[0]))
                 content = $(content).html();
-            
+
             $tip.find('.cooltip-body').html(content);
             $tip.show().position({
                 my: 'center bottom-10', at: 'center top', of: sender,
                 within: window, collision: 'flipfit flipfit', using: function(position, info) {
-                    $(this).css(position).find('.cooltip-pin').toggle(info.horizontal == 'center' && info.vertical == 'bottom');
+                    $(this).css(position).find('.cooltip-pin')
+                    .removeClass()
+                    .addClass('cooltip-pin ' + info.horizontal + info.vertical);
+                    /*.toggle(info.horizontal == 'center' && info.vertical == 'bottom')*/
                 }
             });
         }
