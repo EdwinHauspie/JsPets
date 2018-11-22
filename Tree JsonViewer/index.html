@@ -8,12 +8,17 @@
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Open%20Sans" rel="stylesheet">
     <link rel="stylesheet" href="./style.css"/>
-    <script>
-        function render(data) {
-            var html = '<ul>';
 
-            (function ___(o, name) {
-                name = typeof name === 'undefined' ? '' : (name + ': ');
+    <script>
+        let render = data => {
+            var html = '<ul>',
+                dpth = $('#depth')[0].valueAsNumber,
+                sort = $('#sort').is(':checked');
+
+            (function ___(o, name, depth) {
+                if (depth >= dpth) return;
+
+                name = name === null ? '' : (name + ': ');
 
                 if (o === null) {
                     html += `<li>${name}<i>null</i></li>`;
@@ -23,7 +28,7 @@
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
-                            ___(o[i], i);
+                            ___(o[i], i, depth + 1);
                         }
                         html += '</ul>';
                     }
@@ -31,48 +36,57 @@
                 }
                 else if (typeof o == 'object') {
                     var props = Object.keys(o);
-                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + name + `<i>{${props.length}}</i>`;
+                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + `${name}<i>{${props.length}}</i>`;
                     if (props.length) {
                         html += '<ul>';
-                        if ($('#sort').is(':checked')) {
-                            props = props.sort((a, b) => a.localeCompare(b));
-                        }
+                        if (sort) props = props.sort((a, b) => a.localeCompare(b));
                         for (var i = 0; i < props.length; i++) {
-                            ___(o[props[i]], props[i]);
+                            ___(o[props[i]], props[i], depth + 1);
                         }
                         html += '</ul>';
                     }
                     html += '</li>';
                 }
                 else {
-                    html += '<li>' + name + (typeof o === 'string' ? ('<span class="gray">"' + o.replace(/\</g, '&lt;') + '"</span>') : o) + '</li>';
+                    html += `<li>${name}<span>` + (typeof o === 'string' ? ('"' + o.replace(/\</g, '&lt;') + '"') : o) + '</span></li>';
                 }
-            })(data);
+            })(data, null, 0);
 
             html += '</ul>';
 
-            $('.tree').html(html).fadeIn();
+            $('.tree').hide().html(html).fadeIn();
             $('.tree > ul > li').addClass('open');
+
+            //Prularia
+            /*var items = $('.tree > ul > li > ul > li').hide();
+            var counter = 0;
+            var c = setInterval(function() {
+                $(items[counter++]).fadeIn('fast');
+                if (counter == items.length) clearInterval(c);
+            }, 300 / items.length);*/
         }
 
-        $(function() {
+        $(() => {
             $('.tree').on('click', '.toggle', e => { e.stopPropagation(); $(e.target).closest('li').toggleClass('open'); return false; });
-            //$('.tree').on('dblclick', 'li', e => { e.stopPropagation(); $(e.target).toggleClass('open'); });
 
-            $('#parse').click(() => {
+            $('#parse').click(e => {
                 try {
-                    $('.tree').empty().hide();
+                    $('.tree').empty();
                     render(JSON.parse($('textarea').val()));
                 } catch(e) {
                     alert('Invalid JSON.');
                 }
             });
 
-            $('#get').click(() => {
-                $('.tree').empty().hide();
+            $('#get').click(e => {
+                $('.tree').empty();
                 let url = $('#url').val();
                 localStorage.setItem('url', url);
                 $.getJSON('/getjson?url=' + encodeURIComponent(url)).then(r => render(r)).fail(r => alert('Error.'));
+            });
+
+            $('#depth').on('change mousemove', e => {
+                $(e.target).parent().find('span').text(e.target.valueAsNumber);
             });
 
              $('#url').val(localStorage.getItem('url'));
@@ -84,6 +98,7 @@
     <div class="actions">
         <button onclick="$('.tree').find('li').addClass('open');">Expand all</button>
         <button onclick="$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</button>
+        <label><input type="range" id="depth" min="2" max="9" value="9"> Render depth <span>9</span></label>
         <label><input type="checkbox" id="sort" checked="checked">Sort properties</label>
         <button id="get">Get</button>
         <input type="text" id="url">
