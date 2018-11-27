@@ -11,63 +11,57 @@
 
     <script>
         let render = data => {
-            var html = '<ul>',
-                dpth = $('#depth')[0].valueAsNumber,
-                sort = $('#sort').is(':checked');
+            let html = '',
+                sort = $('#sort').is(':checked'),
+                depth = $('#depth')[0].valueAsNumber;
 
-            (function ___(o, name, depth) {
-                if (depth >= dpth) return;
+            (function ___(o, name, curDepth) {
+                if (curDepth >= depth) return;
 
-                name = name === null ? '' : (name + ': ');
+                name = name === null ? '' : name;
 
                 if (o === null) {
                     html += `<li>${name}<i>null</i></li>`;
                 }
                 else if (o instanceof Array) {
-                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + name + `<i>[${o.length}]</i>`;
+                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + `${name} <span>[${o.length}]</span>`;
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
-                            ___(o[i], i, depth + 1);
+                            ___(o[i], i, curDepth + 1);
                         }
                         html += '</ul>';
                     }
                     html+='</li>';
                 }
                 else if (typeof o == 'object') {
-                    var props = Object.keys(o);
-                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + `${name}<i>{${props.length}}</i>`;
+                    let props = Object.keys(o);
+                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + `${name} <span>{${props.length}}</span>`;
                     if (props.length) {
                         html += '<ul>';
                         if (sort) props = props.sort((a, b) => a.localeCompare(b));
                         for (var i = 0; i < props.length; i++) {
-                            ___(o[props[i]], props[i], depth + 1);
+                            ___(o[props[i]], props[i], curDepth + 1);
                         }
                         html += '</ul>';
                     }
                     html += '</li>';
                 }
                 else {
-                    html += `<li>${name}<span>` + (typeof o === 'string' ? ('"' + o.replace(/\</g, '&lt;') + '"') : o) + '</span></li>';
+                    html += `<li>${name} <span>` + (typeof o === 'string' ? ('"' + o.replace(/\</g, '&lt;') + '"') : o) + '</span></li>';
                 }
             })(data, null, 0);
 
-            html += '</ul>';
-
-            $('.tree').hide().html(html).fadeIn();
+            $('.tree').hide().html(`<ul>${html}</ul>`).fadeIn();
             $('.tree > ul > li').addClass('open');
-
-            //Prularia
-            /*var items = $('.tree > ul > li > ul > li').hide();
-            var counter = 0;
-            var c = setInterval(function() {
-                $(items[counter++]).fadeIn('fast');
-                if (counter == items.length) clearInterval(c);
-            }, 300 / items.length);*/
         }
 
         $(() => {
-            $('.tree').on('click', '.toggle', e => { e.stopPropagation(); $(e.target).closest('li').toggleClass('open'); return false; });
+            $('.tree').on('click', '.toggle', e => {
+                e.stopPropagation();
+                $(e.target).closest('li').toggleClass('open');
+                return false;
+            });
 
             $('#parse').click(e => {
                 try {
@@ -82,14 +76,16 @@
                 $('.tree').empty();
                 let url = $('#url').val();
                 localStorage.setItem('url', url);
-                $.getJSON('/getjson?url=' + encodeURIComponent(url)).then(r => render(r)).fail(r => alert('Error.'));
+                $.getJSON('/getjson?url=' + encodeURIComponent(url)).then(r => render(r)).fail(r => $('.tree').html('Error'));
             });
 
             $('#depth').on('change mousemove', e => {
                 $(e.target).parent().find('span').text(e.target.valueAsNumber);
             });
 
-             $('#url').val(localStorage.getItem('url'));
+             $('#url').val(localStorage.getItem('url')).on('keydown', e => {
+                 if (e.which === 13) $('#get').click();
+             });
         });
     </script>
 </head>

@@ -21,7 +21,10 @@ const app = http.createServer((request, response) => {
                     response.write(data);
                     response.end();
                 });
-            });
+            }).on('error', (err) => {
+                response.writeHead(500, { 'Content-Type': 'text/json' });
+                response.end();
+              });
 
             return;
         }
