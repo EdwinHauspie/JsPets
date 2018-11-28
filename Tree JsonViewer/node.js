@@ -4,49 +4,37 @@ const url = require('url'),
     fs = require('fs'),
     open = require('open');
 
+const write = (response, code, type, data) => {
+    response.writeHead(code, { 'Content-Type': type });
+    if (data) response.write(data);
+    response.end();
+};
+
 const app = http.createServer((request, response) => {
     try {
-        var query = url.parse(request.url, true);
+        const requestUrl = url.parse(request.url, true);
+        const jsonUrl = requestUrl.query.jsonUrl;
 
-        if (query.query.url) {
-            let protocol = query.query.url.split(':')[0] === 'http' ? http : https;
+        if (jsonUrl) {
+            let protocol = jsonUrl.split(':')[0] === 'http' ? http : https;
 
-            protocol.get(query.query.url, resp => {
+            protocol.get(jsonUrl, resp => {
                 let data = '';
-
                 resp.on('data', chunk => (data += chunk));
-
-                resp.on('end', () => {
-                    response.writeHead(200, { 'Content-Type': 'text/json' });
-                    response.write(data);
-                    response.end();
-                });
-            }).on('error', (err) => {
-                response.writeHead(500, { 'Content-Type': 'text/json' });
-                response.end();
-              });
-
-            return;
+                resp.on('end', () => write(response, 200, 'text/json', data));
+                resp.on('error', e => write(response, 500, 'text/json', e));
+            }).on('error', e => write(response, 500, 'text/json', e));
         }
-
-
-        var file = query.path != '/' ? query.path : '/index.html';
-        //console.log(query);
-
-        var contents = fs.readFileSync(__dirname + file, 'utf8');
-
-        response.writeHead(200, { 'Content-Type': 'text/' + file.split('.').reverse()[0] });
-        response.write(contents);
-        response.end();
+        else {
+            var file = requestUrl.path != '/' ? requestUrl.path : '/index.html';
+            var contents = fs.readFileSync(__dirname + file, 'utf8');
+            write(response, 200, 'text/' + file.split('.').reverse()[0], contents);
+        }
     } catch (e) {
-        response.writeHead(500);
-        response.write('Error: ' + e.message);
-        console.log('Error: ' + e.message);
-        response.end();
+        write(response, 500, 'text/json', e);
     }
 });
 
 app.listen(1337, '127.0.0.1', () => {
-    //console.log('Launching the browser!');
     open('http://127.0.0.1:1337');
 });

@@ -6,7 +6,6 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Open%20Sans" rel="stylesheet">
     <link rel="stylesheet" href="./style.css"/>
 
     <script>
@@ -21,7 +20,7 @@
                 name = name === null ? '' : name;
 
                 if (o === null) {
-                    html += `<li>${name}<i>null</i></li>`;
+                    html += `<li>${name} <span><i>null</i></span></li>`;
                 }
                 else if (o instanceof Array) {
                     html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + `${name} <span>[${o.length}]</span>`;
@@ -76,7 +75,7 @@
                 $('.tree').empty();
                 let url = $('#url').val();
                 localStorage.setItem('url', url);
-                $.getJSON('/getjson?url=' + encodeURIComponent(url)).then(r => render(r)).fail(r => $('.tree').html('Error'));
+                $.getJSON('/?jsonUrl=' + encodeURIComponent(url)).then(r => render(r)).fail(r => $('.tree').html('Error'));
             });
 
             $('#depth').on('change mousemove', e => {
