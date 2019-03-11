@@ -5,14 +5,13 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-    <link rel="stylesheet" href="./style.css"/>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="icon" href="favicon.ico"/>
 
     <script>
         let render = data => {
-            let html = '',
-                sort = $('#sort').is(':checked'),
-                depth = $('#depth')[0].valueAsNumber;
+            let html = '';
+            const sort = $('#sort').val(), depth = $('#depth').val() || 999;
 
             (function ___(o, name, curDepth) {
                 if (curDepth >= depth) return;
@@ -78,7 +77,7 @@
                 $.getJSON('/?jsonUrl=' + encodeURIComponent(url)).then(r => render(r)).fail(r => $('.tree').html('Error'));
             });
 
-            $('#depth').on('change mousemove', e => {
+            $('#depth').on('change', e => {
                 $(e.target).parent().find('span').text(e.target.valueAsNumber);
             });
 
@@ -93,8 +92,8 @@
     <div class="actions">
         <button onclick="$('.tree').find('li').addClass('open');">Expand all</button>
         <button onclick="$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</button>
-        <label><input type="range" id="depth" min="2" max="9" value="9"> Render depth <span>9</span></label>
-        <label><input type="checkbox" id="sort" checked="checked">Sort properties</label>
+        <select id="depth"><option value="">No depth limit</option><option value="2">Render depth 2</option><option value="3">Render depth 3</option></select>
+        <select id="sort"><option value="">No sorting</option><option value="1">Sort properties</option></select>
         <button id="get">Get</button>
         <input type="text" id="url">
         <button id="parse">Parse</button>

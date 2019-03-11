@@ -26,12 +26,14 @@ const app = http.createServer((request, response) => {
             }).on('error', e => write(response, 500, 'text/json', e));
         }
         else {
-            var file = requestUrl.path != '/' ? requestUrl.path : '/index.html';
-            var contents = fs.readFileSync(__dirname + file, 'utf8');
-            write(response, 200, 'text/' + file.split('.').reverse()[0], contents);
+            var file = __dirname + (requestUrl.path != '/' ? requestUrl.path : '/index.html');
+            var contents = fs.readFileSync(file, 'utf8');
+            var mime = 'text/' + file.split('.').reverse()[0];
+            if (file.indexOf('.ico') >= 0) mime = 'image/x-icon';
+            write(response, 200, mime, contents);
         }
     } catch (e) {
-        write(response, 500, 'text/json', e);
+        console.log(e);
     }
 });
 
