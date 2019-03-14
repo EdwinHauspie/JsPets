@@ -12,24 +12,25 @@ label { cursor: pointer; margin: 0 15px; }
 .tree ul, li { list-style: none; margin: 0; padding: 0; }
 .tree ul { display: none; margin-left: 4px; }
 .tree li { padding-left: 20px; position: relative; }
+
 .tree .toggle {
     display: inline-block;
     cursor: pointer;
-    width: 9px;
-    height: 9px;
+    width: 11px;
+    height: 11px;
     position: absolute;
-    left: -6px;
-    top: 9px;
-    background: #e0e0e0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAH0lEQVQYV2NkQID/DAwMjCAumIACFEEQBwXgVImhHQAIaAUFnFbvrgAAAABJRU5ErkJggg==) no-repeat 2px 2px;
-    border: 1px solid #848484;
-    border-radius: 2px;
+    left: -9px;
+    top: 6px;
+    background: #e0e0e0;
+    border: 3px solid #e0e0e0;
     z-index: 2;
+    font-size: 12px;
+    color: #b8b8b8;
+    transition: all .4s;
 }
-.tree li.open > .toggle {
-    background: #ddd url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAFklEQVQYV2NkwAIYcQn+R5fAqRLDBAA8aQEFEuiyCAAAAABJRU5ErkJggg==) no-repeat 2px 2px;
-}
+.tree .toggle:hover {color: #474747;}
+.tree li.open > .toggle {transform: rotate(-180deg);color: #474747;}
 
-.toggle:hover { border-color: #000000; }
 .tree li.open > ul, .tree > ul { display: block; }
 .tree span { color: #a27565; font-weight: normal; }
 

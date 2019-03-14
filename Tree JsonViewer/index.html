@@ -5,6 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="stylesheet" href="style.css"/>
     <link rel="icon" href="favicon.ico"/>
 
@@ -22,7 +23,7 @@
                     html += `<li>${name} <span><i>null</i></span></li>`;
                 }
                 else if (o instanceof Array) {
-                    html += '<li>' + (o.length ? '<span class="toggle"></span>' : '') + `${name} <span>[${o.length}]</span>`;
+                    html += '<li>' + (o.length ? '<i class="fa fa-plus toggle"></i>' : '') + `${name} <span>[${o.length}]</span>`;
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
@@ -34,7 +35,7 @@
                 }
                 else if (typeof o == 'object') {
                     let props = Object.keys(o);
-                    html += '<li>' + (props.length ? '<span class="toggle"></span>' : '') + `${name} <span>{${props.length}}</span>`;
+                    html += '<li>' + (props.length ? '<i class="fa fa-plus toggle"></i>' : '') + `${name} <span>{${props.length}}</span>`;
                     if (props.length) {
                         html += '<ul>';
                         if (sort) props = props.sort((a, b) => a.localeCompare(b));
@@ -95,7 +96,7 @@
         <select id="depth"><option value="">No depth limit</option><option value="2">Render depth 2</option><option value="3">Render depth 3</option></select>
         <select id="sort"><option value="">No sorting</option><option value="1">Sort properties</option></select>
         <button id="get">Get</button>
-        <input type="text" id="url">
+        <input type="text" id="url" value="https://jsonplaceholder.typicode.com/users">
         <button id="parse">Parse</button>
         <textarea spellcheck="false" autocomplete="off">{ "firstName": "John", "lastName": "Smith", "age": 25 }</textarea>
     </div>
