@@ -1,18 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <title>JsonViewer</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="icon" href="favicon.ico"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.ico" />
 
     <script>
         let render = data => {
             let html = '';
             const sort = $('#sort').val(), depth = $('#depth').val() || 999;
+            const toggle = arr => arr.length ? '<i class="fa toggle"></i>' : '';
 
             (function ___(o, name, curDepth) {
                 if (curDepth >= depth) return;
@@ -20,10 +22,10 @@
                 name = name === null ? '' : name;
 
                 if (o === null) {
-                    html += `<li>${name} <span><i>null</i></span></li>`;
+                    html += `<li>${name} <span><em>null</em></span></li>`;
                 }
                 else if (o instanceof Array) {
-                    html += '<li>' + (o.length ? '<i class="fa fa-plus toggle"></i>' : '') + `${name} <span>[${o.length}]</span>`;
+                    html += `<li>${toggle(o)} ${name} <em>[${o.length}]</em>`;
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
@@ -31,11 +33,11 @@
                         }
                         html += '</ul>';
                     }
-                    html+='</li>';
+                    html += '</li>';
                 }
                 else if (typeof o == 'object') {
                     let props = Object.keys(o);
-                    html += '<li>' + (props.length ? '<i class="fa fa-plus toggle"></i>' : '') + `${name} <span>{${props.length}}</span>`;
+                    html += `<li>${toggle(props)} ${name} <em>{${props.length}}</em>`;
                     if (props.length) {
                         html += '<ul>';
                         if (sort) props = props.sort((a, b) => a.localeCompare(b));
@@ -47,7 +49,7 @@
                     html += '</li>';
                 }
                 else {
-                    html += `<li>${name} <span>` + (typeof o === 'string' ? ('"' + o.replace(/\</g, '&lt;') + '"') : o) + '</span></li>';
+                    html += `<li>${name} <span>` + (typeof o === 'string' ? `"${o.replace(/\</g, '&lt;')}"` : o) + '</span></li>';
                 }
             })(data, null, 0);
 
@@ -65,8 +67,8 @@
             $('#parse').click(e => {
                 try {
                     $('.tree').empty();
-                    render(JSON.parse($('textarea').val()));
-                } catch(e) {
+                    render(JSON.parse($('#json').val()));
+                } catch (e) {
                     alert('Invalid JSON.');
                 }
             });
@@ -78,30 +80,33 @@
                 $.getJSON('/?jsonUrl=' + encodeURIComponent(url)).then(r => render(r)).fail(r => $('.tree').html('Error'));
             });
 
-            $('#depth').on('change', e => {
-                $(e.target).parent().find('span').text(e.target.valueAsNumber);
-            });
+            $('#depth').on('change', e => $(e.target).parent().find('span').text(e.target.valueAsNumber));
 
-             $('#url').val(localStorage.getItem('url')).on('keydown', e => {
-                 if (e.which === 13) $('#get').click();
-             });
+            const storedUrl = localStorage.getItem('url');
+            if (storedUrl) $('#url').val(storedUrl);
+            $('#url').on('keydown', e => { if (e.which === 13) $('#get').click(); });
         });
     </script>
 </head>
 
 <body>
     <div class="actions">
-        <button onclick="$('.tree').find('li').addClass('open');">Expand all</button>
-        <button onclick="$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</button>
-        <select id="depth"><option value="">No depth limit</option><option value="2">Render depth 2</option><option value="3">Render depth 3</option></select>
-        <select id="sort"><option value="">No sorting</option><option value="1">Sort properties</option></select>
-        <button id="get">Get</button>
-        <input type="text" id="url" value="https://jsonplaceholder.typicode.com/users">
-        <button id="parse">Parse</button>
-        <textarea spellcheck="false" autocomplete="off">{ "firstName": "John", "lastName": "Smith", "age": 25 }</textarea>
+        <a href="javascript:$('.tree').find('li').addClass('open');"><i class="fas fa-plus"></i><i class="fas fa-plus"></i><i class="fas fa-plus"></i>Expand</a>
+        <a href="javascript:$('.tree').find('li').removeClass('open').first().addClass('open');"><i class="fas fa-minus"></i><i class="fas fa-minus"></i><i class="fas fa-minus"></i>Collapse</a>
+        <select id="depth">
+            <option value="">No depth limit</option>
+            <option value="2">Render depth 2</option>
+            <option value="3">Render depth 3</option>
+        </select>
+        <select id="sort">
+            <option value="">No sorting</option>
+            <option value="1">Sort properties</option>
+        </select>
+        <textarea id="url" spellcheck="false" autocomplete="off">https://jsonplaceholder.typicode.com/users</textarea><a href="javascript:void();" id="get">Get</a>
+        <textarea id="json" spellcheck="false" autocomplete="off" style="margin: 0px; width: 420px; height: 6px;">{ "firstName": "John", "lastName": "Smith", "age": 25 }</textarea><a href="javascript:void();" id="parse">Parse</a>
     </div>
 
-    <div class="tree"><i>No data yet</i></div>
+    <div class="tree"><em>No data</em></div>
 </body>
 
 </html>
