@@ -1,86 +1,62 @@
-body {
-    font-family: monospace;
+html, body {
+    letter-spacing: 0.01em;
+    margin: 0;
+    background: #f1f1f1;
     font-size: 16px;
-    line-height: 28px;
-    margin: 0px;
-    background: #2f2f2f;
-    color: #fff;
-}
-
-a {color: #dddddd;font-size: 16px;text-decoration: none;border: 1px solid #dddddd;border-radius: 3px;padding: 3px 7px;}
-a .fas {vertical-align: middle;font-size: 10px;margin-right: 2px;}
-a:hover { color: #ffffff; }
-
-button, select {
-    border-radius: 2px;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    background: #2f2f2f;
-    height: 27px;
-    outline: none;
-    color: #dddddd;
     font-family: monospace;
-    font-size: 16px;
-    line-height: 28px;
-    padding: 3px 7px;
-}
-
-textarea + a {
-    margin-left: 2px;
-}
-
-textarea {
-    width: 430px;
-    outline: none;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    min-height: 15px;
-    min-width: 200px;
-    white-space: nowrap;
-    vertical-align: top;
-    height: 15px;
-}
-
-textarea#url {
-    resize: horizontal;
+    height: 100%;
     overflow: hidden;
 }
 
-[type=text] {
-    font-family: monospace;
-    width: 400px;
+body { display: flex; flex-direction: column; }
+
+/*textarea {
+    width: 500px;
     outline: none;
-    padding: 5px;
-    border: 1px solid #eee;
-    height: 15px;
-    border-radius: 2px;
+    min-height: 41px;
+    min-width: 200px;
+    white-space: nowrap;
+    height: 41px;
+    line-height: 22px;
+}*/
+
+label { font-weight: bold; }
+
+.icon-js {
+    top: 7px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    background: #000;
+    display: inline-block;
+    color: white;
+    font-size: 11px;
+    line-height: 26px;
 }
 
-[type=checkbox] {
-    vertical-align: middle !important;
-}
-
-[type=range] {
-    width: 50px;
-    vertical-align: middle !important;
-}
-
-label {
-    cursor: pointer;
-    margin: 0 15px;
+#url {
+    flex: 1;
+    margin-left: 20px;
+    border-radius: 3px;
+    padding: 0 5px;
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 4px #ddd;
 }
 
 .actions {
-    background: #2f2f2f;
     padding: 20px;
+    display: flex;
+    line-height: 2.2;
 }
 
 .tree {
-    margin: 20px;
+    padding: 20px;
     color: #118ac4;
     font-weight: bold;
     position: relative;
+    flex: 1;
+    overflow-y: scroll;
+    line-height: 1.8;
 }
 
 .tree ul, li {
@@ -101,16 +77,17 @@ label {
     width: 16px;
     height: 16px;
     position: absolute;
-    left: -8px;
-    top: 7px;
+    left: -9px;
+    top: 6px;
     z-index: 2;
-    font-size: 16px;
     transition: all .3s;
-    background: #2f2f2f;
+    background: #f1f1f1; /*Must be same as container background*/
     text-align: center;
-    line-height: 17px;
-    color: #666;
-    border-radius: 50%;
+    line-height: 14px;
+    font-weight: bold;
+    font-size: 19px;
+    font-style: unset;
+    user-select: none;
 }
 
 .tree li {
@@ -120,10 +97,6 @@ label {
 
 .tree li.open > .toggle {
     transform: rotate(90deg);
-}
-
-.tree li > .toggle::before {
-    content: "\f105";
 }
 
 .tree li.open > ul, .tree > ul {
@@ -136,7 +109,7 @@ label {
 }
 
 .tree em {
-    color: #777;
+    color: #aaa;
     font-weight: normal;
     font-style: normal;
 }
@@ -144,12 +117,12 @@ label {
 .tree > ul::before {
     content: ' ';
     display: inline-block;
-    width: 1px;
+    width: 3px;
     height: 15px;
-    left: 4px;
-    top: 0px;
+    left: 23px;
+    top: 12px;
     position: absolute;
-    border-left: 1px solid #2f2f2f;
+    background: #f1f1f1; /*Must be same as container background*/
 }
 
 .tree li::before {
@@ -166,10 +139,10 @@ label {
 .tree li:last-child::after {
     content: ' ';
     display: inline-block;
-    width: 2px;
+    width: 3px;
     height: calc(100% - 15px);
-    left: -1px;
+    left: -2px;
     top: 15px;
     position: absolute;
-    background: #2f2f2f; /*Must be same as container background*/
+    background: #f1f1f1; /*Must be same as container background*/
 }
