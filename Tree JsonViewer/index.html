@@ -13,7 +13,7 @@
         let render = data => {
             let html = '';
             const sort = $('#sort').val(), depth = $('#depth').val() || 999;
-            const toggle = arr => arr.length ? '<i class="toggle">+</i>' : '';
+            const toggle = arr => arr.length ? '<i class="toggle">›</i>' : '';
 
             (function ___(o, name, curDepth) {
                 if (curDepth >= depth) return;
@@ -60,6 +60,12 @@
             $('.tree').on('click', '.toggle', e => {
                 e.stopPropagation();
                 $(e.target).closest('li').toggleClass('open');
+                return false;
+            });
+
+            $('.tree').on('dblclick', '.toggle', e => {
+                e.stopPropagation();
+                $(e.target).closest('li').addClass('open').find('li').addClass('open');
                 return false;
             });
 

@@ -68,7 +68,7 @@ label { font-weight: bold; }
 .tree ul {
     display: none;
     margin-left: 4px;
-    border-left: 1px dotted #777;
+    border-left: 1px dotted #aaa;
 }
 
 .tree .toggle {
@@ -85,7 +85,7 @@ label { font-weight: bold; }
     text-align: center;
     line-height: 14px;
     font-weight: bold;
-    font-size: 19px;
+    font-size: 21px;
     font-style: unset;
     user-select: none;
 }
@@ -133,7 +133,7 @@ label { font-weight: bold; }
     left: 0;
     top: 14px;
     position: absolute;
-    border-top: 1px dotted #777;
+    border-top: 1px dotted #aaa;
 }
 
 .tree li:last-child::after {
