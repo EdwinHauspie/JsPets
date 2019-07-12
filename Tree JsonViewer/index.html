@@ -69,27 +69,20 @@
                 return false;
             });
 
-            /*$('#parse').click(e => {
-                try {
-                    $('.tree').empty();
-                    render(JSON.parse($('#json').val()));
-                } catch (e) {
-                    alert('Invalid JSON.');
-                }
-                return false;
-            });*/
-
             $('#depth').on('change', e => $(e.target).parent().find('span').text(e.target.valueAsNumber));
 
             const storedUrl = localStorage.getItem('url');
             if (storedUrl) $('#url').val(storedUrl);
 
-            const get = () => {
+            const get = async () => {
                 $('.tree').empty();
                 let url = $('#url').val();
                 localStorage.setItem('url', url);
-                $.getJSON('/?jsonUrl=' + encodeURIComponent(url)).then(r => render(r)).fail(r => $('.tree').html('Error'));
+                var result = await fetch('/?jsonUrl=' + encodeURIComponent(url));
+                var obj = await result.json();
+                render(obj);
             };
+
             $('#url').on('keydown', e => {
                 if (e.which === 13) get();
             });
@@ -102,20 +95,25 @@
 <body>
     <div class="actions">
         <label><i class="icon-js">&nbsp;JS</i> JSON Viewer</label>
-        <!--a class="pure-button" href="javascript:$('.tree').find('li').addClass('open');"></i>Expand all</a>
-        <a class="pure-button" href="javascript:$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</a-->
-        <!--select id="depth">
-            <option value="">No depth limit</option>
-            <option value="2">Render depth 2</option>
-            <option value="3">Render depth 3</option>
-        </select>
-        <select id="sort">
-            <option value="">No sorting</option>
-            <option value="1">Sort properties</option>
-        </select-->
+
         <input id="url" value="https://jsonplaceholder.typicode.com/users" />
-        <!--textarea id="json" spellcheck="false" autocomplete="off">{ "firstName": "John", "lastName": "Smith", "age": 25 }</textarea>
-        <a id="parse" class="pure-button">Parse</a-->
+
+        <a id="hamburger" href="javascript:$('#menu').slideToggle(100);"><span></span><span></span><span></span></a>
+
+        <div id="menu" style="display:none;">
+            <a href="javascript:(async function() { var x = await navigator.clipboard.readText(); try { $('.tree').empty(); render(JSON.parse(x)); } catch (e) { alert('Clipboard does not contain valid JSON.'); } })(); ">Paste from clipboard</a>
+            <a href="javascript:$('.tree').find('li').addClass('open');"></i>Expand all</a>
+            <a href="javascript:$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</a>
+            <select id="depth">
+                <option value="">No depth limit</option>
+                <option value="2">Render depth 2</option>
+                <option value="3">Render depth 3</option>
+            </select>
+            <select id="sort">
+                <option value="">No sorting</option>
+                <option value="1">Sort properties</option>
+            </select>
+        </div>
     </div>
 
     <div class="tree">
