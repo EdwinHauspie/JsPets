@@ -1,7 +1,6 @@
 html, body {
     letter-spacing: 0.01em;
     margin: 0;
-    background: #f1f1f1;
     font-size: 16px;
     font-family: monospace;
     height: 100%;
@@ -9,8 +8,6 @@ html, body {
 }
 
 body { display: flex; flex-direction: column; }
-
-label { font-weight: bold; }
 
 .icon-js {
     top: 7px;
@@ -25,22 +22,27 @@ label { font-weight: bold; }
 }
 
 #url {
-    flex: 1;
-    margin-left: 20px;
-    border-radius: 3px;
-    padding: 0 5px;
-    border: 1px solid #fff;
-    box-shadow: 0px 0px 4px #ddd;
+    border-radius: 4px;
+    padding: 0 10px;
+    border: 2px solid #dcdcdc;
+    line-height: 2.4;
+    margin: 10px;
+    display: block;
+    outline: none;
 }
 
 .actions {
     padding: 20px;
     display: flex;
-    line-height: 2.2;
+    line-height: 2.4;
+}
+
+.actions > * {
+    margin-left: 20px;
 }
 
 .tree {
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     color: #118ac4;
     font-weight: bold;
     position: relative;
@@ -58,7 +60,7 @@ label { font-weight: bold; }
 .tree ul {
     display: none;
     margin-left: 4px;
-    border-left: 1px dotted #aaa;
+    /*border-left: 1px solid #aaa;*/
 }
 
 .tree .toggle {
@@ -67,11 +69,11 @@ label { font-weight: bold; }
     width: 16px;
     height: 16px;
     position: absolute;
-    left: -9px;
+    left: -8px;
     top: 6px;
     z-index: 2;
     transition: all .3s;
-    background: #f1f1f1; /*Must be same as container background*/
+    background: white; /*Must be same as container background*/
     text-align: center;
     line-height: 14px;
     font-weight: bold;
@@ -83,6 +85,23 @@ label { font-weight: bold; }
 .tree li {
     padding-left: 30px;
     position: relative;
+    cursor: default;
+    border-left: 1px solid #ccc;
+}
+
+.tree li:last-child::after {
+    content: ' ';
+    display: inline-block;
+    width: 0px;
+    height: 15px;
+    left: 0px;
+    top: 0px;
+    border-left: 1px solid #ccc;
+    position: absolute;
+}
+
+.tree li:last-child {
+    border-left: 0;
 }
 
 .tree li.open > .toggle {
@@ -96,6 +115,7 @@ label { font-weight: bold; }
 .tree span {
     color: #977046;
     font-weight: normal;
+    cursor: text;
 }
 
 .tree em {
@@ -104,7 +124,7 @@ label { font-weight: bold; }
     font-style: normal;
 }
 
-.tree > ul::before {
+/*.tree > ul::before {
     content: ' ';
     display: inline-block;
     width: 3px;
@@ -112,8 +132,8 @@ label { font-weight: bold; }
     left: 23px;
     top: 12px;
     position: absolute;
-    background: #f1f1f1; /*Must be same as container background*/
-}
+    background: #f1f1f1; /*Must be same as container background
+}*/
 
 .tree li::before {
     content: ' ';
@@ -123,10 +143,10 @@ label { font-weight: bold; }
     left: 0;
     top: 14px;
     position: absolute;
-    border-top: 1px dotted #aaa;
+    border-top: 1px solid #ccc;
 }
 
-.tree li:last-child::after {
+/*.tree li:last-child::after {
     content: ' ';
     display: inline-block;
     width: 3px;
@@ -134,23 +154,10 @@ label { font-weight: bold; }
     left: -2px;
     top: 15px;
     position: absolute;
-    background: #f1f1f1; /*Must be same as container background*/
-}
+    background: #f1f1f1; /*Must be same as container background
+}*/
 
-#hamburger {
-    margin-left: 10px;
-
-}
-
-#hamburger span {
-    display: block;
-    width: 20px;
-    height: 3px;
-    background-color: #000;
-    margin: 6px 0;
-}
-
-#menu {
+/*#menu {
     z-index: 999;
     position: fixed;
     top: 60px;
@@ -164,4 +171,4 @@ label { font-weight: bold; }
 
 #menu a {
     display: block;
-}
+}*/

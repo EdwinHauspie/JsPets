@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>JSON Viewer</title>
+    <title>JSON</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -12,7 +12,7 @@
     <script>
         let render = data => {
             let html = '';
-            const sort = $('#sort').val(), depth = $('#depth').val() || 999;
+            const sort = $('#sort').is(':checked'), depth = $('#depth').val() || 999;
             const toggle = arr => arr.length ? '<i class="toggle">›</i>' : '';
 
             (function ___(o, name, curDepth) {
@@ -63,9 +63,10 @@
                 return false;
             });
 
-            $('.tree').on('dblclick', '.toggle', e => {
+            $('.tree').on('dblclick', e => {
                 e.stopPropagation();
-                $(e.target).closest('li').addClass('open').find('li').addClass('open');
+                var $li = $(e.target).closest('li');
+                if ($li.find('.toggle').length) $li.toggleClass('open');
                 return false;
             });
 
@@ -93,27 +94,18 @@
 </head>
 
 <body>
+    <input id="url" value="https://jsonplaceholder.typicode.com/users" />
+
     <div class="actions">
-        <label><i class="icon-js">&nbsp;JS</i> JSON Viewer</label>
+        <!--b><i class="icon-js">&nbsp;JS</i> JSON Viewer</b-->
+    </div>
 
-        <input id="url" value="https://jsonplaceholder.typicode.com/users" />
-
-        <a id="hamburger" href="javascript:$('#menu').slideToggle(100);"><span></span><span></span><span></span></a>
-
-        <div id="menu" style="display:none;">
-            <a href="javascript:(async function() { var x = await navigator.clipboard.readText(); try { $('.tree').empty(); render(JSON.parse(x)); } catch (e) { alert('Clipboard does not contain valid JSON.'); } })(); ">Paste from clipboard</a>
-            <a href="javascript:$('.tree').find('li').addClass('open');"></i>Expand all</a>
-            <a href="javascript:$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</a>
-            <select id="depth">
-                <option value="">No depth limit</option>
-                <option value="2">Render depth 2</option>
-                <option value="3">Render depth 3</option>
-            </select>
-            <select id="sort">
-                <option value="">No sorting</option>
-                <option value="1">Sort properties</option>
-            </select>
-        </div>
+    <div class="actions">
+        <a href="javascript:$('.tree').find('li').addClass('open');"></i>Expand all</a>
+        <a href="javascript:$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</a>
+        <a href="javascript:(async function() { var x = await navigator.clipboard.readText(); try { $('.tree').empty(); render(JSON.parse(x)); } catch (e) { alert('Clipboard does not contain valid JSON.'); } })(); ">Paste from clipboard</a>
+        <div>Max render depth <input id="depth" value="10" type="number" style="width:35px;border:0;"></div>
+        <div><label><input id="sort" type="checkbox" /> Sort property names</label></div>
     </div>
 
     <div class="tree">
