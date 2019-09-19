@@ -1,31 +1,54 @@
-body { font-family: verdana, sans-serif; font-size: 13px; line-height: 25px; margin: 20px; }
-.tree {width: 200px;}
+body {font-family: Roboto, sans-serif;font-size: 15px;line-height: 28px;margin: 20px;color: #222;}
+
+.tree {width: 350px;}
+
 .tree ul, li { list-style: none; margin: 0; padding: 0;}
-.tree ul { display: none; }
-.tree li { padding-left: 23px; position: relative;}
+
 .tree .toggle {
     display: inline-block;
     cursor: pointer;
     width: 16px;
     height: 16px;
     position: absolute;
-    left: 5px;
-    top: 5px;
+    left: 3px;
+    top: 6px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAVElEQVQoU2NkYGBguHTp0v+3b98yODo6MoL46AAsuH///v/Pnz9nkJSUxKoQrhOfQhTjcSnEcMOaNWv+//r1i0FPT49BR0cHLE+aSQTdRJTvCIUTAEpgPwo+KLAsAAAAAElFTkSuQmCC);
-    z-index: 2;
     background-repeat: no-repeat;
     background-position: 4px 4px;
 }
+
+.tree li { position: relative; }
 
 .tree li.open > .toggle {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAXElEQVQoU2NkIAIwEqGGgXH+/Pn/b9y4wdDZ2Ymhoby8/L+mpiYDI4ixceNGBn9/fxSFyOJg3egK0flwK2ASKioqDHfu3EExGcUduKzGcOzChQv/x8fHo4gTFQQA5zU5TagbBmIAAAAASUVORK5CYII=);
 }
 
+.tree ul { display: none; }
 .tree li.open > ul, .tree > ul { display: block; }
 
-.tree img { vertical-align: middle; }
+.tree li .name {
+    padding: 1px 2px 1px 23px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 
-.tree li .name {padding: 1px 2px 1px 23px;display: block;position: relative;cursor: pointer;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+.tree li .name { padding-left: 23px; }
+.tree li li .name { padding-left: 46px; }
+.tree li li li .name { padding-left: 69px; }
+.tree li li li li .name { padding-left: 92px; }
+.tree li li li li li .name { padding-left: 115px; }
+.tree li li li li li li .name { padding-left: 138px; }
+
+.tree li .toggle { left: 3px; }
+.tree li li .toggle { left: 26px; }
+.tree li li li .toggle { left: 49px; }
+.tree li li li li .toggle { left: 72px; }
+.tree li li li li li .toggle { left: 95px; }
+.tree li li li li li li .toggle { left: 118px; }
 
 .tree li .name::before {
     content: ' ';
@@ -33,13 +56,12 @@ body { font-family: verdana, sans-serif; font-size: 13px; line-height: 25px; mar
     background-image: url("folder.png");
     width: 16px;
     height: 16px;
-    position: absolute;
-    left: 3px;
-    top: 5px;
+    margin-right: 5px;
+    vertical-align: text-top;
 }
 
-.tree li .name:hover { color: black; background-color: #f5f5f5; }
-.tree li.active > .name { color: black; background-color: #e1eef3; }
+.tree li .name:hover {color: black;background-color: #eefaff;}
+.tree li.active > .name {background-color: #d3f1ff;}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */

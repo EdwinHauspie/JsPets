@@ -1,15 +1,17 @@
 html, body {
     letter-spacing: 0.01em;
     margin: 0;
-    font-size: 16px;
-    font-family: monospace;
     height: 100%;
     overflow: hidden;
 }
 
-body { display: flex; flex-direction: column; }
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Roboto, sans-serif;
+}
 
-.icon-js {
+/*icon-js {
     top: 7px;
     width: 20px;
     height: 20px;
@@ -19,31 +21,42 @@ body { display: flex; flex-direction: column; }
     color: white;
     font-size: 11px;
     line-height: 26px;
-}
+}*/
 
 #url {
     border-radius: 4px;
-    padding: 0 10px;
+    padding: 7px 9px;
     border: 2px solid #dcdcdc;
-    line-height: 2.4;
     margin: 10px;
     display: block;
     outline: none;
+    font-size: 17px;
+    color: #222;
 }
 
 .actions {
-    padding: 20px;
+    margin: 0 10px 10px 10px;
     display: flex;
-    line-height: 2.4;
 }
 
-.actions > * {
-    margin-left: 20px;
+.actions a {
+    background: #ddd;
+    color: #000;
+    text-decoration: none;
+    padding: 0 10px;
+    border-radius: 4px;
+    font-size: 15px;
+    line-height: 32px;
+ }
+
+.actions > *:not(:first-child) {
+    margin-left: 10px;
 }
 
 .tree {
+    font-size: 16px;
+    font-family: monospace;
     padding: 0 20px 20px 20px;
-    color: #118ac4;
     font-weight: bold;
     position: relative;
     flex: 1;
@@ -60,7 +73,6 @@ body { display: flex; flex-direction: column; }
 .tree ul {
     display: none;
     margin-left: 4px;
-    /*border-left: 1px solid #aaa;*/
 }
 
 .tree .toggle {
@@ -69,24 +81,27 @@ body { display: flex; flex-direction: column; }
     width: 16px;
     height: 16px;
     position: absolute;
-    left: -8px;
-    top: 6px;
+    left: -10px;
+    top: 4px;
     z-index: 2;
     transition: all .3s;
-    background: white; /*Must be same as container background*/
     text-align: center;
     line-height: 14px;
     font-weight: bold;
     font-size: 21px;
     font-style: unset;
     user-select: none;
+    background: #e2e2e2;
+    color: #aaa;
+    border-radius: 30%;
+    border: 2px solid #fff;
 }
 
 .tree li {
     padding-left: 30px;
     position: relative;
     cursor: default;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #ddd;
 }
 
 .tree li:last-child::after {
@@ -96,7 +111,7 @@ body { display: flex; flex-direction: column; }
     height: 15px;
     left: 0px;
     top: 0px;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #ddd;
     position: absolute;
 }
 
@@ -113,27 +128,15 @@ body { display: flex; flex-direction: column; }
 }
 
 .tree span {
-    color: #977046;
+    color: #9e9e9e;
     font-weight: normal;
     cursor: text;
 }
 
 .tree em {
-    color: #aaa;
     font-weight: normal;
     font-style: normal;
 }
-
-/*.tree > ul::before {
-    content: ' ';
-    display: inline-block;
-    width: 3px;
-    height: 15px;
-    left: 23px;
-    top: 12px;
-    position: absolute;
-    background: #f1f1f1; /*Must be same as container background
-}*/
 
 .tree li::before {
     content: ' ';
@@ -143,32 +146,5 @@ body { display: flex; flex-direction: column; }
     left: 0;
     top: 14px;
     position: absolute;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #ddd;
 }
-
-/*.tree li:last-child::after {
-    content: ' ';
-    display: inline-block;
-    width: 3px;
-    height: calc(100% - 15px);
-    left: -2px;
-    top: 15px;
-    position: absolute;
-    background: #f1f1f1; /*Must be same as container background
-}*/
-
-/*#menu {
-    z-index: 999;
-    position: fixed;
-    top: 60px;
-    right: 50px;
-    background: #fff;
-    border-radius: 3px;
-    padding: 10px;
-    border: 1px solid #fff;
-    box-shadow: rgb(221, 221, 221) 0px 0px 4px;
-}
-
-#menu a {
-    display: block;
-}*/

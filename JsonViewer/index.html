@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" type="image/png" href="data:image/png;base64,....==">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
 
     <script>
         let render = data => {
@@ -98,12 +99,9 @@
 
     <div class="actions">
         <!--b><i class="icon-js">&nbsp;JS</i> JSON Viewer</b-->
-    </div>
-
-    <div class="actions">
         <a href="javascript:$('.tree').find('li').addClass('open');"></i>Expand all</a>
         <a href="javascript:$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</a>
-        <a href="javascript:(async function() { var x = await navigator.clipboard.readText(); try { $('.tree').empty(); render(JSON.parse(x)); } catch (e) { alert('Clipboard does not contain valid JSON.'); } })(); ">Paste from clipboard</a>
+        <a href="javascript:(async function() { var x = await navigator.clipboard.readText(); try { render(JSON.parse(x)); } catch (e) { $('.tree').html('Clipboard does not contain valid JSON.'); } })(); ">Paste from clipboard</a>
         <div>Max render depth <input id="depth" value="10" type="number" style="width:35px;border:0;"></div>
         <div><label><input id="sort" type="checkbox" /> Sort property names</label></div>
     </div>

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Explorer</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
+    <link rel="stylesheet" href="./explorer.css" />
+    <script>
+        function render(items) {
+            if (!items || !items.length) return '';
+            var html = '<ul>';
+
+            for (var i = 0, item = items[i]; i < items.length; i++ , item = items[i]) {
+                html += '<li><span class="name">' + item.name + '</span>' + (item.children && item.children.length ? '<span class="toggle"></span>' : '');
+                html += render(item.children);
+                html += '</li>';
+            }
+
+            html += '</ul>';
+            return html;
+        }
+
+        var html = render([
+            {
+                name: 'C:',
+                children: [
+                    {
+                        name: 'Program Files',
+                        children: [{ name: 'Microsoft SQL Server', children: [{ name: 'bin' }] }, { name: 'Notepad++' }]
+                    },
+                    {
+                        name: 'Windows',
+                        children: [{ name: 'Fonts' }, { name: 'System32' }]
+                    }
+                ]
+            }
+        ]);
+
+        $(function () {
+            function toggle() { $(this).closest('li').toggleClass('open'); }
+
+            $('.tree')
+                .html(html)
+                .on('click', '.toggle', toggle)
+                .on('dblclick', '.name', toggle)
+                .on('click', '.name', function () { $('.tree .active').removeClass('active'); $(this).closest('li').addClass('active'); });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="tree noselect"></div>
+</body>
+
+</html>
