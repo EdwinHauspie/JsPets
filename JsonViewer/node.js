@@ -17,8 +17,9 @@ const app = http.createServer((request, response) => {
 
         if (jsonUrl) {
             let protocol = jsonUrl.split(':')[0] === 'http' ? http : https;
+            let method = request.method.toLowerCase();
 
-            protocol.get(jsonUrl, resp => {
+            protocol[method](jsonUrl, resp => {
                 let data = '';
                 resp.on('data', chunk => (data += chunk));
                 resp.on('end', () => write(response, 200, 'text/json', data));

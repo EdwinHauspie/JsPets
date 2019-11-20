@@ -11,9 +11,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
 
     <script>
-        let render = data => {
+        let json = null;
+        let data = null;
+
+        let render = () => {
             let html = '';
-            const sort = $('#sort').is(':checked'), depth = $('#depth').val() || 999;
+            const sort = $('#sort').prop('checked'), depth = 99;
             const toggle = arr => arr.length ? '<i class="toggle">›</i>' : '';
 
             (function ___(o, name, curDepth) {
@@ -25,7 +28,7 @@
                     html += `<li>${name} <span><em>null</em></span></li>`;
                 }
                 else if (o instanceof Array) {
-                    html += `<li>${toggle(o)} ${name} <em>[${o.length}]</em>`;
+                    html += `<li>${toggle(o)} ${name} <em>array [${o.length}]</em>`;
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
@@ -37,7 +40,7 @@
                 }
                 else if (typeof o == 'object') {
                     let props = Object.keys(o);
-                    html += `<li>${toggle(props)} ${name} <em>{${props.length}}</em>`;
+                    html += `<li>${toggle(props)} ${name} <em>object {${props.length}}</em>`;
                     if (props.length) {
                         html += '<ul>';
                         if (sort) props = props.sort((a, b) => a.localeCompare(b));
@@ -76,18 +79,38 @@
             const storedUrl = localStorage.getItem('url');
             if (storedUrl) $('#url').val(storedUrl);
 
-            const get = async () => {
+            const get = async (method = 'GET') => {
                 $('.tree').empty();
                 let url = $('#url').val();
                 localStorage.setItem('url', url);
-                var result = await fetch('/?jsonUrl=' + encodeURIComponent(url));
-                var obj = await result.json();
-                render(obj);
+                var response = await fetch('/?jsonUrl=' + encodeURIComponent(url), { method });
+                json = await response.text();
+                console.log(`JSON length: ${json.length}`);
+                data = JSON.parse(json);
+                render();
             };
 
-            $('#url').on('keydown', e => {
+            $('#url').focus().on('keydown', e => {
                 if (e.which === 13) get();
             });
+
+            $('#expand').on('click', () => $('.tree').find('li').addClass('open'));
+            $('#collapse').on('click', () => $('.tree').find('li').removeClass('open').first().addClass('open'));
+
+            $('#clipboard').on('click', async () => {
+                json = await navigator.clipboard.readText();
+                try {
+                    data = JSON.parse(json);
+                    render();
+                    console.log(`JSON length: ${json.length}`);
+                }
+                catch (e) {
+                    $('.tree').html('Clipboard does not contain valid JSON.');
+                }
+            });
+
+            $('#get').on('click', () => get());
+            $('#post').on('click', () => get('POST')); //TODO
 
             get();
         });
@@ -95,15 +118,15 @@
 </head>
 
 <body>
-    <input id="url" value="https://jsonplaceholder.typicode.com/users" />
 
     <div class="actions">
-        <!--b><i class="icon-js">&nbsp;JS</i> JSON Viewer</b-->
-        <a href="javascript:$('.tree').find('li').addClass('open');"></i>Expand all</a>
-        <a href="javascript:$('.tree').find('li').removeClass('open').first().addClass('open');">Collapse all</a>
-        <a href="javascript:(async function() { var x = await navigator.clipboard.readText(); try { render(JSON.parse(x)); } catch (e) { $('.tree').html('Clipboard does not contain valid JSON.'); } })(); ">Paste from clipboard</a>
-        <div>Max render depth <input id="depth" value="10" type="number" style="width:35px;border:0;"></div>
-        <div><label><input id="sort" type="checkbox" /> Sort property names</label></div>
+        <input id="url" value="https://jsonplaceholder.typicode.com/users" />
+        <button id="get">GET</button>
+        <button id="post">POST</button>
+        <button id="expand">Expand all</button>
+        <button id="collapse">Collapse all</button>
+        <button id="clipboard">Paste from clipboard</button>
+        <label><input id="sort" type="checkbox" checked="checked" /> Sort properties</label>
     </div>
 
     <div class="tree">

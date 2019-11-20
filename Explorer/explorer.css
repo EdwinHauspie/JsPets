@@ -1,6 +1,6 @@
-body {font-family: Roboto, sans-serif;font-size: 15px;line-height: 28px;margin: 20px;color: #222;}
+body {font-family: Roboto, sans-serif;font-size: 14px;line-height: 25px;margin: 20px;color: #222;}
 
-.tree {width: 350px;}
+.tree {width: 300px;}
 
 .tree ul, li { list-style: none; margin: 0; padding: 0;}
 
@@ -17,7 +17,7 @@ body {font-family: Roboto, sans-serif;font-size: 15px;line-height: 28px;margin: 
     background-position: 4px 4px;
 }
 
-.tree li { position: relative; }
+.tree li {position: relative;}
 
 .tree li.open > .toggle {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAXElEQVQoU2NkIAIwEqGGgXH+/Pn/b9y4wdDZ2Ymhoby8/L+mpiYDI4ixceNGBn9/fxSFyOJg3egK0flwK2ASKioqDHfu3EExGcUduKzGcOzChQv/x8fHo4gTFQQA5zU5TagbBmIAAAAASUVORK5CYII=);
@@ -34,6 +34,7 @@ body {font-family: Roboto, sans-serif;font-size: 15px;line-height: 28px;margin: 
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    border-radius: 3px;
 }
 
 .tree li .name { padding-left: 23px; }
@@ -60,8 +61,8 @@ body {font-family: Roboto, sans-serif;font-size: 15px;line-height: 28px;margin: 
     vertical-align: text-top;
 }
 
-.tree li .name:hover {color: black;background-color: #eefaff;}
-.tree li.active > .name {background-color: #d3f1ff;}
+.tree li .name:hover {color: black;background-color: #f9f9f9;}
+.tree li.active > .name {background-color: #ececec;}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */

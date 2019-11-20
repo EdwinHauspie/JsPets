@@ -1,57 +1,101 @@
 html, body {
     letter-spacing: 0.01em;
     margin: 0;
-    height: 100%;
-    overflow: hidden;
+    font-family: Roboto, sans-serif;
+    color: #333;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    font-family: Roboto, sans-serif;
-}
-
-/*icon-js {
-    top: 7px;
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-    background: #000;
-    display: inline-block;
-    color: white;
-    font-size: 11px;
-    line-height: 26px;
-}*/
-
-#url {
-    border-radius: 4px;
-    padding: 7px 9px;
-    border: 2px solid #dcdcdc;
-    margin: 10px;
-    display: block;
-    outline: none;
-    font-size: 17px;
-    color: #222;
+    overflow-y: scroll;
 }
 
 .actions {
-    margin: 0 10px 10px 10px;
+    margin: 10px;
     display: flex;
+    align-items: center;
+    line-height: 34px;
+    font-size: 15px !important;
 }
 
-.actions a {
-    background: #ddd;
-    color: #000;
-    text-decoration: none;
+.actions #url {
+    border-radius: 4px;
+    padding: 0 9px;
+    border: 2px solid #dcdcdc;
+    flex: 1;
+    outline: none;
+    color: #222;
+    line-height: inherit;
+    font-size: inherit;
+}
+
+.actions button {
+    outline:none;
+    border:2px solid #dcdcdc;
+    background: #f5f5f5;
     padding: 0 10px;
     border-radius: 4px;
-    font-size: 15px;
-    line-height: 32px;
+    font-size: inherit;
+    line-height: inherit;
+ }
+
+ .actions label {
+    border: 2px solid #dcdcdc;
+    padding: 0 10px;
+    border-radius: 4px;
+    background: #f5f5f5;
+    line-height: inherit;
+ }
+
+ :focus {
+    border-color: #52a8eccc !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6) !important;
+}
+
+ .actions button.checked, .actions button:active {
+    box-shadow: inset 0px 0px 5px #c1c1c1 !important;
+ }
+
+ .actions button span {
+     display:none;
+     color:grey;
  }
 
 .actions > *:not(:first-child) {
     margin-left: 10px;
 }
+
+input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 18px;
+    width: 18px;
+    outline: none;
+    border: 2px solid #dcdcdc;
+    background: #ffffff;
+    border-radius: 2px;
+    margin: 0 5px -3px 0;
+    transition: all .15s;
+    background-position-y: -15px;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+input[type=checkbox]:checked {
+    background-position-y: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .tree {
     font-size: 16px;
@@ -60,7 +104,7 @@ body {
     font-weight: bold;
     position: relative;
     flex: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     line-height: 1.8;
 }
 
@@ -78,30 +122,30 @@ body {
 .tree .toggle {
     display: inline-block;
     cursor: pointer;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     position: absolute;
     left: -10px;
-    top: 4px;
+    top: 5px;
     z-index: 2;
-    transition: all .3s;
+    transition: all .15s;
     text-align: center;
-    line-height: 14px;
+    line-height: 12px;
     font-weight: bold;
     font-size: 21px;
     font-style: unset;
     user-select: none;
-    background: #e2e2e2;
-    color: #aaa;
-    border-radius: 30%;
-    border: 2px solid #fff;
+    background: #ffffff;
+    color: #c3c3c3;
+    border-radius: 4px;
+    border: 2px solid #dcdcdc;
 }
 
 .tree li {
     padding-left: 30px;
     position: relative;
     cursor: default;
-    border-left: 1px solid #ddd;
+    border-left: 2px solid #dcdcdc;
 }
 
 .tree li:last-child::after {
@@ -111,9 +155,11 @@ body {
     height: 15px;
     left: 0px;
     top: 0px;
-    border-left: 1px solid #ddd;
+    border-left: 2px solid #dcdcdc;
     position: absolute;
 }
+
+.tree > ul > li::after { display: none !important; }
 
 .tree li:last-child {
     border-left: 0;
@@ -128,23 +174,71 @@ body {
 }
 
 .tree span {
-    color: #9e9e9e;
+    color: #aaa;
     font-weight: normal;
     cursor: text;
 }
 
 .tree em {
     font-weight: normal;
-    font-style: normal;
 }
 
 .tree li::before {
     content: ' ';
     display: inline-block;
-    width: 20px;
+    width: 17px;
     height: 1px;
     left: 0;
     top: 14px;
     position: absolute;
-    border-top: 1px solid #ddd;
+    border-top: 2px solid #dcdcdc;
 }
+
+.tree li:last-child::before {
+    width: 19px;
+}
+
+.tree li:last-child > .toggle {
+    left: -8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 20px;
+}
+*/
