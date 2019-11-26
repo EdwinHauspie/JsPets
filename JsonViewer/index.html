@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
 
     <script>
-        let json = null;
-        let data = null;
+        let json = null,
+            data = null;
 
         let render = () => {
             let html = '';
@@ -79,20 +79,16 @@
             const storedUrl = localStorage.getItem('url');
             if (storedUrl) $('#url').val(storedUrl);
 
-            const get = async (method = 'GET') => {
+            const send = async () => {
                 $('.tree').empty();
                 let url = $('#url').val();
                 localStorage.setItem('url', url);
-                var response = await fetch('/?jsonUrl=' + encodeURIComponent(url), { method });
+                var response = await fetch('/?jsonUrl=' + encodeURIComponent(url), { method: document.getElementById('method').value });
                 json = await response.text();
                 console.log(`JSON length: ${json.length}`);
                 data = JSON.parse(json);
                 render();
             };
-
-            $('#url').focus().on('keydown', e => {
-                if (e.which === 13) get();
-            });
 
             $('#expand').on('click', () => $('.tree').find('li').addClass('open'));
             $('#collapse').on('click', () => $('.tree').find('li').removeClass('open').first().addClass('open'));
@@ -109,10 +105,9 @@
                 }
             });
 
-            $('#get').on('click', () => get());
-            $('#post').on('click', () => get('POST')); //TODO
-
-            get();
+            $('#send').on('click', () => send());
+            $('#url').focus().on('keydown', e => { if (e.which === 13) send(); });
+            send();
         });
     </script>
 </head>
@@ -120,9 +115,9 @@
 <body>
 
     <div class="actions">
+        <select id="method"><option>GET</option><option>POST</option></select>
         <input id="url" value="https://jsonplaceholder.typicode.com/users" />
-        <button id="get">GET</button>
-        <button id="post">POST</button>
+        <button id="send">Send</button>
         <button id="expand">Expand all</button>
         <button id="collapse">Collapse all</button>
         <button id="clipboard">Paste from clipboard</button>

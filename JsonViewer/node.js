@@ -18,6 +18,7 @@ const app = http.createServer((request, response) => {
         if (jsonUrl) {
             let protocol = jsonUrl.split(':')[0] === 'http' ? http : https;
             let method = request.method.toLowerCase();
+            console.log(method);
 
             protocol[method](jsonUrl, resp => {
                 let data = '';

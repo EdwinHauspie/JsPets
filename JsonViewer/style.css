@@ -12,7 +12,7 @@ body {
 .actions {
     margin: 10px;
     display: flex;
-    align-items: center;
+    /*align-items: center;*/
     line-height: 34px;
     font-size: 15px !important;
 }
@@ -28,7 +28,7 @@ body {
     font-size: inherit;
 }
 
-.actions button {
+.actions button, .actions select {
     outline:none;
     border:2px solid #dcdcdc;
     background: #f5f5f5;
@@ -39,11 +39,10 @@ body {
  }
 
  .actions label {
-    border: 2px solid #dcdcdc;
-    padding: 0 10px;
-    border-radius: 4px;
-    background: #f5f5f5;
     line-height: inherit;
+    padding-left: 25px;
+    position: relative;
+    border: 2px solid #fff;
  }
 
  :focus {
@@ -73,12 +72,14 @@ input[type=checkbox] {
     border: 2px solid #dcdcdc;
     background: #ffffff;
     border-radius: 2px;
-    margin: 0 5px -3px 0;
-    transition: all .15s;
     background-position-y: -15px;
     background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
     background-size: contain;
     background-repeat: no-repeat;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 8px;
 }
 
 input[type=checkbox]:checked {
