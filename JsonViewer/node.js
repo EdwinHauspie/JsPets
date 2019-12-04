@@ -6,39 +6,44 @@ const url = require('url'),
 
 const write = (response, code, type, data) => {
     response.writeHead(code, { 'Content-Type': type });
-    if (data) response.write(data);
+    response.write(data);
     response.end();
 };
 
-const app = http.createServer((request, response) => {
-    try {
-        const requestUrl = url.parse(request.url, true);
-        const jsonUrl = requestUrl.query.jsonUrl;
+const onError = e => write(response, 500, 'text/json', JSON.stringify({ error: e.message }));
 
-        if (jsonUrl) {
-            let protocol = jsonUrl.split(':')[0] === 'http' ? http : https;
-            let method = request.method.toLowerCase();
-            console.log(method);
+http
+    .createServer((request, response) => {
+        try {
+            const requestUrl = url.parse(request.url, true);
+            const jsonUrl = requestUrl.query.jsonUrl;
 
-            protocol[method](jsonUrl, resp => {
-                let data = '';
-                resp.on('data', chunk => (data += chunk));
-                resp.on('end', () => write(response, 200, 'text/json', data));
-                resp.on('error', e => write(response, 500, 'text/json', e));
-            }).on('error', e => write(response, 500, 'text/json', e));
-        }
-        else {
+            if (jsonUrl) {
+                var jsonProtocol = jsonUrl.startsWith('https') ? https : https;
+                var jsonRequest = jsonProtocol.request(jsonUrl, { method: request.method }, jsonResponse => {
+                    jsonResponse.on('error', onError);
+                    let data = '';
+                    jsonResponse.on('data', chunk => (data += chunk));
+                    jsonResponse.on('end', () => {
+                        var status = jsonResponse.statusCode;
+                        if (status == 200) write(response, status, 'text/json', data);
+                        else write(response, status, 'text/json', JSON.stringify({ statusCode: status, statusMessage: jsonResponse.statusMessage }));
+                    });
+                });
+                jsonRequest.on('error', onError);
+                jsonRequest.end();
+                return;
+            }
+
             var file = __dirname + (requestUrl.path != '/' ? requestUrl.path : '/index.html');
             var contents = fs.readFileSync(file, 'utf8');
             var mime = 'text/' + file.split('.').reverse()[0];
             if (file.indexOf('.ico') >= 0) mime = 'image/x-icon';
             write(response, 200, mime, contents);
+        } catch (e) {
+            onError(e);
         }
-    } catch (e) {
-        console.log(e);
-    }
-});
-
-app.listen(1337, '127.0.0.1', () => {
-    open('http://127.0.0.1:1337');
-});
+    })
+    .listen(8000, '127.0.0.1', () => {
+        open('http://127.0.0.1:8000');
+    });

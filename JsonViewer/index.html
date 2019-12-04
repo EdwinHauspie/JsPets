@@ -25,10 +25,10 @@
                 name = name === null ? '' : name;
 
                 if (o === null) {
-                    html += `<li>${name} <span><em>null</em></span></li>`;
+                    html += `<li><b>${name}</b> <span>null</span></li>`;
                 }
                 else if (o instanceof Array) {
-                    html += `<li>${toggle(o)} ${name} <em>array [${o.length}]</em>`;
+                    html += `<li>${toggle(o)} <b>${name}</b> <span>array [${o.length}]</span>`;
                     if (o.length) {
                         html += '<ul>';
                         for (var i = 0; i < o.length; i++) {
@@ -40,10 +40,10 @@
                 }
                 else if (typeof o == 'object') {
                     let props = Object.keys(o);
-                    html += `<li>${toggle(props)} ${name} <em>object {${props.length}}</em>`;
+                    if (sort) props = props.sort((a, b) => a.localeCompare(b));
+                    html += `<li>${toggle(props)} <b>${name}</b> <span>{ ${props.join(', ')} }</span>`;
                     if (props.length) {
                         html += '<ul>';
-                        if (sort) props = props.sort((a, b) => a.localeCompare(b));
                         for (var i = 0; i < props.length; i++) {
                             ___(o[props[i]], props[i], curDepth + 1);
                         }
@@ -52,7 +52,7 @@
                     html += '</li>';
                 }
                 else {
-                    html += `<li>${name} <span>` + (typeof o === 'string' ? `"${o.replace(/\</g, '&lt;')}"` : o) + '</span></li>';
+                    html += `<li><b>${name}</b> <span>` + (typeof o === 'string' ? `"${o.replace(/\</g, '&lt;')}"` : o) + '</span></li>';
                 }
             })(data, null, 0);
 
@@ -67,22 +67,36 @@
                 return false;
             });
 
-            $('.tree').on('dblclick', e => {
+            $('.tree').on('dblclick', 'li', e => {
                 e.stopPropagation();
                 var $li = $(e.target).closest('li');
                 if ($li.find('.toggle').length) $li.toggleClass('open');
                 return false;
             });
 
+            $('.tree').on('mousemove', 'span, b', e => {
+                e.stopPropagation();
+                $(e.target).prop('contenteditable', 'plaintext-only');
+                //window.getSelection().removeAllRanges();
+                //$(e.target).focus();
+                return false;
+            });
+
             $('#depth').on('change', e => $(e.target).parent().find('span').text(e.target.valueAsNumber));
 
-            const storedUrl = localStorage.getItem('url');
-            if (storedUrl) $('#url').val(storedUrl);
+            function restoreHistory() {
+                const storedUrls = (localStorage.getItem('urls') || '').split(';');
+                document.getElementById('urls').innerHTML = '';;
+                storedUrls.forEach(x => document.getElementById('urls').insertAdjacentHTML('beforeend', `<option>${x}</option>`))
+            }
+
+            restoreHistory();
 
             const send = async () => {
                 $('.tree').empty();
                 let url = $('#url').val();
-                localStorage.setItem('url', url);
+                localStorage.setItem('urls', (localStorage.getItem('urls') || '').split(';').concat([url]).filter((x, idx, arr) => arr.indexOf(x) == idx).join(';'));
+                restoreHistory();
                 var response = await fetch('/?jsonUrl=' + encodeURIComponent(url), { method: document.getElementById('method').value });
                 json = await response.text();
                 console.log(`JSON length: ${json.length}`);
@@ -106,27 +120,24 @@
             });
 
             $('#send').on('click', () => send());
-            $('#url').focus().on('keydown', e => { if (e.which === 13) send(); });
-            send();
+            $('#url').on('keydown', e => { if (e.which === 13) send(); });
         });
     </script>
 </head>
 
 <body>
-
     <div class="actions">
         <select id="method"><option>GET</option><option>POST</option></select>
-        <input id="url" value="https://jsonplaceholder.typicode.com/users" />
+        <input id="url" list="urls" autofocus />
+        <datalist id="urls"></datalist>
         <button id="send">Send</button>
         <button id="expand">Expand all</button>
         <button id="collapse">Collapse all</button>
-        <button id="clipboard">Paste from clipboard</button>
         <label><input id="sort" type="checkbox" checked="checked" /> Sort properties</label>
+        <button id="clipboard">Paste JSON</button>
     </div>
 
-    <div class="tree">
-        <em>No data</em>
-    </div>
+    <div class="tree"></div>
 </body>
 
 </html>

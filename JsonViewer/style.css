@@ -107,6 +107,7 @@ input[type=checkbox]:checked {
     flex: 1;
     overflow-y: auto;
     line-height: 1.8;
+    white-space: nowrap;
 }
 
 .tree ul, li {
@@ -129,10 +130,9 @@ input[type=checkbox]:checked {
     left: -10px;
     top: 5px;
     z-index: 2;
-    transition: all .15s;
+    /*transition: all .15s;*/
     text-align: center;
     line-height: 12px;
-    font-weight: bold;
     font-size: 21px;
     font-style: unset;
     user-select: none;
@@ -178,10 +178,12 @@ input[type=checkbox]:checked {
     color: #aaa;
     font-weight: normal;
     cursor: text;
+    padding: 5px;
 }
 
-.tree em {
-    font-weight: normal;
+.tree b {
+    cursor: text;
+    padding: 5px;
 }
 
 .tree li::before {
