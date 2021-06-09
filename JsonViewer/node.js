@@ -4,22 +4,25 @@ const url = require('url'),
     fs = require('fs'),
     open = require('open');
 
+//https.globalAgent.options.ca = require('ssl-root-cas/latest').create();
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
 const write = (response, code, type, data) => {
     response.writeHead(code, { 'Content-Type': type });
     response.write(data);
     response.end();
 };
 
-const onError = e => write(response, 500, 'text/json', JSON.stringify({ error: e.message }));
-
 http
     .createServer((request, response) => {
+        const onError = e => write(response, 500, 'text/json', JSON.stringify({ error: e.message }));
+
         try {
             const requestUrl = url.parse(request.url, true);
             const jsonUrl = requestUrl.query.jsonUrl;
 
             if (jsonUrl) {
-                var jsonProtocol = jsonUrl.startsWith('https') ? https : https;
+                var jsonProtocol = jsonUrl.startsWith('https') ? https : http;
                 var jsonRequest = jsonProtocol.request(jsonUrl, { method: request.method }, jsonResponse => {
                     jsonResponse.on('error', onError);
                     let data = '';

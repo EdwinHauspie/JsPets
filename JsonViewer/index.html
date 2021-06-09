@@ -74,13 +74,13 @@
                 return false;
             });
 
-            $('.tree').on('mousemove', 'span, b', e => {
+            /*$('.tree').on('mousemove', 'span, b', e => {
                 e.stopPropagation();
                 $(e.target).prop('contenteditable', 'plaintext-only');
                 //window.getSelection().removeAllRanges();
                 //$(e.target).focus();
                 return false;
-            });
+            });*/
 
             $('#depth').on('change', e => $(e.target).parent().find('span').text(e.target.valueAsNumber));
 
@@ -99,7 +99,7 @@
                 restoreHistory();
                 var response = await fetch('/?jsonUrl=' + encodeURIComponent(url), { method: document.getElementById('method').value });
                 json = await response.text();
-                console.log(`JSON length: ${json.length}`);
+                //console.log(`JSON length: ${json.length}`);
                 data = JSON.parse(json);
                 render();
             };
@@ -133,7 +133,7 @@
         <button id="send">Send</button>
         <button id="expand">Expand all</button>
         <button id="collapse">Collapse all</button>
-        <label><input id="sort" type="checkbox" checked="checked" /> Sort properties</label>
+        <label><input id="sort" type="checkbox"/> Sort properties</label>
         <button id="clipboard">Paste JSON</button>
     </div>
 

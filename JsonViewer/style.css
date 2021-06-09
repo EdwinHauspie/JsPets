@@ -108,6 +108,7 @@ input[type=checkbox]:checked {
     overflow-y: auto;
     line-height: 1.8;
     white-space: nowrap;
+    overflow-x: hidden;
 }
 
 .tree ul, li {
