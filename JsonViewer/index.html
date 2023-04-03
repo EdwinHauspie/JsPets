@@ -108,7 +108,14 @@
             $('#collapse').on('click', () => $('.tree').find('li').removeClass('open').first().addClass('open'));
 
             $('#clipboard').on('click', async () => {
-                json = await navigator.clipboard.readText();
+				try {
+					json = await navigator.clipboard.readText();
+				}
+				catch (e) {
+                    $('.tree').html('Clipboard is not supported.');
+					return;
+                }
+                
                 try {
                     data = JSON.parse(json);
                     render();
