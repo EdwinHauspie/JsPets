@@ -2,146 +2,21 @@
 <html>
 
 <head>
-    <title>JSON</title>
+    <title>JSON Viewer</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,....==">
+    <script src="script.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
-
-    <script>
-        let json = null,
-            data = null;
-
-        let render = () => {
-            let html = '';
-            const sort = $('#sort').prop('checked'), depth = 99;
-            const toggle = arr => arr.length ? '<i class="toggle">›</i>' : '';
-
-            (function ___(o, name, curDepth) {
-                if (curDepth >= depth) return;
-
-                name = name === null ? '' : name;
-
-                if (o === null) {
-                    html += `<li><b>${name}</b> <span>null</span></li>`;
-                }
-                else if (o instanceof Array) {
-                    html += `<li>${toggle(o)} <b>${name}</b> <span>array [${o.length}]</span>`;
-                    if (o.length) {
-                        html += '<ul>';
-                        for (var i = 0; i < o.length; i++) {
-                            ___(o[i], i, curDepth + 1);
-                        }
-                        html += '</ul>';
-                    }
-                    html += '</li>';
-                }
-                else if (typeof o == 'object') {
-                    let props = Object.keys(o);
-                    if (sort) props = props.sort((a, b) => a.localeCompare(b));
-                    html += `<li>${toggle(props)} <b>${name}</b> <span>{ ${props.join(', ')} }</span>`;
-                    if (props.length) {
-                        html += '<ul>';
-                        for (var i = 0; i < props.length; i++) {
-                            ___(o[props[i]], props[i], curDepth + 1);
-                        }
-                        html += '</ul>';
-                    }
-                    html += '</li>';
-                }
-                else {
-                    html += `<li><b>${name}</b> <span>` + (typeof o === 'string' ? `"${o.replace(/\</g, '&lt;')}"` : o) + '</span></li>';
-                }
-            })(data, null, 0);
-
-            $('.tree').hide().html(`<ul>${html}</ul>`).fadeIn();
-            $('.tree > ul > li').addClass('open');
-        }
-
-        $(() => {
-            $('.tree').on('click', '.toggle', e => {
-                e.stopPropagation();
-                $(e.target).closest('li').toggleClass('open');
-                return false;
-            });
-
-            $('.tree').on('dblclick', 'li', e => {
-                e.stopPropagation();
-                var $li = $(e.target).closest('li');
-                if ($li.find('.toggle').length) $li.toggleClass('open');
-                return false;
-            });
-
-            /*$('.tree').on('mousemove', 'span, b', e => {
-                e.stopPropagation();
-                $(e.target).prop('contenteditable', 'plaintext-only');
-                //window.getSelection().removeAllRanges();
-                //$(e.target).focus();
-                return false;
-            });*/
-
-            $('#depth').on('change', e => $(e.target).parent().find('span').text(e.target.valueAsNumber));
-
-            function restoreHistory() {
-                const storedUrls = (localStorage.getItem('urls') || '').split(';');
-                document.getElementById('urls').innerHTML = '';;
-                storedUrls.forEach(x => document.getElementById('urls').insertAdjacentHTML('beforeend', `<option>${x}</option>`))
-            }
-
-            restoreHistory();
-
-            const send = async () => {
-                $('.tree').empty();
-                let url = $('#url').val();
-                localStorage.setItem('urls', (localStorage.getItem('urls') || '').split(';').concat([url]).filter((x, idx, arr) => arr.indexOf(x) == idx).join(';'));
-                restoreHistory();
-                var response = await fetch('/?jsonUrl=' + encodeURIComponent(url), { method: document.getElementById('method').value });
-                json = await response.text();
-                //console.log(`JSON length: ${json.length}`);
-                data = JSON.parse(json);
-                render();
-            };
-
-            $('#expand').on('click', () => $('.tree').find('li').addClass('open'));
-            $('#collapse').on('click', () => $('.tree').find('li').removeClass('open').first().addClass('open'));
-
-            $('#clipboard').on('click', async () => {
-				try {
-					json = await navigator.clipboard.readText();
-				}
-				catch (e) {
-                    $('.tree').html('Clipboard is not supported.');
-					return;
-                }
-                
-                try {
-                    data = JSON.parse(json);
-                    render();
-                    console.log(`JSON length: ${json.length}`);
-                }
-                catch (e) {
-                    $('.tree').html('Clipboard does not contain valid JSON.');
-                }
-            });
-
-            $('#send').on('click', () => send());
-            $('#url').on('keydown', e => { if (e.which === 13) send(); });
-        });
-    </script>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <div class="actions">
-        <select id="method"><option>GET</option><option>POST</option></select>
-        <input id="url" list="urls" autofocus />
-        <datalist id="urls"></datalist>
-        <button id="send">Send</button>
         <button id="expand">Expand all</button>
         <button id="collapse">Collapse all</button>
         <label><input id="sort" type="checkbox"/> Sort properties</label>
         <button id="clipboard">Paste JSON</button>
+        <textarea></textarea>
     </div>
 
     <div class="tree"></div>

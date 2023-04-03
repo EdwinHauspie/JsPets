@@ -1,11 +1,9 @@
-const url = require('url'),
-    http = require('http'),
-    https = require('https'),
-    fs = require('fs'),
-    open = require('open');
-
-//https.globalAgent.options.ca = require('ssl-root-cas/latest').create();
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+import url from 'url';
+import http from 'http';
+//import https from 'https';
+import fs from 'fs';
+import open from 'open';
+import path from 'path';
 
 const write = (response, code, type, data) => {
     response.writeHead(code, { 'Content-Type': type });
@@ -15,36 +13,23 @@ const write = (response, code, type, data) => {
 
 http
     .createServer((request, response) => {
-        const onError = e => write(response, 500, 'text/json', JSON.stringify({ error: e.message }));
+        console.log(`${request.method} ${request.url}`);
 
-        try {
-            const requestUrl = url.parse(request.url, true);
-            const jsonUrl = requestUrl.query.jsonUrl;
+        try {           
+            const urlObj = url.parse(request.url, true);
 
-            if (jsonUrl) {
-                var jsonProtocol = jsonUrl.startsWith('https') ? https : http;
-                var jsonRequest = jsonProtocol.request(jsonUrl, { method: request.method }, jsonResponse => {
-                    jsonResponse.on('error', onError);
-                    let data = '';
-                    jsonResponse.on('data', chunk => (data += chunk));
-                    jsonResponse.on('end', () => {
-                        var status = jsonResponse.statusCode;
-                        if (status == 200) write(response, status, 'text/json', data);
-                        else write(response, status, 'text/json', JSON.stringify({ statusCode: status, statusMessage: jsonResponse.statusMessage }));
-                    });
-                });
-                jsonRequest.on('error', onError);
-                jsonRequest.end();
-                return;
-            }
+            const workingDir = path.resolve();
+            const filePath = workingDir + urlObj.path;
+            if (filePath.endsWith('/')) filePath += '/index.html';
 
-            var file = __dirname + (requestUrl.path != '/' ? requestUrl.path : '/index.html');
-            var contents = fs.readFileSync(file, 'utf8');
-            var mime = 'text/' + file.split('.').reverse()[0];
-            if (file.indexOf('.ico') >= 0) mime = 'image/x-icon';
-            write(response, 200, mime, contents);
+            const fileContents = fs.readFileSync(filePath, 'utf8');
+			
+            let mime = 'text/' + filePath.split('.').reverse()[0];
+            if (filePath.endsWith('.js')) mime = 'application/javascript';
+			
+            write(response, 200, mime, fileContents);
         } catch (e) {
-            onError(e);
+            write(response, 500, 'text/json', JSON.stringify({ error: e }));
         }
     })
     .listen(8000, '127.0.0.1', () => {

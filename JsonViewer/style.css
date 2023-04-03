@@ -12,20 +12,11 @@ body {
 .actions {
     margin: 10px;
     display: flex;
-    /*align-items: center;*/
     line-height: 34px;
     font-size: 15px !important;
-}
-
-.actions #url {
-    border-radius: 4px;
-    padding: 0 9px;
-    border: 2px solid #dcdcdc;
-    flex: 1;
-    outline: none;
-    color: #222;
-    line-height: inherit;
-    font-size: inherit;
+    position: fixed;
+    right: 0;
+    z-index: 2;
 }
 
 .actions button, .actions select {
@@ -86,7 +77,17 @@ input[type=checkbox]:checked {
     background-position-y: 0;
 }
 
-
+textarea {
+    position: fixed;
+    width: 50vw;
+    height: 50vh;
+    right: 10px;
+    top: 56px;
+    border: 2px solid #dcdcdc;
+    background: #ffffff;
+    border-radius: 2px;
+    display: none;
+}
 
 
 
@@ -101,7 +102,7 @@ input[type=checkbox]:checked {
 .tree {
     font-size: 16px;
     font-family: monospace;
-    padding: 0 20px 20px 20px;
+    padding: 12px 20px;
     font-weight: bold;
     position: relative;
     flex: 1;
@@ -180,6 +181,7 @@ input[type=checkbox]:checked {
     font-weight: normal;
     cursor: text;
     padding: 5px;
+    font-style: italic;
 }
 
 .tree b {
@@ -205,44 +207,3 @@ input[type=checkbox]:checked {
 .tree li:last-child > .toggle {
     left: -8px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #666;
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-track {
-    background: #ddd;
-    border-radius: 20px;
-}
-*/
